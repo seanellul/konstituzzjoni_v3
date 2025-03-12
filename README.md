@@ -18,6 +18,33 @@ An interactive web application for exploring and understanding the Constitution 
 - **Authentication**: NextAuth.js (optional)
 - **SEO**: Next SEO
 
+## Security and Privacy
+
+### Analytics Privacy
+
+This project collects anonymous usage statistics to help improve the user experience:
+
+- **No Personal Information**: We do not collect IP addresses, names, emails, or any personally identifiable information.
+- **Session Privacy**: Session IDs are randomly generated and automatically rotated every 24 hours.
+- **Data Retention**: All analytics data is automatically deleted after 365 days.
+- **User Control**: Users can opt out of analytics at any time through the privacy notice.
+
+### Security Measures
+
+To protect both users and the application:
+
+- **Database Security**: Prisma Studio (port 5555) is only accessible in development mode, never in production.
+- **Environment Separation**: Different security settings are applied based on the environment (development vs. production).
+- **Session Protection**: User sessions are generated with cryptographically secure random values.
+
+### Development Security
+
+When developing:
+
+- Always use the `npm run studio:dev` command to run Prisma Studio safely.
+- Never expose the Prisma Studio interface in production environments.
+- Copy `.env.example` to `.env` and set secure values for your environment.
+
 ## Getting Started
 
 ### Prerequisites
@@ -40,14 +67,19 @@ An interactive web application for exploring and understanding the Constitution 
    yarn install
    ```
 
-3. Run the development server:
+3. Copy `.env.example` to `.env` and configure settings:
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Run the development server:
    ```bash
    npm run dev
    # or
    yarn dev
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## Project Structure
 
@@ -79,3 +111,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - The Government of Malta for providing the official text of the Constitution
 - All contributors who have helped to make this project possible 
+
+## Production Deployment
+
+1. Build the application with `npm run build`
+2. Set NODE_ENV to "production" in your environment
+3. Set secure values for all environment variables
+4. Run `npm start` to start the production server
+5. Ensure firewall rules block access to port 5555 

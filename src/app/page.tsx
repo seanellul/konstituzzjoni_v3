@@ -90,7 +90,7 @@ export default function Home() {
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
-      <section className="min-h-[85vh] flex flex-col justify-center relative overflow-hidden">
+      <section className="min-h-[70vh] flex flex-col justify-center relative overflow-hidden">
         {/* Background with subtle animation */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-secondary-light z-0">
           <motion.div 
@@ -140,7 +140,7 @@ export default function Home() {
         />
 
         {/* Hero content */}
-        <div className="container mx-auto px-6 relative z-20 mb-10">
+        <div className="container mx-auto px-6 relative z-20 mb-6">
           <motion.div
             className="max-w-4xl mx-auto text-center"
             initial="hidden"
@@ -187,7 +187,7 @@ export default function Home() {
         </div>
 
         {/* Constitution preview teaser - new section */}
-        <div className="relative h-[200px] mb-10 overflow-hidden mx-auto max-w-4xl">
+        <div className="relative h-[150px] mb-4 overflow-hidden mx-auto max-w-4xl">
           <motion.div 
             className="absolute w-64 md:w-80 bg-white rounded-lg shadow-md border border-gray-200 p-3 rotate-3 left-[20%] z-30"
             initial={{ y: 100, opacity: 0, rotate: 3 }}
@@ -221,7 +221,7 @@ export default function Home() {
 
         {/* Scroll indicator - moved up closer to the content */}
         <motion.div 
-          className="mx-auto mb-6"
+          className="mx-auto mb-2"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: [0, 1, 0], y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -235,18 +235,18 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Constitution Visualization Section - Now feels more connected */}
-      <section className="py-16 relative overflow-hidden">
+      {/* Constitution Visualization Section */}
+      <section className="py-8 relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center"
+            className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
             {/* Left side: Interactive Constitution Document */}
-            <div className="relative h-[600px]">
+            <div className="relative h-[400px]">
               {/* Chapter 1 Document (Foreground) */}
               <motion.div 
                 className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-xl border border-gray-200 p-6 z-40 left-20"
@@ -308,7 +308,7 @@ export default function Home() {
 
               {/* Chapter III Document - Fundamental Rights */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-2 top-8 -left-8 z-30"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-2 top-4 -left-8 z-30"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.85 : 0,
                   rotate: scrollY > 200 ? rotateValue * 0.9 + 2 : 2,
@@ -336,7 +336,7 @@ export default function Home() {
 
               {/* Chapter IV Document (Executive) */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-3 bottom-10 -left-10 z-50"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-3 bottom-5 -left-10 z-50"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.7 : 0,
                   rotate: scrollY > 200 ? rotateValue * 0.8 + 3 : 3,
@@ -364,7 +364,7 @@ export default function Home() {
 
               {/* Chapter VI Document - Parliament */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-5 top- -right-0 z-30"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-5 top-16 -right-0 z-20"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.6 : 0,
                   rotate: scrollY > 200 ? rotateValue * -1.7 + 5 : 5,
@@ -392,7 +392,7 @@ export default function Home() {
 
               {/* Act IV Document */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 -rotate-4 bottom-64 -left-12 z-10"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 -rotate-4 bottom-40 -left-12 z-10"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.5 : 0,
                   rotate: scrollY > 200 ? rotateValue * 0.9 - 4 : -4,
@@ -416,7 +416,7 @@ export default function Home() {
 
               {/* Chapter X Document (Finance) */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-6 top-60 right-0 z-0"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-6 top-32 right-0 z-0"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.3 : 0,
                   rotate: scrollY > 200 ? rotateValue * -1.3 + 6 : 6,
@@ -458,7 +458,7 @@ export default function Home() {
               </p>
               
               {/* Live Analytics Widget */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <LiveInsightsWidget />
               </div>
               
@@ -475,10 +475,10 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-6">
           <motion.div 
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="text-center max-w-3xl mx-auto mb-10"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -517,7 +517,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary-DEFAULT to-primary-dark text-white">
+      <section className="py-12 bg-gradient-to-r from-primary-DEFAULT to-primary-dark text-white">
         <div className="container mx-auto px-6">
           <motion.div 
             className="text-center max-w-3xl mx-auto"
@@ -526,8 +526,8 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl font-bold font-serif mb-6">Begin Exploring the Constitution Now</h2>
-            <p className="text-xl mb-8 text-white/90">
+            <h2 className="text-3xl font-bold font-serif mb-4">Begin Exploring the Constitution Now</h2>
+            <p className="text-xl mb-6 text-white/90">
               Discover the rights, principles, and framework that guide Malta's democracy.
             </p>
             <Link 

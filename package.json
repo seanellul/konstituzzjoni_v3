@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "studio:dev": "cross-env NODE_ENV=development prisma studio",
+    "postinstall": "prisma generate",
     "clean": "rimraf .next"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.14",
+    "cross-env": "^7.0.3",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "^8.4.24",
