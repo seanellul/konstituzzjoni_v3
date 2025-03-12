@@ -6,6 +6,7 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 import PageViewTracker from '@/components/PageViewTracker';
 import PrivacyNotice from '@/components/PrivacyNotice';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -48,6 +49,7 @@ export default function RootLayout({
         </footer>
         <PageViewTracker />
         <PrivacyNotice />
+        <Analytics />
       </body>
     </html>
   );
