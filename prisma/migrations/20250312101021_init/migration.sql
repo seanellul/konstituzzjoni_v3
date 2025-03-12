@@ -1,54 +1,66 @@
 -- CreateTable
 CREATE TABLE "PageView" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "path" TEXT NOT NULL,
-    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "sessionId" TEXT,
-    "referrer" TEXT
+    "referrer" TEXT,
+
+    CONSTRAINT "PageView_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ArticleView" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "chapter" INTEGER NOT NULL,
     "article" INTEGER NOT NULL,
-    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "sessionId" TEXT
+    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "sessionId" TEXT,
+
+    CONSTRAINT "ArticleView_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ChapterView" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "chapter" INTEGER NOT NULL,
-    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "sessionId" TEXT
+    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "sessionId" TEXT,
+
+    CONSTRAINT "ChapterView_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "SearchQuery" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "term" TEXT NOT NULL,
-    "timestamp" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "sessionId" TEXT
+    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "sessionId" TEXT,
+
+    CONSTRAINT "SearchQuery_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "ActiveUser" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "sessionId" TEXT NOT NULL,
-    "lastActive" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "lastActive" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "ActiveUser_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "AnalyticsSummary" (
-    "id" TEXT NOT NULL PRIMARY KEY,
-    "date" DATETIME NOT NULL,
+    "id" TEXT NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
     "totalPageViews" INTEGER NOT NULL DEFAULT 0,
     "totalArticleViews" INTEGER NOT NULL DEFAULT 0,
     "totalChapterViews" INTEGER NOT NULL DEFAULT 0,
     "totalSearches" INTEGER NOT NULL DEFAULT 0,
     "uniqueVisitors" INTEGER NOT NULL DEFAULT 0,
-    "updatedAt" DATETIME NOT NULL
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "AnalyticsSummary_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
