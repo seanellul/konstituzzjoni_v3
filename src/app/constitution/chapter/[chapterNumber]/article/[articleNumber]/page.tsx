@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import { notFound } from 'next/navigation';
 import { Paragraph, Section } from '@/types/constitution';
 import ArticleContent from './ArticleContent';
+import { toRomanNumeral } from '@/lib/utils';
 
 export async function generateStaticParams() {
   const chapters = await getChapters();
@@ -40,8 +41,8 @@ export async function generateMetadata({ params }: { params: { chapterNumber: st
   }
   
   return {
-    title: `Article ${articleNum}: ${article.title} | Constitution of Malta`,
-    description: article.notes || `Article ${articleNum} of the Constitution of Malta: ${article.title}`,
+    title: `Article ${articleNum} - ${article.title} | Constitution of Malta`,
+    description: `Read Article ${articleNum} from Chapter ${toRomanNumeral(chapterNum)} of the Constitution of Malta`,
   };
 }
 
@@ -68,7 +69,7 @@ export default async function ArticlePage({ params }: { params: { chapterNumber:
             href: '/constitution',
           },
           {
-            label: `Chapter ${chapterNum}`,
+            label: `Chapter ${toRomanNumeral(chapterNum)}`,
             href: `/constitution/chapter/${chapterNum}`,
           },
           {

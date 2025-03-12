@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ArticleCard from '@/components/ArticleCard';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { toRomanNumeral } from '@/lib/utils';
 
 export async function generateStaticParams() {
   const chapters = await getChapters();
@@ -28,8 +29,8 @@ export async function generateMetadata({ params }: { params: { chapterNumber: st
   }
   
   return {
-    title: `Chapter ${chapterNum} - ${chapter.title} | Constitution of Malta`,
-    description: `Browse articles in Chapter ${chapterNum} - ${chapter.title} of the Constitution of Malta`,
+    title: `Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} | Constitution of Malta`,
+    description: `Browse articles in Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} of the Constitution of Malta`,
   };
 }
 
@@ -56,7 +57,7 @@ export default async function ChapterPage({ params }: { params: { chapterNumber:
             href: '/constitution',
           },
           {
-            label: `Chapter ${chapterNum} - ${chapter.title}`,
+            label: `Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title}`,
             href: `/constitution/chapter/${chapterNum}`,
             active: true,
           },
@@ -65,7 +66,7 @@ export default async function ChapterPage({ params }: { params: { chapterNumber:
 
       <div className="mb-8">
         <h1 className="text-3xl font-bold font-serif text-primary-DEFAULT mb-2">
-          Chapter {chapterNum} - {chapter.title}
+          Chapter {toRomanNumeral(chapterNum)} - {chapter.title}
         </h1>
         <p className="text-gray-600">
           Browse all articles in this chapter of the Constitution of Malta.
