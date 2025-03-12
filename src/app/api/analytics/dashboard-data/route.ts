@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
+import fs from 'fs';
+import path from 'path';
 
 // Helper function to convert BigInt values to regular numbers
 function convertBigIntsToNumbers(obj: any): any {
@@ -24,6 +26,25 @@ function convertBigIntsToNumbers(obj: any): any {
   }
   
   return obj;
+}
+
+// Helper function to get article title from JSON file
+async function getArticleTitle(chapter: number, article: number): Promise<string | null> {
+  try {
+    const articlesDirectory = path.join(process.cwd(), 'articles');
+    const articlePath = path.join(articlesDirectory, `chapter_${chapter}`, `article_${article}.json`);
+    
+    if (!fs.existsSync(articlePath)) {
+      return null;
+    }
+    
+    const fileContent = fs.readFileSync(articlePath, 'utf8');
+    const articleData = JSON.parse(fileContent);
+    return articleData.title || null;
+  } catch (error) {
+    console.error(`Error fetching title for article ${article} in chapter ${chapter}:`, error);
+    return null;
+  }
 }
 
 export async function GET(request: Request) {
@@ -141,27 +162,41 @@ export async function GET(request: Request) {
     ]);
     
     // Extract unique_visitors value, ensuring it's a regular number
-    const uniqueVisitorsCount = uniqueVisitors[0]?.unique_visitors 
-      ? Number(uniqueVisitors[0].unique_visitors) 
+    const uniqueVisitorsCount = Array.isArray(uniqueVisitors) && uniqueVisitors[0]?.unique_visitors !== undefined
+      ? Number(uniqueVisitors[0].unique_visitors)
       : 0;
     
-    // Prepare dashboard data
-    const dashboardData = {
+    // Convert BigInt values to regular numbers
+    const processedResults = {
       topArticles: convertBigIntsToNumbers(topArticles),
       topChapters: convertBigIntsToNumbers(topChapters),
       topSearches: convertBigIntsToNumbers(topSearches),
       stats: {
-        totalArticleViews: Number(totalArticleViews),
-        totalChapterViews: Number(totalChapterViews),
-        totalPageViews: Number(totalPageViews),
-        totalSearches: Number(totalSearches),
-        activeUserCount: Number(activeUserCount),
-        uniqueVisitors: uniqueVisitorsCount
+        totalArticleViews,
+        totalChapterViews,
+        totalPageViews,
+        totalSearches,
+        activeUserCount,
+        uniqueVisitors: typeof uniqueVisitors === 'number' ? uniqueVisitors : 0
       },
       timeframe
     };
     
-    return NextResponse.json(dashboardData, { status: 200 });
+    // Add article titles to topArticles
+    const topArticlesWithTitles = await Promise.all(
+      processedResults.topArticles.map(async (article: any) => {
+        const title = await getArticleTitle(article.chapter, article.article);
+        return {
+          ...article,
+          title: title || `Article ${article.article}`
+        };
+      })
+    );
+    
+    // Update the processed results with article titles
+    processedResults.topArticles = topArticlesWithTitles;
+    
+    return NextResponse.json(processedResults, { status: 200 });
   } catch (error) {
     console.error('Error fetching dashboard data:', error);
     return NextResponse.json(

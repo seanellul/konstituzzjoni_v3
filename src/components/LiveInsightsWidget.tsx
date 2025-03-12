@@ -9,6 +9,7 @@ interface TopArticle {
   chapter: number;
   article: number;
   views: number;
+  title?: string;
 }
 
 interface TopSearch {
@@ -120,13 +121,17 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
               <ChartBarIcon className="w-4 h-4 mr-2 text-primary-DEFAULT/70 dark:text-primary-400/70" />
               Most Read Today:
             </span>
-            <Link 
-              href={`/constitution/chapter/${topArticle.chapter}/article/${topArticle.article}`}
-              className="text-sm font-medium text-primary-DEFAULT dark:text-primary-400 hover:underline flex items-center"
-            >
-              Article {topArticle.article}
-              <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">({topArticle.views} views)</span>
-            </Link>
+            <div className="flex flex-col items-end">
+              <Link 
+                href={`/constitution/chapter/${topArticle.chapter}/article/${topArticle.article}`}
+                className="text-sm font-medium text-primary-DEFAULT dark:text-primary-400 hover:underline"
+              >
+                Article {topArticle.article}
+              </Link>
+              <div className="text-xs text-gray-500 dark:text-gray-400 max-w-[150px] truncate" title={topArticle.title || ''}>
+                {topArticle.title || ''} <span>({topArticle.views} views)</span>
+              </div>
+            </div>
           </motion.div>
         )}
         

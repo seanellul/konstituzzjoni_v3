@@ -17,6 +17,7 @@ interface TopArticle {
   chapter: number;
   article: number;
   views: number;
+  title: string;
 }
 
 interface TopChapter {
@@ -225,7 +226,7 @@ export default function AnalyticsDashboard() {
                   <thead>
                     <tr className="border-b border-gray-200 dark:border-gray-700">
                       <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Article</th>
-                      <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Chapter</th>
+                      <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Title</th>
                       <th className="py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Views</th>
                     </tr>
                   </thead>
@@ -238,7 +239,7 @@ export default function AnalyticsDashboard() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 + (i * 0.05) }}
                       >
-                        <td className="py-2">
+                        <td className="py-2 whitespace-nowrap">
                           <Link 
                             href={`/constitution/chapter/${article.chapter}/article/${article.article}`}
                             className="text-primary-DEFAULT dark:text-primary-400 hover:underline"
@@ -246,7 +247,15 @@ export default function AnalyticsDashboard() {
                             Article {article.article}
                           </Link>
                         </td>
-                        <td className="py-2 text-gray-600 dark:text-gray-400">Chapter {article.chapter}</td>
+                        <td className="py-2 text-gray-600 dark:text-gray-400 max-w-[200px] truncate">
+                          <Link 
+                            href={`/constitution/chapter/${article.chapter}/article/${article.article}`}
+                            className="hover:underline"
+                            title={article.title || ''}
+                          >
+                            {article.title || ''}
+                          </Link>
+                        </td>
                         <td className="py-2 text-right font-medium dark:text-gray-300">{article.views}</td>
                       </motion.tr>
                     ))}
