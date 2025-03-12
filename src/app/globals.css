@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+@layer components {
+  .article-content {
+    @apply mt-6 mb-6 leading-relaxed font-serif text-lg;
+  }
+  
+  .article-header {
+    @apply mb-8 pb-4 border-b border-gray-200;
+  }
+  
+  .article-title {
+    @apply text-3xl font-bold mb-2 font-serif text-primary;
+  }
+  
+  .chapter-title {
+    @apply text-xl text-gray-600 mb-4;
+  }
+  
+  .paragraph {
+    @apply mb-4;
+  }
+  
+  .section {
+    @apply mb-6;
+  }
+  
+  .section-identifier {
+    @apply font-bold mr-2;
+  }
+  
+  .subsection {
+    @apply pl-6 mb-3;
+  }
+  
+  .subsection-identifier {
+    @apply font-semibold mr-2;
+  }
+  
+  .breadcrumb {
+    @apply flex text-sm text-gray-500 mb-8;
+  }
+  
+  .breadcrumb-item {
+    @apply hover:text-primary transition-colors;
+  }
+  
+  .breadcrumb-separator {
+    @apply mx-2;
+  }
+  
+  .chapter-card {
+    @apply p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-primary;
+  }
+  
+  .article-card {
+    @apply p-4 bg-white rounded-lg shadow-sm hover:shadow transition-shadow mb-4 border-l-2 border-primary-light;
+  }
+  
+  .search-input {
+    @apply w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition-all;
+  }
+  
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-primary-light;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-gray-800 px-4 py-2 rounded-lg hover:bg-secondary-dark transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300;
+  }
+} 

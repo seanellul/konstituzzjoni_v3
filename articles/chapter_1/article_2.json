@@ -1,0 +1,23 @@
+{
+  "number": 2,
+  "title": "Religion",
+  "chapterNumber": 1,
+  "chapterTitle": "The Republic of Malta",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "(1) The religion of Malta is the Roman Catholic Apostolic Religion."
+    },
+    {
+      "paragraph": 2,
+      "text": "(2) The authorities of the Roman Catholic Apostolic Church have the duty and the right to teach which principles are right and which are wrong."
+    },
+    {
+      "paragraph": 3,
+      "text": "(3) Religious teaching of the Roman Catholic Apostolic Faith shall be provided in all State schools as part of compulsory education."
+    }
+  ],
+  "amendmentHistory": null,
+  "crossReferences": [],
+  "notes": "This article establishes the official religion of Malta and its role in education."
+} 

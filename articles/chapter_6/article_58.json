@@ -1,0 +1,52 @@
+{
+  "number": 58,
+  "title": "Disqualification of voters",
+  "chapterNumber": 5,
+  "chapterTitle": "Parliament",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "(1) No person shall be qualified to be registered as a voter for the election of members of the House of Representatives if -"
+    },
+    {
+      "paragraph": 2,
+      "text": "(a) he is interdicted or incapacitated for any mental infirmity by a court in Malta or is otherwise determined in Malta to be of unsound mind;"
+    },
+    {
+      "paragraph": 3,
+      "text": "(b) he is under sentence of death imposed on him by any court in Malta or is serving a sentence of imprisonment (by whatever name called) exceeding twelve months imposed on him by such a court or substituted by competent authority for some other sentence imposed on him by such a court, or is under such a sentence of imprisonment the execution of which has been suspended; or"
+    },
+    {
+      "paragraph": 4,
+      "text": "(c) he is disqualified for registration as a voter by or under any law for the time being in force in Malta by reason of his having been convicted of any offence connected with the election of members of the House of Representatives."
+    },
+    {
+      "paragraph": 5,
+      "text": "(2) For the purposes of paragraph (b) of sub-article (1) of this article -"
+    },
+    {
+      "paragraph": 6,
+      "text": "(a) two or more sentences that are required to be served consecutively shall be regarded as separate sentences if none of them exceeds twelve months, but if any one of them exceeds twelve months they shall be regarded as one sentence; and"
+    },
+    {
+      "paragraph": 7,
+      "text": "(b) no account shall be taken of a sentence of imprisonment imposed as an alternative to or in default of the payment of a fine."
+    },
+    {
+      "paragraph": 8,
+      "text": "(3) A person shall not be treated as having the qualifications mentioned in article 57 of this Constitution unless, on the prescribed date, and, on such date or dates as, pursuant to the provisions of any law for the time being in force in Malta, are the qualifying dates for inclusion in the electoral register, he possesses, and at all times during the preceding six months he has possessed, those qualifications."
+    },
+    {
+      "paragraph": 9,
+      "text": "(4) Notwithstanding the provisions of sub-articles (1), (2) and (3) of this article, a person who, by reason of service outside Malta in the public service or as, or as a member of, a disciplined force is not by virtue of his residence of the required duration entitled to be registered as a voter for the election of members of the House of Representatives, shall where upon application made by him in that behalf to the Electoral Commission, that Commission is satisfied that in all other respects he is entitled to be so registered, be entitled to be registered for that purpose in the electoral division in which he would have been entitled to vote had his continuous period of residence in Malta not been interrupted by such service outside Malta."
+    }
+  ],
+  "amendmentHistory": null,
+  "crossReferences": [
+    {
+      "article": 57,
+      "description": "Reference to qualification of voters"
+    }
+  ],
+  "notes": "This article establishes the circumstances under which a person is disqualified from being registered as a voter for elections to the House of Representatives, including mental incapacity, imprisonment, and electoral offenses, with special provisions for persons serving outside Malta in public service or disciplined forces."
+} 

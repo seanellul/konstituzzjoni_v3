@@ -1,0 +1,60 @@
+{
+  "number": 55,
+  "title": "Electoral Commission",
+  "chapterNumber": 5,
+  "chapterTitle": "Parliament",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "(1) There shall be an Electoral Commission for Malta."
+    },
+    {
+      "paragraph": 2,
+      "text": "(2) The Electoral Commission shall consist of a Chairman, who shall be the person for the time being holding the office of Chief Electoral Commissioner, and such number of members not being less than four as may be prescribed by the Electoral (Polling) Ordinance."
+    },
+    {
+      "paragraph": 3,
+      "text": "(3) The members of the Electoral Commission shall be appointed by the President, acting in accordance with the advice of the Prime Minister, given after he has consulted the Leader of the Opposition."
+    },
+    {
+      "paragraph": 4,
+      "text": "(4) A person shall not be qualified to hold office as a member of the Electoral Commission if he is a Minister, a Parliamentary Secretary, a member of, or a candidate for election to, the House of Representatives or a public officer."
+    },
+    {
+      "paragraph": 5,
+      "text": "(5) Subject to the provisions of this article, a member of the Electoral Commission shall vacate his office -"
+    },
+    {
+      "paragraph": 6,
+      "text": "(a) at the expiration of three years from the date of his appointment; or"
+    },
+    {
+      "paragraph": 7,
+      "text": "(b) if any circumstances arise that, if he were not a member of the Commission, would cause him to be disqualified for appointment as such."
+    },
+    {
+      "paragraph": 8,
+      "text": "(6) Subject to the provisions of sub-article (7) of this article, the Electoral Commission may act notwithstanding any vacancy in its membership or the absence of any member and the presence or participation of any person not entitled to be present at or to participate in its proceedings shall not invalidate those proceedings."
+    },
+    {
+      "paragraph": 9,
+      "text": "(7) Any decision of the Electoral Commission shall require the support of a majority of all the members thereof; and in the exercise of its functions under article 56(4) of this Constitution, the Commission shall act unanimously."
+    },
+    {
+      "paragraph": 10,
+      "text": "(8) Subject to the provisions of sub-article (7) of this article, the Electoral Commission may regulate its own procedure."
+    },
+    {
+      "paragraph": 11,
+      "text": "(9) In the exercise of its functions under this Constitution the Electoral Commission shall not be subject to the direction or control of any other person or authority."
+    }
+  ],
+  "amendmentHistory": null,
+  "crossReferences": [
+    {
+      "article": 56,
+      "description": "Reference to Electoral Commission's role in determining electoral divisions"
+    }
+  ],
+  "notes": "This article establishes the Electoral Commission for Malta, including its composition, appointment of members, term limits, voting requirements, and independence in the exercise of its functions."
+} 

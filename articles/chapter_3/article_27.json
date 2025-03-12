@@ -1,0 +1,27 @@
+{
+  "number": 27,
+  "title": "Commonwealth citizens",
+  "chapterNumber": 3,
+  "chapterTitle": "Citizenship",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "(1) Every person who under this Constitution or any Act of Parliament is a citizen of Malta or under any enactment for the time being in force in any country to which this article applies is a citizen of that country shall, by virtue of that citizenship, have the status of a Commonwealth citizen."
+    },
+    {
+      "paragraph": 2,
+      "text": "(2) Every person who is a British subject without citizenship under the British Nationality Act, 1948, or who continues to be a British subject under section 2 of that Act shall, by virtue of that status, have the status of a Commonwealth citizen."
+    },
+    {
+      "paragraph": 3,
+      "text": "(3) The countries to which this article applies are the United Kingdom and Colonies, Canada, Australia, New Zealand, India, Pakistan, Ceylon, Ghana, Malaysia, Nigeria, Cyprus, Sierra Leone, Tanzania, Jamaica, Trinidad and Tobago, Uganda, Kenya, Malawi, Malta, Zambia, The Gambia, Singapore, Guyana, Botswana, Lesotho, Barbados, Swaziland, Mauritius, Zimbabwe, and such other countries as may be prescribed by Parliament."
+    }
+  ],
+  "amendmentHistory": {
+    "date": "1989-08-01",
+    "description": "Updated list of Commonwealth countries",
+    "legalReference": "Act XXIII of 1989"
+  },
+  "crossReferences": [],
+  "notes": "This article establishes the status of Commonwealth citizens in Malta."
+} 

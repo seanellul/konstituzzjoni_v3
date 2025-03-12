@@ -1,0 +1,56 @@
+{
+  "number": 56,
+  "title": "Electoral divisions",
+  "chapterNumber": 5,
+  "chapterTitle": "Parliament",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "(1) The members of the House of Representatives shall be elected upon the principle of proportional representation by means of the single transferable vote from such number of electoral divisions, being an odd number and not less than nine and not more than fifteen, as Parliament shall from time to time determine. Such number of members shall be elected from each electoral division, being not less than five and not more than seven, as Parliament shall determine."
+    },
+    {
+      "paragraph": 2,
+      "text": "(2) The boundaries of the electoral divisions shall be such that the number of inhabitants entitled to vote for members of the House of Representatives in each electoral division is as nearly equal to the population quota as is reasonably practicable:"
+    },
+    {
+      "paragraph": 3,
+      "text": "Provided that such boundaries shall be drawn so that the difference between the number of inhabitants entitled to vote in each electoral division and the population quota shall not exceed five per centum more or five per centum less, in the case of not more than one electoral division, and shall not exceed one per centum more or one per centum less in the case of the other electoral divisions."
+    },
+    {
+      "paragraph": 4,
+      "text": "(3) For the purposes of sub-article (2) of this article, \"population quota\" means the number obtained by dividing the number of inhabitants entitled to vote for members of the House of Representatives by the number of electoral divisions."
+    },
+    {
+      "paragraph": 5,
+      "text": "(4) The Electoral Commission shall review the boundaries of the electoral divisions at intervals of not less than two nor more than five years and may, in accordance with the provisions of this article, alter such boundaries as it may deem desirable:"
+    },
+    {
+      "paragraph": 6,
+      "text": "Provided that where, in accordance with sub-article (3) of article 66 of this Constitution or in accordance with the said article 66 as read with sub-article (6) of article 76 of this Constitution, an alteration of the boundaries of electoral divisions is required to be effected, the Electoral Commission shall forthwith carry out a review and shall make such alterations in the said boundaries as are required to be made, and no provision of any law shall be construed as restricting or precluding the Electoral Commission from carrying out such review and making such alterations without awaiting either the expiration of any time limit for review which may be provided for in this article, or the coming into force of any law, including an Act approving an electoral register, which may be required to be made or which may be in the process of being made or may be due to be made."
+    },
+    {
+      "paragraph": 7,
+      "text": "(5) The review of the boundaries of electoral divisions and the alterations thereto shall be made in accordance with such rules as are contained in Schedule 2 to this Constitution; and in the application and working of such rules, the fact that the number of persons shown in the last census may not precisely correspond with the number of inhabitants entitled to vote for members of the House of Representatives, shall be disregarded."
+    },
+    {
+      "paragraph": 8,
+      "text": "(6) The conduct of elections for membership of the House of Representatives and the division of members among electoral divisions shall be subject to such provisions as may be prescribed by or under any law for the time being in force in Malta."
+    }
+  ],
+  "amendmentHistory": null,
+  "crossReferences": [
+    {
+      "article": 66,
+      "description": "Reference to dissolution of Parliament"
+    },
+    {
+      "article": 76,
+      "description": "Reference to exercise of executive authority"
+    },
+    {
+      "article": "Schedule 2",
+      "description": "Reference to rules for review of electoral division boundaries"
+    }
+  ],
+  "notes": "This article establishes the principles for creating electoral divisions for the House of Representatives, including the number of divisions, their boundaries, the requirement for equal population distribution, and the Electoral Commission's responsibility to review and adjust boundaries periodically."
+} 

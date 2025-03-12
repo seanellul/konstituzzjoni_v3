@@ -1,0 +1,30 @@
+{
+  "number": 6,
+  "title": "Constitution to be supreme law",
+  "chapterNumber": 1,
+  "chapterTitle": "The Republic of Malta",
+  "content": [
+    {
+      "paragraph": 1,
+      "text": "Subject to the provisions of sub-articles (7) and (9) of article 47 and of article 66 of this Constitution, if any other law is inconsistent with this Constitution, this Constitution shall prevail and the other law shall, to the extent of the inconsistency, be void."
+    }
+  ],
+  "amendmentHistory": {
+    "date": "1996-07-26",
+    "description": "Amendment regarding the provisions of article 47 and 66",
+    "legalReference": "Act XI of 1996"
+  },
+  "crossReferences": [
+    {
+      "articleNumber": 47,
+      "chapterNumber": 4,
+      "description": "Reference to provisions regarding freedom of expression"
+    },
+    {
+      "articleNumber": 66,
+      "chapterNumber": 6,
+      "description": "Reference to provisions regarding parliamentary procedure"
+    }
+  ],
+  "notes": "This article establishes the supremacy of the Constitution over other laws in Malta."
+} 

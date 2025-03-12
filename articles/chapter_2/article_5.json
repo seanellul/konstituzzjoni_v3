@@ -1,0 +1,37 @@
+{
+  "number": 5,
+  "chapterNumber": 2,
+  "chapterTitle": "Declaration of Principles",
+  "title": "Right to Life",
+  "content": [
+    "Every person in Malta has a fundamental right to life, liberty, security of the person, the enjoyment of property and the protection of the law."
+  ],
+  "sections": [
+    {
+      "identifier": "1",
+      "content": [
+        "No person shall be deprived of his life intentionally save in execution of the sentence of a court in respect of a criminal offence under the law of Malta of which he has been convicted."
+      ],
+      "subsections": [
+        {
+          "identifier": "a",
+          "content": [
+            "A person shall not be regarded as having been deprived of his life in contravention of this article if he dies as the result of the use of force which is no more than absolutely necessary in defence of any person from unlawful violence."
+          ]
+        },
+        {
+          "identifier": "b",
+          "content": [
+            "A person shall not be regarded as having been deprived of his life in contravention of this article if he dies as the result of the use of force which is no more than absolutely necessary in order to effect a lawful arrest or to prevent the escape of a person lawfully detained."
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": ["human rights", "right to life", "fundamental rights", "criminal law"],
+  "amendmentHistory": {
+    "date": "2000-02-15",
+    "description": "Amendment abolishing death penalty",
+    "legalReference": "Act No. III of 2000"
+  }
+} 

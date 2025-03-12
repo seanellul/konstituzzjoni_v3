@@ -1,0 +1,33 @@
+{
+  "name": "konstituzzjoni-mt",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "clean": "rimraf .next"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "framer-motion": "latest",
+    "next": "latest",
+    "next-auth": "latest",
+    "next-seo": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.14",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "postcss": "^8.4.24",
+    "rimraf": "^5.0.10",
+    "typescript": "latest"
+  }
+}
