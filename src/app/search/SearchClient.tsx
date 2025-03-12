@@ -84,7 +84,7 @@ export default function SearchClient({ query, results }: SearchClientProps) {
 
       {query && (
         <div className="mb-4">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             {results.length === 0
               ? 'No results found'
               : `Found ${results.length} result${results.length === 1 ? '' : 's'} for "${query}"`}
@@ -98,17 +98,17 @@ export default function SearchClient({ query, results }: SearchClientProps) {
             <ArticleCard key={article.number} article={article} />
           ))
         ) : query ? (
-          <div className="bg-gray-50 p-6 rounded-lg text-center">
-            <p className="text-gray-600 mb-4">No articles found matching your search.</p>
-            <p className="text-gray-500 mb-6">Try using different keywords or browse all chapters.</p>
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">No articles found matching your search.</p>
+            <p className="text-gray-500 dark:text-gray-500 mb-6">Try using different keywords or browse all chapters.</p>
             <Link href="/constitution" className="btn-primary">
               Browse All Chapters
             </Link>
           </div>
         ) : (
-          <div className="bg-gray-50 p-6 rounded-lg text-center">
-            <p className="text-gray-600 mb-4">Enter a search term to find articles in the Constitution of Malta.</p>
-            <p className="text-gray-500 mb-6">You can search by article title, content, or keywords.</p>
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg text-center">
+            <p className="text-gray-600 dark:text-gray-400 mb-4">Enter a search term to find articles in the Constitution of Malta.</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-6">You can search by article title, content, or keywords.</p>
             <Link href="/constitution" className="btn-primary">
               Browse All Chapters
             </Link>
