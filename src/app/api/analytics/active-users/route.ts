@@ -23,6 +23,19 @@ export async function GET() {
       );
     }
 
+    // Check if database is available
+    try {
+      // Test database connection with a simple query
+      await prisma.$queryRaw`SELECT 1`;
+    } catch (dbError) {
+      console.error('Database connection error:', dbError);
+      // Return a fallback count if database is unavailable
+      return NextResponse.json(
+        { count: cachedCount || 1, cached: false, fallback: true },
+        { status: 200 }
+      );
+    }
+
     // Calculate a timestamp from 5 minutes ago
     const fiveMinutesAgo = new Date();
     fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
@@ -61,9 +74,10 @@ export async function GET() {
       );
     }
     
+    // If no cached data, return a fallback count
     return NextResponse.json(
-      { error: 'Failed to fetch active user count', count: 0 },
-      { status: 500 }
+      { count: 1, fallback: true, error: 'Using fallback data due to error' },
+      { status: 200 }
     );
   }
 } 
