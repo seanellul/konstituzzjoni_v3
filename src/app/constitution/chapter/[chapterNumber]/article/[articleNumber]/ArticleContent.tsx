@@ -3,15 +3,26 @@
 import { motion } from 'framer-motion';
 import { AmendmentHistory, CrossReference, Paragraph, Section, Article } from '@/types/constitution';
 import { toRomanNumeral } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import { trackArticleView } from '@/lib/analytics';
 
 interface ArticleContentProps {
   article: Article;
+  chapterNum: number;
+  articleNum: number;
 }
 
-export default function ArticleContent({ article }: ArticleContentProps) {
+export default function ArticleContent({ article, chapterNum, articleNum }: ArticleContentProps) {
   const [hoveredParagraph, setHoveredParagraph] = useState<number | null>(null);
   
+  useEffect(() => {
+    // Track article view when the component mounts
+    if (chapterNum && articleNum) {
+      trackArticleView(chapterNum, articleNum);
+    }
+  }, [chapterNum, articleNum]);
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -103,8 +114,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     
     if (level === 0) {
       bgColor = isHovered ? 'bg-primary-700' : 'bg-primary-50';
-      // Use the primary red accent color for numbers on hover (not white)
-      textColor = isHovered ? 'text-red-700' : 'text-primary-DEFAULT';
+      textColor = isHovered ? 'text-primary-DEFAULT' : 'text-primary-DEFAULT';
       borderColor = 'border-primary-200';
       shadow = isHovered ? 'shadow-md' : 'shadow-sm';
     } else if (level === 1) {
@@ -122,30 +132,86 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     return { bgColor, textColor, borderColor, shadow };
   };
 
+  const renderAmendmentHistory = (amendmentHistory: AmendmentHistory) => {
+    if (!amendmentHistory) return null;
+
+    return (
+      <motion.div 
+        className="mt-8 p-4 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300 hover:bg-gray-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+      >
+        <h3 className="font-bold text-lg mb-3 text-primary">Amendment History</h3>
+        <p className="mb-2">{amendmentHistory.date} - {amendmentHistory.description}</p>
+        <p className="text-sm text-gray-500">Legal Reference: {amendmentHistory.legalReference}</p>
+      </motion.div>
+    );
+  };
+
+  const renderCrossReferences = (references: CrossReference[]) => {
+    if (!references || references.length === 0) return null;
+
+    return (
+      <motion.div 
+        className="mt-8 p-4 bg-blue-50 rounded-lg border border-blue-100 hover:shadow-md transition-shadow duration-300 hover:bg-blue-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+      >
+        <h3 className="font-bold text-lg mb-3 text-blue-800">Related Articles</h3>
+        <ul className="space-y-2">
+          {references.map((ref, index) => (
+            <li key={index} className="hover:translate-x-1 transition-transform">
+              <a 
+                href={`/constitution/chapter/${ref.chapterNumber}/article/${ref.articleNumber}`}
+                className="text-blue-600 hover:underline flex items-center"
+              >
+                <svg className="w-4 h-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clipRule="evenodd" />
+                </svg>
+                <span>Article {ref.articleNumber} (Chapter {ref.chapterNumber})</span>
+              </a>
+              <p className="text-sm text-gray-600 ml-5">{ref.description}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    );
+  };
+
   return (
     <>
-      <motion.div 
-        className="article-header mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h1 className="article-title text-3xl font-bold font-serif text-primary-DEFAULT mb-2">
-          Article {article.number}: {article.title}
-        </h1>
-        <h2 className="chapter-title text-xl text-gray-700">
-          Chapter {toRomanNumeral(article.chapterNumber)} - {article.chapterTitle}
-        </h2>
-      </motion.div>
+      <Breadcrumbs
+        items={[
+          { href: "/constitution", label: "Constitution" },
+          { href: `/constitution/chapter/${chapterNum}`, label: `Chapter ${toRomanNumeral(chapterNum)}` },
+          { href: "", label: `Article ${articleNum}`, active: true },
+        ]}
+      />
 
-      <motion.div 
-        className="article-content bg-white p-6 rounded-lg shadow-sm border border-gray-100"
-        variants={containerVariants}
+      <motion.article 
+        className="mt-6"
         initial="hidden"
         animate="visible"
+        variants={containerVariants}
       >
+        <motion.h1 
+          className="text-3xl font-bold font-serif mb-2 text-gray-900"
+          variants={itemVariants}
+        >
+          Article {article.number}{article.title && `: ${article.title}`}
+        </motion.h1>
+
+        <motion.div 
+          className="text-sm text-gray-500 mb-8"
+          variants={itemVariants}
+        >
+          Chapter {toRomanNumeral(article.chapterNumber)} - {article.chapterTitle}
+        </motion.div>
+        
         {article.content && Array.isArray(article.content) && (
-          <div className="space-y-4">
+          <div className="space-y-4 prose-lg max-w-none">
             {article.content.map((paragraph, index) => {
               const paragraphText = typeof paragraph === 'string' ? paragraph : paragraph.text;
               const paragraphNum = typeof paragraph === 'string' ? index + 1 : paragraph.paragraph;
@@ -205,13 +271,13 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                     <div 
                       className={`absolute left-0 top-0 h-full w-1 rounded-l ${
                         hoveredParagraph === paragraphNum 
-                          ? 'bg-primary-DEFAULT' 
+                          ? 'bg-primary' 
                           : level === 1 ? 'bg-gray-300' : 'bg-gray-400'
                       }`} 
                     />
                   )}
-
-                  <div className="flex items-center pl-3">
+                  
+                  <div className="flex items-start pl-3">
                     {identifier && (
                       <motion.div 
                         className={`mr-4 flex-shrink-0 ${badgeShape} ${badgeSize} ${bgColor} ${textColor} ${borderColor} border transition-all duration-200 ${shadow} flex items-center justify-center self-start mt-0.5`}
@@ -233,46 +299,22 @@ export default function ArticleContent({ article }: ArticleContentProps) {
             })}
           </div>
         )}
-      </motion.div>
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {article.amendmentHistory && (
+        {article.amendmentHistory && renderAmendmentHistory(article.amendmentHistory)}
+        {article.crossReferences && renderCrossReferences(article.crossReferences)}
+        
+        {article.notes && (
           <motion.div 
-            className="p-6 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300 hover:bg-gray-100"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <h3 className="font-bold text-lg mb-3 text-primary-DEFAULT">Amendment History</h3>
-            <p className="mb-2">{article.amendmentHistory.date} - {article.amendmentHistory.description}</p>
-            <p className="text-sm text-gray-500">Legal Reference: {article.amendmentHistory.legalReference}</p>
-          </motion.div>
-        )}
-
-        {article.crossReferences && article.crossReferences.length > 0 && (
-          <motion.div 
-            className="p-6 bg-gray-50 rounded-lg border border-gray-200 hover:shadow-md transition-shadow duration-300 hover:bg-gray-100"
+            className="mt-8 p-4 bg-yellow-50 rounded-lg border border-yellow-100 hover:shadow-md transition-shadow duration-300 hover:bg-yellow-100"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
           >
-            <h3 className="font-bold text-lg mb-3 text-primary-DEFAULT">Related Articles</h3>
-            <ul className="space-y-2">
-              {article.crossReferences.map((ref, index) => (
-                <li key={index} className="hover:translate-x-1 transition-transform">
-                  <a 
-                    href={`/constitution/chapter/${ref.chapterNumber}/article/${ref.articleNumber}`}
-                    className="text-primary-DEFAULT hover:underline flex items-center"
-                  >
-                    <span className="mr-2">→</span>
-                    <span>Article {ref.articleNumber} - {ref.description}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <h3 className="font-bold text-lg mb-3 text-yellow-800">Notes</h3>
+            <p className="text-gray-800">{article.notes}</p>
           </motion.div>
         )}
-      </div>
+      </motion.article>
     </>
   );
 } 

@@ -65,11 +65,11 @@ body {
   }
   
   .chapter-card {
-    @apply p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border-l-4 border-primary;
+    @apply p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border-l-4 border-primary h-full block;
   }
   
   .article-card {
-    @apply p-4 bg-white rounded-lg shadow-sm hover:shadow transition-shadow mb-4 border-l-2 border-primary-light;
+    @apply p-4 bg-white rounded-lg shadow-sm hover:shadow transition-all duration-300 mb-4 border-l-2 border-primary-light;
   }
   
   .search-input {

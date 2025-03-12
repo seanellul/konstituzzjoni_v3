@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { DocumentTextIcon, MagnifyingGlassIcon, BookOpenIcon, ChartBarIcon } from '@heroicons/react/24/outline';
+import LiveInsightsWidget from '@/components/LiveInsightsWidget';
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
@@ -363,7 +364,7 @@ export default function Home() {
 
               {/* Chapter VI Document - Parliament */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-5 top- -right-20 z-20"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-5 top- -right-0 z-30"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.6 : 0,
                   rotate: scrollY > 200 ? rotateValue * -1.7 + 5 : 5,
@@ -415,7 +416,7 @@ export default function Home() {
 
               {/* Chapter X Document (Finance) */}
               <motion.div 
-                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-6 bottom-20 right-0 z-0"
+                className="absolute w-full max-w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 rotate-6 top-60 right-0 z-0"
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.3 : 0,
                   rotate: scrollY > 200 ? rotateValue * -1.3 + 6 : 6,
@@ -455,6 +456,12 @@ export default function Home() {
               <p className="text-lg text-gray-600 mb-8">
                 Discover the structure, principles and articles that form the foundation of Malta's democracy through a modern, user-friendly interface.
               </p>
+              
+              {/* Live Analytics Widget */}
+              <div className="mb-8">
+                <LiveInsightsWidget />
+              </div>
+              
               <Link 
                 href="/about" 
                 className="text-primary-DEFAULT font-medium hover:underline flex items-center gap-2 group"

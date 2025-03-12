@@ -1,86 +1,62 @@
+// Server Component (default)
 import { getArticle, getChapterArticles, getChapters } from '@/lib/constitution';
-import Breadcrumbs from '@/components/Breadcrumbs';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Paragraph, Section } from '@/types/constitution';
 import ArticleContent from './ArticleContent';
 import { toRomanNumeral } from '@/lib/utils';
+import { Article } from '@/types/constitution';
 
 export async function generateStaticParams() {
   const chapters = await getChapters();
-  const paths = [];
-  
+  const params = [];
+
   for (const chapter of chapters) {
     const articles = await getChapterArticles(chapter.number);
-    
     for (const article of articles) {
-      paths.push({
+      params.push({
         chapterNumber: chapter.number.toString(),
         articleNumber: article.number.toString(),
       });
     }
   }
-  
-  return paths;
+
+  return params;
 }
 
-export async function generateMetadata({ params }: { params: { chapterNumber: string, articleNumber: string } }) {
-  const resolvedParams = await params;
-  const chapterNumber = resolvedParams.chapterNumber;
-  const articleNumber = resolvedParams.articleNumber;
-  const chapterNum = parseInt(chapterNumber);
-  const articleNum = parseInt(articleNumber);
-  
+export async function generateMetadata({
+  params,
+}: {
+  params: { chapterNumber: string; articleNumber: string };
+}): Promise<Metadata> {
+  params = await params;
+  const chapterNum = parseInt(params.chapterNumber, 10);
+  const articleNum = parseInt(params.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);
-  
+
   if (!article) {
     return {
-      title: 'Article Not Found',
-      description: 'The requested article could not be found',
+      title: 'Article Not Found | Constitution of Malta',
+      description: 'The requested article could not be found in the Constitution of Malta',
     };
   }
-  
+
   return {
     title: `Article ${articleNum} - ${article.title} | Constitution of Malta`,
     description: `Read Article ${articleNum} from Chapter ${toRomanNumeral(chapterNum)} of the Constitution of Malta`,
   };
 }
 
-export default async function ArticlePage({ params }: { params: { chapterNumber: string, articleNumber: string } }) {
-  const resolvedParams = await params;
-  const chapterNumber = resolvedParams.chapterNumber;
-  const articleNumber = resolvedParams.articleNumber;
-  const chapterNum = parseInt(chapterNumber);
-  const articleNum = parseInt(articleNumber);
-  
+export default async function ArticlePage({ params }: { params: { chapterNumber: string; articleNumber: string } }) {
+  params = await params;
+  const chapterNum = parseInt(params.chapterNumber, 10);
+  const articleNum = parseInt(params.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);
-  
+
   if (!article) {
     notFound();
   }
 
   return (
-    <>
-      <Breadcrumbs
-        items={[
-          {
-            label: 'Constitution',
-            href: '/constitution',
-          },
-          {
-            label: `Chapter ${toRomanNumeral(chapterNum)}`,
-            href: `/constitution/chapter/${chapterNum}`,
-          },
-          {
-            label: `Article ${articleNum}`,
-            href: `/constitution/chapter/${chapterNum}/article/${articleNum}`,
-            active: true,
-          },
-        ]}
-      />
-
-      <ArticleContent 
-        article={article} 
-      />
-    </>
+    <ArticleContent article={article} chapterNum={chapterNum} articleNum={articleNum} />
   );
 } 

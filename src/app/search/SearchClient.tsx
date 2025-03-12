@@ -1,0 +1,96 @@
+'use client';
+
+import { useEffect } from 'react';
+import { trackSearch } from '@/lib/analytics';
+import ArticleCard from '@/components/ArticleCard';
+import Link from 'next/link';
+import { Article } from '@/types/constitution';
+import { useRouter } from 'next/navigation';
+
+interface SearchClientProps {
+  query: string;
+  results: Article[];
+}
+
+export default function SearchClient({ query, results }: SearchClientProps) {
+  const router = useRouter();
+
+  useEffect(() => {
+    // Track the search query when the component mounts
+    console.log('SearchClient mounted with query:', query);
+    if (query) {
+      console.log('About to track search for term:', query);
+      try {
+        trackSearch(query);
+        console.log('Successfully called trackSearch for:', query);
+      } catch (error) {
+        console.error('Error tracking search:', error);
+      }
+    } else {
+      console.log('No query to track');
+    }
+  }, [query]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const searchQuery = formData.get('q') as string;
+    if (searchQuery) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
+  return (
+    <>
+      <form onSubmit={handleSubmit} className="mb-8">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            name="q"
+            defaultValue={query}
+            placeholder="Search for articles, rights, principles..."
+            className="search-input flex-grow"
+            aria-label="Search query"
+          />
+          <button type="submit" className="btn-primary">
+            Search
+          </button>
+        </div>
+      </form>
+
+      {query && (
+        <div className="mb-4">
+          <p className="text-gray-600">
+            {results.length === 0
+              ? 'No results found'
+              : `Found ${results.length} result${results.length === 1 ? '' : 's'} for "${query}"`}
+          </p>
+        </div>
+      )}
+
+      <div className="space-y-4">
+        {results.length > 0 ? (
+          results.map((article) => (
+            <ArticleCard key={article.number} article={article} />
+          ))
+        ) : query ? (
+          <div className="bg-gray-50 p-6 rounded-lg text-center">
+            <p className="text-gray-600 mb-4">No articles found matching your search.</p>
+            <p className="text-gray-500 mb-6">Try using different keywords or browse all chapters.</p>
+            <Link href="/constitution" className="btn-primary">
+              Browse All Chapters
+            </Link>
+          </div>
+        ) : (
+          <div className="bg-gray-50 p-6 rounded-lg text-center">
+            <p className="text-gray-600 mb-4">Enter a search term to find articles in the Constitution of Malta.</p>
+            <p className="text-gray-500 mb-6">You can search by article title, content, or keywords.</p>
+            <Link href="/constitution" className="btn-primary">
+              Browse All Chapters
+            </Link>
+          </div>
+        )}
+      </div>
+    </>
+  );
+} 

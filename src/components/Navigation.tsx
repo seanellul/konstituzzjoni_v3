@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import ActiveUsersCounter from './ActiveUsersCounter';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -25,47 +26,64 @@ const Navigation = () => {
               </span>
             </Link>
           </div>
-          <div className="flex space-x-6 md:space-x-10">
-            <Link
-              href="/"
-              className={`${
-                pathname === '/'
-                  ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
-                  : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
-              } pb-1 font-medium transition-all duration-200`}
-            >
-              Home
-            </Link>
-            <Link
-              href="/constitution"
-              className={`${
-                pathname?.startsWith('/constitution')
-                  ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
-                  : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
-              } pb-1 font-medium transition-all duration-200`}
-            >
-              Constitution
-            </Link>
-            <Link
-              href="/search"
-              className={`${
-                pathname?.startsWith('/search')
-                  ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
-                  : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
-              } pb-1 font-medium transition-all duration-200`}
-            >
-              Search
-            </Link>
-            <Link
-              href="/about"
-              className={`${
-                pathname?.startsWith('/about')
-                  ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
-                  : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
-              } pb-1 font-medium transition-all duration-200`}
-            >
-              About
-            </Link>
+          <div className="flex items-center">
+            <div className="flex space-x-6 md:space-x-10 mr-6">
+              <Link
+                href="/"
+                className={`${
+                  pathname === '/'
+                    ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
+                    : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
+                } pb-1 font-medium transition-all duration-200`}
+              >
+                Home
+              </Link>
+              <Link
+                href="/constitution"
+                className={`${
+                  pathname?.startsWith('/constitution')
+                    ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
+                    : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
+                } pb-1 font-medium transition-all duration-200`}
+              >
+                Constitution
+              </Link>
+              <Link
+                href="/search"
+                className={`${
+                  pathname?.startsWith('/search')
+                    ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
+                    : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
+                } pb-1 font-medium transition-all duration-200`}
+              >
+                Search
+              </Link>
+              <Link
+                href="/analytics"
+                className={`${
+                  pathname?.startsWith('/analytics')
+                    ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
+                    : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
+                } pb-1 font-medium transition-all duration-200`}
+              >
+                Analytics
+              </Link>
+              <Link
+                href="/about"
+                className={`${
+                  pathname?.startsWith('/about')
+                    ? 'text-primary-DEFAULT border-b-2 border-primary-DEFAULT font-semibold'
+                    : 'text-gray-700 hover:text-primary-DEFAULT hover:border-b-2 hover:border-primary-200'
+                } pb-1 font-medium transition-all duration-200`}
+              >
+                About
+              </Link>
+            </div>
+            <div className="border-l border-gray-200 pl-4 py-1 ml-2">
+              <div className="bg-gray-50 shadow-sm rounded-full">
+                <ActiveUsersCounter />
+              </div>
+            </div>
           </div>
         </div>
       </div>

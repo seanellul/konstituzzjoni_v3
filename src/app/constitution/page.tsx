@@ -3,6 +3,7 @@ import { getChapters } from '@/lib/constitution';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Chapter } from '@/types/constitution';
 import { toRomanNumeral } from '@/lib/utils';
+import ConstitutionContent from './ConstitutionContent';
 
 export const metadata = {
   title: 'Constitution of Malta - Chapters',
@@ -31,28 +32,7 @@ export default async function ConstitutionPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {chapters.map((chapter: Chapter) => (
-          <Link 
-            href={`/constitution/chapter/${chapter.number}`}
-            key={chapter.number}
-            className="chapter-card group"
-          >
-            <h2 className="text-2xl font-bold font-serif text-primary-DEFAULT group-hover:text-primary-dark transition-colors">
-              Chapter {toRomanNumeral(chapter.number)}
-            </h2>
-            <h3 className="text-xl text-gray-700 mb-4">{chapter.title}</h3>
-            <div className="flex justify-between items-center">
-              <span className="text-gray-500">
-                {chapter.articles?.length || 0} Articles
-              </span>
-              <span className="text-primary-DEFAULT group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <ConstitutionContent chapters={chapters} />
     </>
   );
 } 
