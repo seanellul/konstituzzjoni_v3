@@ -229,6 +229,8 @@ export function trackActiveUser() {
     console.error('Failed to track active user:', error);
   }
   
-  // Re-ping every 2 minutes to maintain active status
-  setTimeout(trackActiveUser, 2 * 60 * 1000);
+  // Increase re-ping interval from 2 minutes to 3 minutes
+  // The active-users endpoint counts users active in the last 5 minutes,
+  // so pinging every 3 minutes is still within that window
+  setTimeout(trackActiveUser, 3 * 60 * 1000);
 } 

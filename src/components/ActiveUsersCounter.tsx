@@ -3,40 +3,36 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserGroupIcon } from '@heroicons/react/24/outline';
+import { useActiveUsersStore } from '@/lib/activeUsersStore';
 
 export default function ActiveUsersCounter() {
-  const [activeUsers, setActiveUsers] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const prevCount = useRef<number>(0);
   const [pulsing, setPulsing] = useState<boolean>(false);
+  
+  // Use the shared store for active users count
+  const { count: activeUsers, fetch } = useActiveUsersStore();
 
   useEffect(() => {
-    const fetchActiveUsers = async () => {
-      try {
-        const response = await fetch('/api/analytics/active-users');
-        const data = await response.json();
-        const newCount = data.count || 0;
-        
-        if (!loading && prevCount.current !== newCount) {
-          setPulsing(true);
-          setTimeout(() => setPulsing(false), 1000);
-        }
-        
-        setActiveUsers(newCount);
-        prevCount.current = newCount;
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching active users:', error);
-        setLoading(false);
-      }
+    // Initial fetch
+    const fetchData = async () => {
+      await fetch();
+      setLoading(false);
     };
-
-    fetchActiveUsers();
     
-    // Refresh data every 30 seconds
-    const interval = setInterval(fetchActiveUsers, 30 * 1000);
-    return () => clearInterval(interval);
-  }, [loading]);
+    fetchData();
+    
+    // No need for interval here since it's handled by the store
+  }, [fetch]);
+  
+  // Handle count changes for animation
+  useEffect(() => {
+    if (!loading && prevCount.current !== activeUsers) {
+      setPulsing(true);
+      setTimeout(() => setPulsing(false), 1000);
+      prevCount.current = activeUsers;
+    }
+  }, [activeUsers, loading]);
 
   return (
     <motion.div 

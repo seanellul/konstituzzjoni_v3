@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { trackPageView, trackActiveUser, getOrCreateSessionId } from '@/lib/analytics';
+import { initActiveUsersTracking } from '@/lib/activeUsersStore';
 
 export default function PageViewTracker() {
   const pathname = usePathname();
@@ -11,10 +12,14 @@ export default function PageViewTracker() {
     // Initialize session ID
     const sessionId = getOrCreateSessionId();
     
-    // Track page view
+    // Track page view for this specific page
     trackPageView(pathname);
     
-    // Register as active user
+    // Initialize active users tracking and data store - this sets up a single interval
+    // instead of having multiple intervals in different components
+    initActiveUsersTracking();
+    
+    // Register as active user (ping once, then the tracking will be maintained by setInterval)
     trackActiveUser();
     
     // Set up headers for future API requests

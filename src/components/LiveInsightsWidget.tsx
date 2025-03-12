@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChartBarIcon, MagnifyingGlassIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { useActiveUsersStore } from '@/lib/activeUsersStore';
 
 interface TopArticle {
   chapter: number;
@@ -17,8 +18,10 @@ interface TopSearch {
 export default function LiveInsightsWidget({ className = '' }: { className?: string }) {
   const [topArticle, setTopArticle] = useState<TopArticle | null>(null);
   const [topSearch, setTopSearch] = useState<TopSearch | null>(null);
-  const [activeUsers, setActiveUsers] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  
+  // Use the shared store for active users count instead of fetching separately
+  const { count: activeUsers } = useActiveUsersStore();
 
   useEffect(() => {
     const fetchInsights = async () => {
@@ -33,13 +36,10 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
         const searchesRes = await fetch('/api/analytics/top-searches?timeframe=day&limit=1');
         const searches = await searchesRes.json();
         
-        // Fetch active users
-        const activeRes = await fetch('/api/analytics/active-users');
-        const active = await activeRes.json();
+        // No need to fetch active users here anymore since we're using the shared store
         
         if (articles && articles.length > 0) setTopArticle(articles[0]);
         if (searches && searches.length > 0) setTopSearch(searches[0]);
-        setActiveUsers(active.count || 0);
       } catch (error) {
         console.error('Error fetching insights:', error);
       } finally {
@@ -49,8 +49,8 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
     
     fetchInsights();
     
-    // Refresh data every minute
-    const interval = setInterval(fetchInsights, 60 * 1000);
+    // Reduce refresh frequency from 60s to 120s (2 minutes)
+    const interval = setInterval(fetchInsights, 120 * 1000);
     return () => clearInterval(interval);
   }, []);
   

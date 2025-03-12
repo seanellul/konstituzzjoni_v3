@@ -41,6 +41,15 @@ pre, code {
   word-break: break-word;
 }
 
+/* Hide scrollbars but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 @layer components {
   .article-content {
     @apply mt-4 sm:mt-6 mb-4 sm:mb-6 leading-relaxed font-serif text-base sm:text-lg dark:text-gray-200;

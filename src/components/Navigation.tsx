@@ -6,11 +6,16 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import ActiveUsersCounter from './ActiveUsersCounter';
 import DarkModeToggle from './DarkModeToggle';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Navigation = () => {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -25,12 +30,7 @@ const Navigation = () => {
   ];
 
   return (
-    <motion.nav 
-      className="sticky top-0 z-50 bg-gradient-to-r from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm"
-      initial={{ y: -20, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
+    <nav className="sticky top-0 z-50 bg-gradient-to-r from-white via-white to-gray-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="container mx-auto px-4 py-2 md:px-6 md:py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -48,6 +48,7 @@ const Navigation = () => {
               onClick={toggleMobileMenu}
               className="text-gray-700 dark:text-gray-300 hover:text-primary-DEFAULT dark:hover:text-primary-400 focus:outline-none"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -89,14 +90,15 @@ const Navigation = () => {
           </div>
         </div>
         
-        {/* Mobile menu dropdown */}
-        {mobileMenuOpen && (
-          <motion.div 
-            className="md:hidden mt-2 px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 rounded-md shadow-lg"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-          >
+        {/* Mobile menu dropdown - CSS transition instead of animation */}
+        <div 
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            mobileMenuOpen 
+              ? 'max-h-96 opacity-100 mt-2' 
+              : 'max-h-0 opacity-0 mt-0'
+          }`}
+        >
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 rounded-md shadow-lg">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -119,10 +121,10 @@ const Navigation = () => {
                 <DarkModeToggle />
               </div>
             </div>
-          </motion.div>
-        )}
+          </div>
+        </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 };
 
