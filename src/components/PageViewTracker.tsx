@@ -4,11 +4,15 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { trackPageView, trackActiveUser, getOrCreateSessionId } from '@/lib/analytics';
 import { initActiveUsersTracking } from '@/lib/activeUsersStore';
+import { isBrowser } from '@/lib/utils';
 
 export default function PageViewTracker() {
   const pathname = usePathname();
   
   useEffect(() => {
+    // Skip on server-side
+    if (!isBrowser()) return;
+    
     // Initialize session ID
     const sessionId = getOrCreateSessionId();
     

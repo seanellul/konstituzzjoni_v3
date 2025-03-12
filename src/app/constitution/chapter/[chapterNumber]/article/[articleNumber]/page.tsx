@@ -28,7 +28,6 @@ export async function generateMetadata({
 }: {
   params: { chapterNumber: string; articleNumber: string };
 }): Promise<Metadata> {
-  params = await params;
   const chapterNum = parseInt(params.chapterNumber, 10);
   const articleNum = parseInt(params.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);
@@ -47,7 +46,6 @@ export async function generateMetadata({
 }
 
 export default async function ArticlePage({ params }: { params: { chapterNumber: string; articleNumber: string } }) {
-  params = await params;
   const chapterNum = parseInt(params.chapterNumber, 10);
   const articleNum = parseInt(params.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);

@@ -3,12 +3,19 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline';
+import { isBrowser } from '@/lib/utils';
 
 export default function DarkModeToggle() {
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   // Initialize dark mode from localStorage or system preference
   useEffect(() => {
+    setMounted(true);
+    
+    // Only run in browser environment
+    if (!isBrowser()) return;
+    
     // Check for saved preference
     const savedMode = localStorage.getItem('darkMode');
     
@@ -24,18 +31,26 @@ export default function DarkModeToggle() {
 
   // Apply dark mode changes to document
   useEffect(() => {
+    if (!mounted) return;
+    
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('darkMode', darkMode.toString());
-  }, [darkMode]);
+    
+    if (isBrowser()) {
+      localStorage.setItem('darkMode', darkMode.toString());
+    }
+  }, [darkMode, mounted]);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
+  // Don't render anything until after hydration to avoid layout shift
+  if (!mounted) return null;
 
   return (
     <motion.button

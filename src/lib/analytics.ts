@@ -15,10 +15,11 @@
  */
 
 import { shouldFilterFromAnalytics } from './content-filters';
+import { isBrowser } from './utils';
 
 // Internal blacklist check - for administrative use only
 function isSessionBlacklisted(): boolean {
-  if (typeof window === 'undefined') return false;
+  if (!isBrowser()) return false;
   
   const sessionId = localStorage.getItem('constitution_session_id');
   
@@ -57,7 +58,7 @@ function isSessionBlacklisted(): boolean {
 
 // Check if analytics is enabled for this user
 export function isAnalyticsEnabled(): boolean {
-  if (typeof window === 'undefined') return false;
+  if (!isBrowser()) return false;
   
   // First check if user is blacklisted
   if (isSessionBlacklisted()) return false;
@@ -69,7 +70,7 @@ export function isAnalyticsEnabled(): boolean {
 
 // Allow users to opt out of analytics (hidden functionality, not exposed in UI)
 export function setAnalyticsOptOut(optOut: boolean): void {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   
   if (optOut) {
     localStorage.setItem('analytics_opt_out', 'true');
@@ -80,7 +81,7 @@ export function setAnalyticsOptOut(optOut: boolean): void {
 
 // Function to track page views for general pages
 export function trackPageView(path: string) {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
   
   try {
@@ -104,7 +105,7 @@ export function trackPageView(path: string) {
 
 // Function to track article views
 export function trackArticleView(chapter: number, article: number) {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
   
   try {
@@ -128,7 +129,7 @@ export function trackArticleView(chapter: number, article: number) {
 
 // Function to track chapter views
 export function trackChapterView(chapter: number) {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
   
   try {
@@ -151,7 +152,7 @@ export function trackChapterView(chapter: number) {
 
 // Function to track searches
 export function trackSearch(term: string) {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
   
   // Skip tracking of blacklisted search terms
@@ -181,7 +182,7 @@ export function trackSearch(term: string) {
 // Generate a random session ID if one doesn't exist already
 // Added session rotation for privacy enhancement
 export function getOrCreateSessionId(): string {
-  if (typeof window === 'undefined') return 'server-side';
+  if (!isBrowser()) return 'server-side';
   
   let sessionId = localStorage.getItem('constitution_session_id');
   let sessionCreated = localStorage.getItem('constitution_session_created');
@@ -206,7 +207,7 @@ export function getOrCreateSessionId(): string {
 
 // Function to track active users
 export function trackActiveUser() {
-  if (typeof window === 'undefined') return;
+  if (!isBrowser()) return;
   
   // Note: We still track active users even if they're blacklisted or opted out
   // This gives us accurate site usage stats while still respecting privacy for detailed analytics

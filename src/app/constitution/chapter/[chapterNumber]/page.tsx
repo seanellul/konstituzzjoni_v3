@@ -29,8 +29,6 @@ export async function generateMetadata({
 }: {
   params: { chapterNumber: string };
 }): Promise<Metadata> {
-  // In Next.js 15, we need to await params even though they're not actually Promises
-  params = await params;
   const chapterNum = parseInt(params.chapterNumber, 10);
   const chapter = await getChapter(chapterNum);
 
@@ -41,8 +39,6 @@ export async function generateMetadata({
 }
 
 export default async function ChapterPage({ params }: { params: { chapterNumber: string } }) {
-  // In Next.js 15, we need to await params even though they're not actually Promises
-  params = await params;
   const chapterNum = parseInt(params.chapterNumber, 10);
   const chapter = await getChapter(chapterNum);
   const articles = await getChapterArticles(chapterNum);

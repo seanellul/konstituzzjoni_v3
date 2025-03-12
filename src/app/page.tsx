@@ -10,8 +10,12 @@ import LiveInsightsWidget from '@/components/LiveInsightsWidget';
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
+  // Only run client-side code after component is mounted
   useEffect(() => {
+    setIsMounted(true);
+    
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
@@ -84,8 +88,9 @@ export default function Home() {
   ];
 
   // Scroll-triggered animation for the constitution paper effect
-  const parallaxY = -scrollY * 0.2;
-  const rotateValue = scrollY * 0.01;
+  // Only calculate on client-side to avoid window reference errors
+  const parallaxY = isMounted ? -scrollY * 0.2 : 0;
+  const rotateValue = isMounted ? scrollY * 0.01 : 0;
 
   return (
     <div className="overflow-x-hidden">
@@ -254,7 +259,7 @@ export default function Home() {
                   y: scrollY > 200 ? parallaxY : 0,
                   rotate: scrollY > 200 ? rotateValue : 0,
                   transformPerspective: 1000,
-                  scale: window.innerWidth < 640 ? 0.6 : 1
+                  scale: isMounted && window.innerWidth < 640 ? 0.6 : 1
                 }}
                 initial={{ y: 100, opacity: 0 }}
                 whileInView={{ y: 0, opacity: 1 }}
@@ -313,7 +318,7 @@ export default function Home() {
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.85 : 0,
                   rotate: scrollY > 200 ? rotateValue * 0.9 + 2 : 2,
-                  scale: window.innerWidth < 640 ? 0.6 : 1
+                  scale: isMounted && window.innerWidth < 640 ? 0.6 : 1
                 }}
                 initial={{ rotate: 2, opacity: 0 }}
                 whileInView={{ opacity: 0.95 }}
@@ -342,7 +347,7 @@ export default function Home() {
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.7 : 0,
                   rotate: scrollY > 200 ? rotateValue * 0.8 + 3 : 3,
-                  scale: window.innerWidth < 640 ? 0.6 : 1
+                  scale: isMounted && window.innerWidth < 640 ? 0.6 : 1
                 }}
                 initial={{ rotate: 3, opacity: 0 }}
                 whileInView={{ opacity: 0.9 }}
@@ -371,7 +376,7 @@ export default function Home() {
                 style={{ 
                   y: scrollY > 200 ? parallaxY * 0.6 : 0,
                   rotate: scrollY > 200 ? rotateValue * -1.7 + 5 : 5,
-                  scale: window.innerWidth < 640 ? 0.6 : 1
+                  scale: isMounted && window.innerWidth < 640 ? 0.6 : 1
                 }}
                 initial={{ rotate: 5, opacity: 0 }}
                 whileInView={{ opacity: 0.85 }}

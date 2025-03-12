@@ -1,4 +1,5 @@
-import { create, StateCreator } from 'zustand';
+import { create } from 'zustand';
+import { isBrowser } from './utils';
 
 /**
  * Global store for active users data to prevent duplicate API calls
@@ -11,48 +12,56 @@ interface ActiveUsersState {
   fetch: () => Promise<number>;
 }
 
-export const useActiveUsersStore = create<ActiveUsersState>(
-  ((set, get) => ({
-    count: 0,
-    lastFetched: 0,
-    isFetching: false,
-    fetch: async () => {
-      const now = Date.now();
-      const { lastFetched, isFetching, count } = get();
-      
-      // Use cached data if it's recent (less than 30 seconds old) and not currently fetching
-      if (now - lastFetched < 30000 && !isFetching) {
-        return count;
-      }
-      
-      // Prevent multiple simultaneous requests
-      if (isFetching) {
-        return count;
-      }
-      
-      try {
-        set({ isFetching: true });
-        const res = await fetch('/api/analytics/active-users');
-        
-        if (!res.ok) {
-          throw new Error('Failed to fetch active users');
-        }
-        
-        const data = await res.json();
-        set({ count: data.count, lastFetched: now, isFetching: false });
-        return data.count;
-      } catch (error) {
-        console.error('Error fetching active users:', error);
-        set({ isFetching: false });
-        return count; // Return the previous count on error
-      }
+export const useActiveUsersStore = create<ActiveUsersState>((set, get) => ({
+  count: 0,
+  lastFetched: 0,
+  isFetching: false,
+  fetch: async () => {
+    // Skip fetching on server-side
+    if (!isBrowser()) {
+      return 0;
     }
-  }) as StateCreator<ActiveUsersState>)
-);
+    
+    const now = Date.now();
+    const { lastFetched, isFetching, count } = get();
+    
+    // Use cached data if it's recent (less than 30 seconds old) and not currently fetching
+    if (now - lastFetched < 30000 && !isFetching) {
+      return count;
+    }
+    
+    // Prevent multiple simultaneous requests
+    if (isFetching) {
+      return count;
+    }
+    
+    try {
+      set({ isFetching: true });
+      const res = await fetch('/api/analytics/active-users');
+      
+      if (!res.ok) {
+        throw new Error('Failed to fetch active users');
+      }
+      
+      const data = await res.json();
+      set({ count: data.count, lastFetched: now, isFetching: false });
+      return data.count;
+    } catch (error) {
+      console.error('Error fetching active users:', error);
+      set({ isFetching: false });
+      return count; // Return the previous count on error
+    }
+  }
+}));
 
 // Helper function to initialize the active user tracking
 // This should be called once when the app loads
 export function initActiveUsersTracking() {
+  // Skip initialization on server-side
+  if (!isBrowser()) {
+    return;
+  }
+  
   // Get the current time
   const now = Date.now();
   

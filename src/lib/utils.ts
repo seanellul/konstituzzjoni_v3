@@ -39,4 +39,9 @@ export function toRomanNumeral(num: number): string {
   }
 
   return result;
-} 
+}
+
+/**
+ * Safely check if code is running in a browser environment
+ */
+export const isBrowser = () => typeof window !== 'undefined'; 
