@@ -52,12 +52,12 @@ export default function ActiveUsersCounter() {
         }}
         transition={{ duration: 0.5 }}
       >
-        <UserGroupIcon className="w-5 h-5 text-green-500" />
+        <UserGroupIcon className="w-5 h-5 text-green-500 dark:text-green-400" />
       </motion.div>
       <AnimatePresence mode="wait">
         <motion.span 
           key={activeUsers}
-          className="text-green-600 font-semibold text-sm min-w-[1rem] text-center"
+          className="text-green-600 dark:text-green-400 font-semibold text-sm min-w-[1rem] text-center"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}

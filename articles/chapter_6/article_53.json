@@ -1,52 +1,44 @@
 {
   "number": 53,
-  "title": "Determination as to questions of membership",
-  "chapterNumber": 5,
+  "title": "Qualifications for membership",
+  "chapterNumber": 6,
   "chapterTitle": "Parliament",
   "content": [
     {
       "paragraph": 1,
-      "text": "(1) The Supreme Court of Malta shall have jurisdiction to hear and determine any question whether -"
+      "text": "Subject to the provisions of article 54 of this Constitution, a person shall be qualified to be elected as a member of the House of Representatives if, and shall not be qualified to be so elected unless -"
     },
     {
       "paragraph": 2,
-      "text": "(a) any person has been validly elected as a member of the House of Representatives;"
+      "text": "(a) he is a citizen of Malta;"
     },
     {
       "paragraph": 3,
-      "text": "(b) any member of the House has vacated his seat therein or is required, under the provisions of sub-article (2) of article 55 of this Constitution, to cease to perform his functions as a member."
+      "text": "(b) he has attained the age of eighteen years;"
     },
     {
       "paragraph": 4,
-      "text": "(2) Any application to the Supreme Court of Malta for the determination of any question under sub-article (1)(a) of this article may be made by any person registered in any electoral register who was entitled to vote at the election to which the application relates or by the Attorney General or by any member of the House of Representatives, and where such an application is made by a person other than the Attorney General, the Attorney General may intervene and may then appear or be represented in the proceedings."
+      "text": "(c) he is registered as a voter for the election of members of the House of Representatives;"
     },
     {
       "paragraph": 5,
-      "text": "(3) Any application to the Supreme Court of Malta for the determination of any question under sub-article (1)(b) of this article may be made by any member of the House of Representatives or by the Attorney General, and where such an application is made by a person other than the Attorney General, the Attorney General may intervene and may then appear or be represented in the proceedings."
+      "text": "(d) he is not disqualified for election as a member of the House of Representatives by or under any law for the time being in force in Malta; and"
     },
     {
       "paragraph": 6,
-      "text": "(4) Parliament may make provision with respect to -"
-    },
-    {
-      "paragraph": 7,
-      "text": "(a) the circumstances and manner in which and the conditions upon which any application may be made to the Supreme Court of Malta for the determination of any question under this article; and"
-    },
-    {
-      "paragraph": 8,
-      "text": "(b) the powers, practice and procedure of the Supreme Court of Malta in relation to any such application."
-    },
-    {
-      "paragraph": 9,
-      "text": "(5) Where the Supreme Court of Malta determines that a member of the House of Representatives has vacated his seat therein or is required, under the provisions of sub-article (2) of article 55 of this Constitution, to cease to perform his functions as a member, or where the Court determines under the provisions of article 55(3) of this Constitution that a member is no longer qualified to be a member of the House, that determination shall not affect the validity of anything previously done by the House of Representatives."
+      "text": "(e) he is qualified to be registered as a voter for the election of members of the House of Representatives."
     }
   ],
-  "amendmentHistory": null,
+  "amendmentHistory": {
+    "date": "1987-07-31",
+    "description": "Amendment lowering qualification age from 21 to 18 years",
+    "legalReference": "Act LVIII of 1987"
+  },
   "crossReferences": [
     {
-      "article": 55,
-      "description": "Reference to disqualifications for membership of House of Representatives"
+      "article": "54",
+      "description": "Disqualifications for membership"
     }
   ],
-  "notes": "This article establishes the jurisdiction of the Supreme Court of Malta to determine questions about the valid election of members of the House of Representatives and whether a member has vacated their seat or must cease to perform their functions."
+  "notes": "This article establishes the qualifications required for membership in the House of Representatives, including citizenship, age, and voter registration requirements."
 } 

@@ -8,7 +8,7 @@ const articlesDirectory = path.join(process.cwd(), 'articles');
  * Get all chapters of the constitution
  */
 export async function getConstitutionStructure(): Promise<Constitution> {
-  const schemaPath = path.join(articlesDirectory, 'maltese_constitution_schema.json');
+  const schemaPath = path.join(articlesDirectory, 'constitution_toc.json');
   const schemaContent = fs.readFileSync(schemaPath, 'utf8');
   const schema = JSON.parse(schemaContent);
   

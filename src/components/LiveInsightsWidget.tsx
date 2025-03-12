@@ -57,15 +57,15 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
   // If there's no data and still loading, show a placeholder
   if (loading && !topArticle && !topSearch && activeUsers === 0) {
     return (
-      <div className={`bg-gray-50 rounded-lg p-5 border border-gray-200 shadow-sm ${className}`}>
-        <h3 className="text-lg font-serif font-bold text-gray-800 mb-3 flex items-center">
-          <ChartBarIcon className="w-5 h-5 mr-2 text-primary-DEFAULT" />
+      <div className={`bg-gray-50/80 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}>
+        <h3 className="text-lg font-serif font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
+          <ChartBarIcon className="w-5 h-5 mr-2 text-primary-DEFAULT dark:text-primary-400" />
           Live Insights
         </h3>
         <div className="animate-pulse space-y-3">
-          <div className="h-5 bg-gray-200 rounded w-3/4"></div>
-          <div className="h-5 bg-gray-200 rounded w-2/3"></div>
-          <div className="h-5 bg-gray-200 rounded w-1/2"></div>
+          <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+          <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+          <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
         </div>
       </div>
     );
@@ -73,55 +73,55 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
   
   return (
     <motion.div 
-      className={`bg-gray-50 rounded-lg p-5 border border-gray-200 shadow-sm ${className}`}
+      className={`bg-gray-50/80 dark:bg-gray-800/50 rounded-lg p-5 border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <h3 className="text-lg font-serif font-bold text-gray-800 mb-3 flex items-center">
-        <ChartBarIcon className="w-5 h-5 mr-2 text-primary-DEFAULT" />
+      <h3 className="text-lg font-serif font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center">
+        <ChartBarIcon className="w-5 h-5 mr-2 text-primary-DEFAULT dark:text-primary-400" />
         Live Insights
       </h3>
       
       <div className="space-y-3">
         {topArticle && (
           <motion.div 
-            className="flex justify-between items-center py-2 border-b border-gray-100"
+            className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <span className="text-sm text-gray-600 flex items-center">
-              <ChartBarIcon className="w-4 h-4 mr-2 text-primary-DEFAULT/70" />
+            <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+              <ChartBarIcon className="w-4 h-4 mr-2 text-primary-DEFAULT/70 dark:text-primary-400/70" />
               Most Read Today:
             </span>
             <Link 
               href={`/constitution/chapter/${topArticle.chapter}/article/${topArticle.article}`}
-              className="text-sm font-medium text-primary-DEFAULT hover:underline flex items-center"
+              className="text-sm font-medium text-primary-DEFAULT dark:text-primary-400 hover:underline flex items-center"
             >
               Article {topArticle.article}
-              <span className="text-xs text-gray-500 ml-2">({topArticle.views} views)</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">({topArticle.views} views)</span>
             </Link>
           </motion.div>
         )}
         
         {topSearch && (
           <motion.div 
-            className="flex justify-between items-center py-2 border-b border-gray-100"
+            className="flex justify-between items-center py-2 border-b border-gray-100 dark:border-gray-700"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <span className="text-sm text-gray-600 flex items-center">
-              <MagnifyingGlassIcon className="w-4 h-4 mr-2 text-blue-500/70" />
+            <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+              <MagnifyingGlassIcon className="w-4 h-4 mr-2 text-blue-500/70 dark:text-blue-400/70" />
               Top Search:
             </span>
             <Link 
               href={`/search?q=${encodeURIComponent(topSearch.term)}`}
-              className="text-sm font-medium text-blue-600 hover:underline flex items-center"
+              className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline flex items-center"
             >
               "{topSearch.term}"
-              <span className="text-xs text-gray-500 ml-2">({topSearch.count} searches)</span>
+              <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">({topSearch.count} searches)</span>
             </Link>
           </motion.div>
         )}
@@ -132,11 +132,11 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <span className="text-sm text-gray-600 flex items-center">
-            <UserGroupIcon className="w-4 h-4 mr-2 text-green-500/70" />
+          <span className="text-sm text-gray-600 dark:text-gray-400 flex items-center">
+            <UserGroupIcon className="w-4 h-4 mr-2 text-green-500/70 dark:text-green-400/70" />
             Reading Right Now:
           </span>
-          <span className="text-sm font-medium text-green-600 flex items-center">
+          <span className="text-sm font-medium text-green-600 dark:text-green-400 flex items-center">
             {activeUsers} {activeUsers === 1 ? 'person' : 'people'}
           </span>
         </motion.div>
@@ -150,7 +150,7 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
       >
         <Link 
           href="/analytics" 
-          className="text-sm text-primary-DEFAULT hover:underline inline-flex items-center"
+          className="text-sm text-primary-DEFAULT dark:text-primary-400 hover:underline inline-flex items-center"
         >
           <span>View Full Analytics</span>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" className="ml-1">

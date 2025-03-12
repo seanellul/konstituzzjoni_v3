@@ -1,7 +1,7 @@
 {
   "number": 57,
   "title": "Qualification of voters",
-  "chapterNumber": 5,
+  "chapterNumber": 6,
   "chapterTitle": "Parliament",
   "content": [
     {
@@ -14,7 +14,7 @@
     },
     {
       "paragraph": 3,
-      "text": "(b) he has attained the age of eighteen years; and"
+      "text": "(b) he has attained the age of sixteen years; and"
     },
     {
       "paragraph": 4,
@@ -25,24 +25,22 @@
       "text": "Provided that this paragraph shall not apply to a person who is ordinarily resident in Malta but has not been resident in Malta as required by this paragraph by reason of service outside Malta in the public service, including service in the offices referred to in sub-articles (3) and (4) of article 124 of this Constitution, or by reason of service outside Malta in, or as a member of, a disciplined force as defined in article 47 of this Constitution."
     }
   ],
-  "amendmentHistory": [
-    {
-      "date": "1987-07-31",
-      "description": "Amendment lowering voting age from 21 to 18 years",
-      "legalReference": "Act LVIII of 1987"
-    }
-  ],
+  "amendmentHistory": {
+    "date": "2018-03-05",
+    "description": "Amendment lowering voting age from 18 to 16 years",
+    "legalReference": "Act V of 2018"
+  },
   "crossReferences": [
     {
-      "article": 58,
-      "description": "Reference to disqualification of voters"
+      "article": "58",
+      "description": "Disqualification of voters"
     },
     {
-      "article": 124,
+      "article": "124",
       "description": "Reference to appointments to public offices"
     },
     {
-      "article": 47,
+      "article": "47",
       "description": "Reference to definition of disciplined force"
     }
   ],

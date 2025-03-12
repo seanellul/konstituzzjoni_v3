@@ -1,7 +1,7 @@
 {
   "number": 58,
   "title": "Disqualification of voters",
-  "chapterNumber": 5,
+  "chapterNumber": 6,
   "chapterTitle": "Parliament",
   "content": [
     {
@@ -31,22 +31,13 @@
     {
       "paragraph": 7,
       "text": "(b) no account shall be taken of a sentence of imprisonment imposed as an alternative to or in default of the payment of a fine."
-    },
-    {
-      "paragraph": 8,
-      "text": "(3) A person shall not be treated as having the qualifications mentioned in article 57 of this Constitution unless, on the prescribed date, and, on such date or dates as, pursuant to the provisions of any law for the time being in force in Malta, are the qualifying dates for inclusion in the electoral register, he possesses, and at all times during the preceding six months he has possessed, those qualifications."
-    },
-    {
-      "paragraph": 9,
-      "text": "(4) Notwithstanding the provisions of sub-articles (1), (2) and (3) of this article, a person who, by reason of service outside Malta in the public service or as, or as a member of, a disciplined force is not by virtue of his residence of the required duration entitled to be registered as a voter for the election of members of the House of Representatives, shall where upon application made by him in that behalf to the Electoral Commission, that Commission is satisfied that in all other respects he is entitled to be so registered, be entitled to be registered for that purpose in the electoral division in which he would have been entitled to vote had his continuous period of residence in Malta not been interrupted by such service outside Malta."
     }
   ],
-  "amendmentHistory": null,
-  "crossReferences": [
-    {
-      "article": 57,
-      "description": "Reference to qualification of voters"
-    }
-  ],
-  "notes": "This article establishes the circumstances under which a person is disqualified from being registered as a voter for elections to the House of Representatives, including mental incapacity, imprisonment, and electoral offenses, with special provisions for persons serving outside Malta in public service or disciplined forces."
+  "amendmentHistory": {
+    "date": "1996-08-01",
+    "description": "Amendment regarding disqualifications for voters with criminal convictions",
+    "legalReference": "Act XXIV of 1996"
+  },
+  "crossReferences": [],
+  "notes": "This article establishes the circumstances under which a person is disqualified from being registered as a voter for elections to the House of Representatives, including mental incapacity, imprisonment, and convictions for electoral offenses."
 } 

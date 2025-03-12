@@ -1,56 +1,59 @@
 {
   "number": 56,
-  "title": "Electoral divisions",
-  "chapterNumber": 5,
+  "title": "Voting at elections",
+  "chapterNumber": 6,
   "chapterTitle": "Parliament",
   "content": [
     {
       "paragraph": 1,
-      "text": "(1) The members of the House of Representatives shall be elected upon the principle of proportional representation by means of the single transferable vote from such number of electoral divisions, being an odd number and not less than nine and not more than fifteen, as Parliament shall from time to time determine. Such number of members shall be elected from each electoral division, being not less than five and not more than seven, as Parliament shall determine."
+      "text": "(1) Subject to the provisions of this article, the vote of electors at any election of members of the House of Representatives shall be given by ballot in such manner as may be prescribed by or under any law for the time being in force in Malta."
     },
     {
       "paragraph": 2,
-      "text": "(2) The boundaries of the electoral divisions shall be such that the number of inhabitants entitled to vote for members of the House of Representatives in each electoral division is as nearly equal to the population quota as is reasonably practicable:"
+      "text": "(2) (a) If a voter of an electoral division informs the Electoral Commission in the period between the publication of the election candidates and the day before the polls are open, that, due to illness or being abroad, such voter will not be in Malta during the day set for voting, or that such voter will be hospitalized during such period, and can provide relevant evidence to the satisfaction of the Electoral Commission, such voter may be permitted to cast his vote at a day set for voting which is earlier than the general election date, on condition that the counting of all votes cast for the general election will not be possible before the close of polling on the day set for polling."
     },
     {
       "paragraph": 3,
-      "text": "Provided that such boundaries shall be drawn so that the difference between the number of inhabitants entitled to vote in each electoral division and the population quota shall not exceed five per centum more or five per centum less, in the case of not more than one electoral division, and shall not exceed one per centum more or one per centum less in the case of the other electoral divisions."
+      "text": "(b) If it is proven to the satisfaction of the Electoral Commission that a voter is unable to cast his vote at the poll booth on the day fixed for such purpose due to illness, or physical or mental infirmity, duly certified under such conditions as may be prescribed by law, such voter may be permitted by the Commission to cast his vote on any one of the days preceding the day fixed for the general election in accordance with the provisions of paragraph (a)."
     },
     {
       "paragraph": 4,
-      "text": "(3) For the purposes of sub-article (2) of this article, \"population quota\" means the number obtained by dividing the number of inhabitants entitled to vote for members of the House of Representatives by the number of electoral divisions."
+      "text": "(c) Notwithstanding the provisions of sub-article (1) and without prejudice to the provisions of paragraphs (a) and (b), and subject to such safeguards for ensuring the secrecy of the vote as may be prescribed by Parliament, Parliament may make provision for enabling any registered voter who is prevented from voting at the place at which he is entitled to cast his vote, to vote in any place in Malta of his choice, under the same conditions which apply to other voters at the place at which he is entitled to vote."
     },
     {
       "paragraph": 5,
-      "text": "(4) The Electoral Commission shall review the boundaries of the electoral divisions at intervals of not less than two nor more than five years and may, in accordance with the provisions of this article, alter such boundaries as it may deem desirable:"
+      "text": "(d) Notwithstanding the provisions of sub-article (1) and without prejudice to the provisions of paragraphs (a), (b) and (c), Parliament may make provision for enabling persons to whom sub-article (7) applies to vote by post, or in such manner as Parliament may provide, subject to such safeguards as may be necessary to ensure that such persons may vote freely and without intimidation."
     },
     {
       "paragraph": 6,
-      "text": "Provided that where, in accordance with sub-article (3) of article 66 of this Constitution or in accordance with the said article 66 as read with sub-article (6) of article 76 of this Constitution, an alteration of the boundaries of electoral divisions is required to be effected, the Electoral Commission shall forthwith carry out a review and shall make such alterations in the said boundaries as are required to be made, and no provision of any law shall be construed as restricting or precluding the Electoral Commission from carrying out such review and making such alterations without awaiting either the expiration of any time limit for review which may be provided for in this article, or the coming into force of any law, including an Act approving an electoral register, which may be required to be made or which may be in the process of being made or may be due to be made."
+      "text": "(3) Voting at any election for members of the House of Representatives shall be held at such time or times and at such place or places as the Electoral Commission may, from time to time, determine."
     },
     {
       "paragraph": 7,
-      "text": "(5) The review of the boundaries of electoral divisions and the alterations thereto shall be made in accordance with such rules as are contained in Schedule 2 to this Constitution; and in the application and working of such rules, the fact that the number of persons shown in the last census may not precisely correspond with the number of inhabitants entitled to vote for members of the House of Representatives, shall be disregarded."
+      "text": "(4) For the purposes of paragraph (d) of sub-article (2), the persons to whom sub-article (7) applies are -"
     },
     {
       "paragraph": 8,
-      "text": "(6) The conduct of elections for membership of the House of Representatives and the division of members among electoral divisions shall be subject to such provisions as may be prescribed by or under any law for the time being in force in Malta."
-    }
-  ],
-  "amendmentHistory": null,
-  "crossReferences": [
-    {
-      "article": 66,
-      "description": "Reference to dissolution of Parliament"
+      "text": "(a) persons who are unable to vote at any place at which they may be entitled to vote under any law for the time being in force in Malta, because they will be, on the date or dates determined for voting pursuant to sub-article (3), outside Malta; or"
     },
     {
-      "article": 76,
-      "description": "Reference to exercise of executive authority"
+      "paragraph": 9,
+      "text": "(b) persons who are unable to vote at any such place because they are or will be, on such date or dates, in Malta but hospitalized or in such institutions for the care of the elderly or otherwise prevented from voting at such place due to illness, infirmity or physical disability; or"
     },
     {
-      "article": "Schedule 2",
-      "description": "Reference to rules for review of electoral division boundaries"
+      "paragraph": 10,
+      "text": "(c) persons who are unable to vote at any such place because of duties being carried out outside Malta in connection with the representation of the Government of Malta, or with any international or multinational organization of which Malta or the Government of Malta form part, or being employed by the Government of Malta as public officers or locally engaged staff in the diplomatic, consular or other representation of the Government of Malta, or being married to or being the son or daughter of such persons, if of eighteen years of age or over and ordinarily resident with them; or"
+    },
+    {
+      "paragraph": 11,
+      "text": "(d) persons who are ordinarily resident in Malta but who are or will be outside Malta on the date or dates determined for voting for reasons of study, work, health or vacation."
     }
   ],
-  "notes": "This article establishes the principles for creating electoral divisions for the House of Representatives, including the number of divisions, their boundaries, the requirement for equal population distribution, and the Electoral Commission's responsibility to review and adjust boundaries periodically."
+  "amendmentHistory": {
+    "date": "2018-07-20",
+    "description": "Amendment regarding voting outside Malta and for persons with disabilities",
+    "legalReference": "Act XXVI of 2018"
+  },
+  "crossReferences": [],
+  "notes": "This article establishes provisions for voting in elections for the House of Representatives, including standard ballot voting, early voting for those ill or abroad, alternative voting locations, and provisions for postal voting for certain categories of voters."
 } 

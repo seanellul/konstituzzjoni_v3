@@ -207,7 +207,9 @@ export function getOrCreateSessionId(): string {
 // Function to track active users
 export function trackActiveUser() {
   if (typeof window === 'undefined') return;
-  if (!isAnalyticsEnabled()) return;
+  
+  // Note: We still track active users even if they're blacklisted or opted out
+  // This gives us accurate site usage stats while still respecting privacy for detailed analytics
   
   const sessionId = getOrCreateSessionId();
   

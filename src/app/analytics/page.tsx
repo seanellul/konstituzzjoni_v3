@@ -106,10 +106,10 @@ export default function AnalyticsDashboard() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl md:text-4xl font-bold font-serif text-gray-900 mb-2">
+        <h1 className="text-3xl md:text-4xl font-bold font-serif text-gray-900 dark:text-gray-100 mb-2">
           Constitution Analytics
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Real-time insights into how the Constitution of Malta is being accessed and used.
         </p>
       </motion.div>
@@ -125,7 +125,7 @@ export default function AnalyticsDashboard() {
           <select
             value={timeframe}
             onChange={(e) => setTimeframe(e.target.value)}
-            className="bg-white border border-gray-300 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-light"
+            className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-light dark:text-gray-200"
           >
             <option value="day">Today</option>
             <option value="week">This Week</option>
@@ -136,14 +136,14 @@ export default function AnalyticsDashboard() {
           
           <button 
             onClick={fetchDashboardData}
-            className="flex items-center space-x-1 px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-md text-sm transition-colors"
+            className="flex items-center space-x-1 px-3 py-2 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md text-sm transition-colors dark:text-gray-300"
           >
             <ArrowPathIcon className="w-4 h-4" />
             <span>Refresh</span>
           </button>
         </div>
         
-        <div className="text-sm text-gray-500 flex items-center">
+        <div className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
           <ClockIcon className="w-4 h-4 mr-1" />
           <span>Last updated at {formatLastUpdated(lastUpdated)}</span>
         </div>
@@ -153,10 +153,10 @@ export default function AnalyticsDashboard() {
         // Loading state
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="animate-pulse bg-white p-6 rounded-lg shadow-sm">
-              <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-              <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            <div key={i} className="animate-pulse bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-4"></div>
+              <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
             </div>
           ))}
         </div>
@@ -169,40 +169,40 @@ export default function AnalyticsDashboard() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-2">
-                <DocumentTextIcon className="w-5 h-5 text-primary-DEFAULT mr-2" />
-                <h3 className="text-sm font-medium text-gray-500">Article Views</h3>
+                <DocumentTextIcon className="w-5 h-5 text-primary-DEFAULT dark:text-primary-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Article Views</h3>
               </div>
-              <p className="text-3xl font-bold text-gray-900 mb-1">{dashboardData?.stats.totalArticleViews.toLocaleString()}</p>
-              <p className="text-sm text-gray-500">{formatTimeframe(timeframe)}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">{dashboardData?.stats.totalArticleViews.toLocaleString()}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{formatTimeframe(timeframe)}</p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-2">
-                <ChartBarIcon className="w-5 h-5 text-blue-600 mr-2" />
-                <h3 className="text-sm font-medium text-gray-500">Chapter Views</h3>
+                <ChartBarIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Chapter Views</h3>
               </div>
-              <p className="text-3xl font-bold text-gray-900 mb-1">{dashboardData?.stats.totalChapterViews.toLocaleString()}</p>
-              <p className="text-sm text-gray-500">{formatTimeframe(timeframe)}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">{dashboardData?.stats.totalChapterViews.toLocaleString()}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{formatTimeframe(timeframe)}</p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-2">
-                <MagnifyingGlassIcon className="w-5 h-5 text-green-600 mr-2" />
-                <h3 className="text-sm font-medium text-gray-500">Searches</h3>
+                <MagnifyingGlassIcon className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Searches</h3>
               </div>
-              <p className="text-3xl font-bold text-gray-900 mb-1">{dashboardData?.stats.totalSearches.toLocaleString()}</p>
-              <p className="text-sm text-gray-500">{formatTimeframe(timeframe)}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">{dashboardData?.stats.totalSearches.toLocaleString()}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{formatTimeframe(timeframe)}</p>
             </div>
 
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="flex items-center mb-2">
-                <UserGroupIcon className="w-5 h-5 text-purple-600 mr-2" />
-                <h3 className="text-sm font-medium text-gray-500">Unique Visitors</h3>
+                <UserGroupIcon className="w-5 h-5 text-purple-600 dark:text-purple-400 mr-2" />
+                <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Unique Visitors</h3>
               </div>
-              <p className="text-3xl font-bold text-gray-900 mb-1">{dashboardData?.stats.uniqueVisitors.toLocaleString()}</p>
-              <p className="text-sm text-gray-500">{formatTimeframe(timeframe)}</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">{dashboardData?.stats.uniqueVisitors.toLocaleString()}</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">{formatTimeframe(timeframe)}</p>
             </div>
           </motion.div>
 
@@ -210,30 +210,30 @@ export default function AnalyticsDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Top Articles */}
             <motion.div 
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <DocumentTextIcon className="w-5 h-5 text-primary-DEFAULT mr-2" />
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+                <DocumentTextIcon className="w-5 h-5 text-primary-DEFAULT dark:text-primary-400 mr-2" />
                 Most Viewed Articles
               </h2>
               
               <div className="overflow-hidden">
                 <table className="min-w-full">
                   <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Article</th>
-                      <th className="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chapter</th>
-                      <th className="py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Views</th>
+                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                      <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Article</th>
+                      <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Chapter</th>
+                      <th className="py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Views</th>
                     </tr>
                   </thead>
                   <tbody>
                     {dashboardData?.topArticles.map((article, i) => (
                       <motion.tr 
                         key={`${article.chapter}-${article.article}`}
-                        className="hover:bg-gray-50"
+                        className="hover:bg-gray-50 dark:hover:bg-gray-700"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 + (i * 0.05) }}
@@ -241,13 +241,13 @@ export default function AnalyticsDashboard() {
                         <td className="py-2">
                           <Link 
                             href={`/constitution/chapter/${article.chapter}/article/${article.article}`}
-                            className="text-primary-DEFAULT hover:underline"
+                            className="text-primary-DEFAULT dark:text-primary-400 hover:underline"
                           >
                             Article {article.article}
                           </Link>
                         </td>
-                        <td className="py-2 text-gray-600">Chapter {article.chapter}</td>
-                        <td className="py-2 text-right font-medium">{article.views}</td>
+                        <td className="py-2 text-gray-600 dark:text-gray-400">Chapter {article.chapter}</td>
+                        <td className="py-2 text-right font-medium dark:text-gray-300">{article.views}</td>
                       </motion.tr>
                     ))}
                     
@@ -263,29 +263,29 @@ export default function AnalyticsDashboard() {
 
             {/* Top Searches */}
             <motion.div 
-              className="bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+              className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                <MagnifyingGlassIcon className="w-5 h-5 text-blue-600 mr-2" />
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+                <MagnifyingGlassIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 mr-2" />
                 Most Popular Searches
               </h2>
               
               <div className="overflow-hidden">
                 <table className="min-w-full">
                   <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Term</th>
-                      <th className="py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Searches</th>
+                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                      <th className="py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Term</th>
+                      <th className="py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Searches</th>
                     </tr>
                   </thead>
                   <tbody>
                     {dashboardData?.topSearches.map((search, i) => (
                       <motion.tr 
                         key={search.term}
-                        className="hover:bg-gray-50"
+                        className="hover:bg-gray-50 dark:hover:bg-gray-700"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 + (i * 0.05) }}
@@ -293,12 +293,12 @@ export default function AnalyticsDashboard() {
                         <td className="py-2">
                           <Link 
                             href={`/search?q=${encodeURIComponent(search.term)}`}
-                            className="text-blue-600 hover:underline"
+                            className="text-blue-600 dark:text-blue-400 hover:underline"
                           >
                             {search.term}
                           </Link>
                         </td>
-                        <td className="py-2 text-right font-medium">{search.count}</td>
+                        <td className="py-2 text-right font-medium dark:text-gray-300">{search.count}</td>
                       </motion.tr>
                     ))}
                     
@@ -315,13 +315,13 @@ export default function AnalyticsDashboard() {
 
           {/* Top Chapters */}
           <motion.div 
-            className="mt-8 bg-white p-6 rounded-lg shadow-sm border border-gray-100"
+            className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
-              <ChartBarIcon className="w-5 h-5 text-green-600 mr-2" />
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+              <ChartBarIcon className="w-5 h-5 text-green-600 dark:text-green-400 mr-2" />
               Chapter Popularity
             </h2>
             
@@ -329,19 +329,19 @@ export default function AnalyticsDashboard() {
               {dashboardData?.topChapters.map((chapter, i) => (
                 <motion.div 
                   key={chapter.chapter}
-                  className="bg-gray-50 p-4 rounded-lg"
+                  className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg"
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.1 + (i * 0.1) }}
                 >
                   <Link 
                     href={`/constitution/chapter/${chapter.chapter}`}
-                    className="text-lg font-medium text-gray-900 hover:text-primary-DEFAULT"
+                    className="text-lg font-medium text-gray-900 dark:text-gray-100 hover:text-primary-DEFAULT dark:hover:text-primary-400"
                   >
                     Chapter {chapter.chapter}
                   </Link>
                   <div className="mt-2 flex justify-between items-center">
-                    <div className="h-2 bg-gray-200 rounded-full w-full">
+                    <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full w-full">
                       <div 
                         className="h-2 bg-green-500 rounded-full" 
                         style={{ 
@@ -349,7 +349,7 @@ export default function AnalyticsDashboard() {
                         }}
                       ></div>
                     </div>
-                    <span className="ml-2 text-sm font-medium text-gray-600">{chapter.views}</span>
+                    <span className="ml-2 text-sm font-medium text-gray-600 dark:text-gray-400">{chapter.views}</span>
                   </div>
                 </motion.div>
               ))}

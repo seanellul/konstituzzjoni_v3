@@ -25,12 +25,15 @@ export async function POST(request: Request) {
       );
     }
     
-    console.log('Search API attempting to create record for term:', term);
+    // Normalize the search term to lowercase for consistent analytics
+    const normalizedTerm = term.toLowerCase().trim();
+    
+    console.log('Search API attempting to create record for term:', normalizedTerm);
     
     // Create the search query record
     const searchQuery = await prisma.searchQuery.create({
       data: {
-        term,
+        term: normalizedTerm, // Store the normalized version
         timestamp: timestamp ? new Date(timestamp) : new Date(),
         sessionId: request.headers.get('x-session-id') || null,
       },

@@ -5,6 +5,7 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class', // Enable dark mode with class strategy
   theme: {
     extend: {
       colors: {
@@ -31,7 +32,7 @@ module.exports = {
         sans: ['var(--font-inter)', 'sans-serif'],
         serif: ['var(--font-merriweather)', 'serif'],
       },
-      typography: {
+      typography: theme => ({
         DEFAULT: {
           css: {
             color: '#1f2937', // text-gray-800
@@ -89,7 +90,46 @@ module.exports = {
             },
           },
         },
-      },
+        dark: {
+          css: {
+            color: '#d1d5db', // text-gray-300
+            a: {
+              color: '#f27a8a', // primary-400
+              '&:hover': {
+                color: '#f7aab2', // primary-300
+              },
+            },
+            h1: {
+              color: '#f9fafb', // text-gray-50
+            },
+            h2: {
+              color: '#f9fafb', // text-gray-50
+            },
+            h3: {
+              color: '#f3f4f6', // text-gray-100
+            },
+            h4: {
+              color: '#e5e7eb', // text-gray-200
+            },
+            blockquote: {
+              borderLeftColor: '#f27a8a', // primary-400
+              color: '#9ca3af', // text-gray-400
+            },
+            strong: {
+              color: '#f3f4f6', // text-gray-100
+            },
+            code: {
+              color: '#e5e7eb', // text-gray-200
+            },
+            figcaption: {
+              color: '#9ca3af', // text-gray-400
+            },
+            hr: {
+              borderColor: '#374151', // text-gray-700
+            },
+          },
+        },
+      }),
     },
   },
   plugins: [

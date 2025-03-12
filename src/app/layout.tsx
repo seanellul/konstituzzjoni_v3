@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Kostituzzjoni.mt Team' }],
   creator: 'Kostituzzjoni.mt Team',
   publisher: 'Kostituzzjoni.mt',
+  viewport: 'width=device-width, initial-scale=1.0, maximum-scale=5.0',
 };
 
 export default function RootLayout({
@@ -35,14 +36,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${merriweather.variable}`}>
-      <body className="bg-secondary-light min-h-screen flex flex-col">
+      <body className="bg-secondary-light dark:bg-gray-900 min-h-screen flex flex-col text-gray-900 dark:text-gray-100">
         <Navigation />
-        <main className="container mx-auto px-6 py-8 flex-grow">
+        <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 flex-grow max-w-full overflow-x-hidden">
           {children}
         </main>
-        <footer className="bg-gray-100 py-6 mt-auto border-t border-gray-200">
-          <div className="container mx-auto px-6">
-            <p className="text-center text-gray-600">
+        <footer className="bg-gray-100 dark:bg-gray-800 py-4 sm:py-6 mt-auto border-t border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-4 sm:px-6">
+            <p className="text-center text-gray-600 dark:text-gray-400 text-sm sm:text-base">
               © {new Date().getFullYear()} Kostituzzjoni.mt | An interactive reader for the Constitution of Malta
             </p>
           </div>
