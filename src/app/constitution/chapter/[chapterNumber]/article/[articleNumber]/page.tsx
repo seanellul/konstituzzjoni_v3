@@ -1,5 +1,4 @@
 import { getArticle, getChapterArticles, getChapters } from '@/lib/constitution';
-import Navigation from '@/components/Navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { notFound } from 'next/navigation';
 import { Paragraph, Section } from '@/types/constitution';
@@ -61,7 +60,6 @@ export default async function ArticlePage({ params }: { params: { chapterNumber:
 
   return (
     <>
-      <Navigation />
       <Breadcrumbs
         items={[
           {

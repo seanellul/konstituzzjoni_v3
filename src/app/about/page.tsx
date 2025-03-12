@@ -1,4 +1,3 @@
-import Navigation from '@/components/Navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Link from 'next/link';
 
@@ -10,7 +9,6 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <>
-      <Navigation />
       <Breadcrumbs
         items={[
           {

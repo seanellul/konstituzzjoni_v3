@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getChapters } from '@/lib/constitution';
-import Navigation from '@/components/Navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { Chapter } from '@/types/constitution';
 import { toRomanNumeral } from '@/lib/utils';
@@ -15,7 +14,6 @@ export default async function ConstitutionPage() {
 
   return (
     <>
-      <Navigation />
       <Breadcrumbs
         items={[
           {

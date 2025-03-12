@@ -1,5 +1,4 @@
 import { searchArticles } from '@/lib/constitution';
-import Navigation from '@/components/Navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ArticleCard from '@/components/ArticleCard';
 import Link from 'next/link';
@@ -21,7 +20,6 @@ export default async function SearchPage({
 
   return (
     <>
-      <Navigation />
       <Breadcrumbs
         items={[
           {

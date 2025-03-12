@@ -10,6 +10,7 @@
     "clean": "rimraf .next"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "axios": "latest",
     "framer-motion": "latest",
     "next": "latest",

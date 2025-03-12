@@ -96,6 +96,32 @@ export default function ArticleContent({ article }: ArticleContentProps) {
     return false;
   };
 
+  // Get background color based on level for the identifier badge
+  const getBadgeStyles = (level: number, isHovered: boolean) => {
+    // Define base colors for each level
+    let bgColor, textColor, borderColor, shadow;
+    
+    if (level === 0) {
+      bgColor = isHovered ? 'bg-primary-700' : 'bg-primary-50';
+      // Use the primary red accent color for numbers on hover (not white)
+      textColor = isHovered ? 'text-red-700' : 'text-primary-DEFAULT';
+      borderColor = 'border-primary-200';
+      shadow = isHovered ? 'shadow-md' : 'shadow-sm';
+    } else if (level === 1) {
+      bgColor = isHovered ? 'bg-blue-500' : 'bg-blue-50';
+      textColor = isHovered ? 'text-white' : 'text-blue-700';
+      borderColor = 'border-blue-200';
+      shadow = isHovered ? 'shadow' : 'shadow-sm';
+    } else {
+      bgColor = isHovered ? 'bg-indigo-500' : 'bg-indigo-50';
+      textColor = isHovered ? 'text-white' : 'text-indigo-700';
+      borderColor = 'border-indigo-200';
+      shadow = 'shadow-sm';
+    }
+    
+    return { bgColor, textColor, borderColor, shadow };
+  };
+
   return (
     <>
       <motion.div 
@@ -126,9 +152,6 @@ export default function ArticleContent({ article }: ArticleContentProps) {
               const { type, level } = getParagraphType(paragraphText);
               const { identifier, content } = parseIdentifier(paragraphText);
               
-              // Determine styling based on paragraph type and level
-              const paddingLeft = level * 24;
-              
               // Base background color
               let bgBaseColor = 'bg-white';
               if (level === 1) bgBaseColor = 'bg-gray-50';
@@ -143,69 +166,68 @@ export default function ArticleContent({ article }: ArticleContentProps) {
                 ? bgHoverColor 
                 : bgBaseColor;
               
-              // Determine if this is the first or last item in a subgroup using the safe function
+              // Determine if this is the first or last item in a subgroup
               const prevType = getAdjacentParagraphType(index, 'prev');
               const nextType = getAdjacentParagraphType(index, 'next');
               
-              const isFirstInSubgroup = level === 1 && prevType.level === 0;
-              const isLastInSubgroup = level === 1 && (nextType.level === 0 || nextType.level === undefined);
-              const isFirstInNestedGroup = level === 2 && prevType.level !== 2;
+              // Calculate indentation based on level
+              const indentClass = level === 0 ? '' : level === 1 ? 'ml-6' : 'ml-12';
               
-              // Check if level 1 item has any level 2 children
-              const hasChildren = level === 1 ? hasChildItems(index) : false;
+              // Get badge styles
+              const isHovered = hoveredParagraph === paragraphNum;
+              const { bgColor, textColor, borderColor, shadow } = getBadgeStyles(level, isHovered);
+              
+              // Get badge size and shape based on level
+              let badgeSize = '';
+              let badgeShape = '';
+              
+              if (level === 0) {
+                badgeShape = 'rounded-md';
+                badgeSize = 'min-w-[32px] h-7';
+              } else if (level === 1) {
+                badgeShape = 'rounded-full';
+                badgeSize = 'w-7 h-7';
+              } else {
+                badgeShape = 'rounded-full';
+                badgeSize = 'w-6 h-6';
+              }
               
               return (
                 <motion.div 
                   key={index}
-                  className={`paragraph-container relative rounded-md transition-all duration-200 ${bgColorClass} ${level > 0 ? 'p-3' : 'p-0 mb-6'}`}
+                  className={`paragraph-container relative rounded-md transition-all duration-200 ${bgColorClass} ${level > 0 ? 'p-3' : 'p-0 mb-6'} ${indentClass}`}
                   variants={itemVariants}
                   onMouseEnter={() => setHoveredParagraph(paragraphNum)}
                   onMouseLeave={() => setHoveredParagraph(null)}
                 >
-                  {/* Tree structure connecting lines */}
-                  <div className="absolute left-0 top-0 bottom-0 w-10 pointer-events-none">
-                    {/* Main vertical line for all nested items */}
-                    {level > 0 && (
-                      <div 
-                        className={`absolute left-2 top-0 bottom-0 w-0.5 ${
-                          hoveredParagraph === paragraphNum 
-                            ? 'bg-primary-DEFAULT' 
-                            : 'bg-gray-300'
-                        }`} 
-                      />
-                    )}
-                    
-                    {/* Horizontal line connecting to content */}
-                    {level > 0 && (
-                      <div className="absolute left-2 top-1/2 w-6 h-0.5 bg-gray-300" />
-                    )}
-                    
-                    {/* Additional vertical line for level 2 items */}
-                    {level === 2 && (
-                      <div className="absolute left-[-16px] top-0 bottom-0 w-0.5 bg-gray-300" />
-                    )}
-                    
-                    {/* Horizontal connector for level 2 items */}
-                    {level === 2 && (
-                      <div className="absolute left-[-16px] top-1/2 w-6 h-0.5 bg-gray-300" />
-                    )}
-                  </div>
+                  {/* Simplified left border to indicate hierarchy */}
+                  {level > 0 && (
+                    <div 
+                      className={`absolute left-0 top-0 h-full w-1 rounded-l ${
+                        hoveredParagraph === paragraphNum 
+                          ? 'bg-primary-DEFAULT' 
+                          : level === 1 ? 'bg-gray-300' : 'bg-gray-400'
+                      }`} 
+                    />
+                  )}
 
-                  <div className={`flex ${level > 0 ? 'ml-10' : ''}`} style={{ paddingLeft: level === 0 ? paddingLeft : 0 }}>
+                  <div className="flex items-center pl-3">
                     {identifier && (
-                      <span className={`font-medium mr-3 ${level === 0 ? 'text-primary-DEFAULT font-bold' : 'text-gray-700'}`}>
-                        ({identifier})
-                      </span>
+                      <motion.div 
+                        className={`mr-4 flex-shrink-0 ${badgeShape} ${badgeSize} ${bgColor} ${textColor} ${borderColor} border transition-all duration-200 ${shadow} flex items-center justify-center self-start mt-0.5`}
+                        animate={{ 
+                          scale: isHovered ? 1.05 : 1,
+                        }}
+                      >
+                        <span className={`font-medium leading-none ${level === 0 ? 'text-sm' : level === 1 ? 'text-sm' : 'text-xs'}`}>
+                          {identifier}
+                        </span>
+                      </motion.div>
                     )}
                     <div className="content flex-1">
-                      <span className="text-lg">{content}</span>
+                      <span className="text-lg leading-relaxed">{content}</span>
                     </div>
                   </div>
-                  
-                  {/* Extra vertical line that extends down to connect with sub-items */}
-                  {hasChildren && (
-                    <div className="absolute left-2 top-[50%] bottom-[-12px] w-0.5 bg-gray-300" />
-                  )}
                 </motion.div>
               );
             })}
