@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChartBarIcon, MagnifyingGlassIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import { useActiveUsersStore } from '@/lib/activeUsersStore';
+import { isBrowser, getBaseUrl } from '@/lib/utils';
 
 interface TopArticle {
   chapter: number;
@@ -19,22 +20,43 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
   const [topArticle, setTopArticle] = useState<TopArticle | null>(null);
   const [topSearch, setTopSearch] = useState<TopSearch | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [mounted, setMounted] = useState<boolean>(false);
   
   // Use the shared store for active users count instead of fetching separately
   const { count: activeUsers } = useActiveUsersStore();
 
   useEffect(() => {
+    // Track if component is mounted
+    setMounted(true);
+    
+    // Skip on server-side
+    if (!isBrowser()) return;
+    
     const fetchInsights = async () => {
       try {
         setLoading(true);
         
+        console.log('Fetching insights for LiveInsightsWidget...');
+        
+        const baseUrl = getBaseUrl();
+        
         // Fetch top article
-        const articlesRes = await fetch('/api/analytics/top-articles?timeframe=day&limit=1');
+        const articlesRes = await fetch(`${baseUrl}/api/analytics/top-articles?timeframe=day&limit=1`);
+        if (!articlesRes.ok) {
+          console.error(`Error fetching top articles: ${articlesRes.status} ${articlesRes.statusText}`);
+          throw new Error('Failed to fetch top articles');
+        }
         const articles = await articlesRes.json();
+        console.log('Top articles response:', articles);
         
         // Fetch top search
-        const searchesRes = await fetch('/api/analytics/top-searches?timeframe=day&limit=1');
+        const searchesRes = await fetch(`${baseUrl}/api/analytics/top-searches?timeframe=day&limit=1`);
+        if (!searchesRes.ok) {
+          console.error(`Error fetching top searches: ${searchesRes.status} ${searchesRes.statusText}`);
+          throw new Error('Failed to fetch top searches');
+        }
         const searches = await searchesRes.json();
+        console.log('Top searches response:', searches);
         
         // No need to fetch active users here anymore since we're using the shared store
         
@@ -53,6 +75,9 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
     const interval = setInterval(fetchInsights, 120 * 1000);
     return () => clearInterval(interval);
   }, []);
+  
+  // Don't render anything until after hydration to avoid layout shift
+  if (!mounted) return null;
   
   // If there's no data and still loading, show a placeholder
   if (loading && !topArticle && !topSearch && activeUsers === 0) {

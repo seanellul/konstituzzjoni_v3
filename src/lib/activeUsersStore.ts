@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { isBrowser } from './utils';
+import { isBrowser, getBaseUrl } from './utils';
 
 /**
  * Global store for active users data to prevent duplicate API calls
@@ -37,13 +37,17 @@ export const useActiveUsersStore = create<ActiveUsersState>((set, get) => ({
     
     try {
       set({ isFetching: true });
-      const res = await fetch('/api/analytics/active-users');
+      console.log('Fetching active users...');
+      
+      const baseUrl = getBaseUrl();
+      const res = await fetch(`${baseUrl}/api/analytics/active-users`);
       
       if (!res.ok) {
-        throw new Error('Failed to fetch active users');
+        throw new Error(`Failed to fetch active users: ${res.status} ${res.statusText}`);
       }
       
       const data = await res.json();
+      console.log('Active users response:', data);
       set({ count: data.count, lastFetched: now, isFetching: false });
       return data.count;
     } catch (error) {
@@ -62,14 +66,16 @@ export function initActiveUsersTracking() {
     return;
   }
   
-  // Get the current time
-  const now = Date.now();
+  console.log('Initializing active users tracking...');
   
   // Initialize the first fetch
-  useActiveUsersStore.getState().fetch();
+  useActiveUsersStore.getState().fetch().then(count => {
+    console.log('Initial active users count:', count);
+  });
   
-  // Set up recurring fetches every 60 seconds (reduced from 30)
+  // Set up recurring fetches every 60 seconds
   setInterval(() => {
+    console.log('Fetching active users (interval)...');
     useActiveUsersStore.getState().fetch();
   }, 60 * 1000);
 } 

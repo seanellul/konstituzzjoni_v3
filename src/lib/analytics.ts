@@ -15,7 +15,7 @@
  */
 
 import { shouldFilterFromAnalytics } from './content-filters';
-import { isBrowser } from './utils';
+import { isBrowser, getBaseUrl } from './utils';
 
 // Internal blacklist check - for administrative use only
 function isSessionBlacklisted(): boolean {
@@ -33,7 +33,8 @@ function isSessionBlacklisted(): boolean {
     // Only check blacklist status once per hour
     if (!blacklistChecked || now - parseInt(blacklistChecked) > 60 * 60 * 1000) {
       // Async check - we'll use the cached value for this request
-      fetch('/api/analytics/check-blacklist', {
+      const baseUrl = getBaseUrl();
+      fetch(`${baseUrl}/api/analytics/check-blacklist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId })
@@ -86,7 +87,8 @@ export function trackPageView(path: string) {
   
   try {
     const sessionId = getOrCreateSessionId();
-    fetch('/api/analytics/pageview', {
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}/api/analytics/pageview`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -110,7 +112,8 @@ export function trackArticleView(chapter: number, article: number) {
   
   try {
     const sessionId = getOrCreateSessionId();
-    fetch('/api/analytics/article-view', {
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}/api/analytics/article-view`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -134,7 +137,8 @@ export function trackChapterView(chapter: number) {
   
   try {
     const sessionId = getOrCreateSessionId();
-    fetch('/api/analytics/chapter-view', {
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}/api/analytics/chapter-view`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -163,7 +167,8 @@ export function trackSearch(term: string) {
   
   try {
     const sessionId = getOrCreateSessionId();
-    fetch('/api/analytics/search', {
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}/api/analytics/search`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -215,7 +220,8 @@ export function trackActiveUser() {
   const sessionId = getOrCreateSessionId();
   
   try {
-    fetch('/api/analytics/active-user', {
+    const baseUrl = getBaseUrl();
+    fetch(`${baseUrl}/api/analytics/active-user`, {
       method: 'POST',
       headers: { 
         'Content-Type': 'application/json',
@@ -225,6 +231,8 @@ export function trackActiveUser() {
         sessionId,
         timestamp: new Date().toISOString(),
       })
+    }).catch(error => {
+      console.error('Failed to track active user:', error);
     });
   } catch (error) {
     console.error('Failed to track active user:', error);

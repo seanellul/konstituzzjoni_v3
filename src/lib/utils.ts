@@ -44,4 +44,22 @@ export function toRomanNumeral(num: number): string {
 /**
  * Safely check if code is running in a browser environment
  */
-export const isBrowser = () => typeof window !== 'undefined'; 
+export const isBrowser = () => typeof window !== 'undefined';
+
+/**
+ * Get the base URL for API requests that works in both development and production
+ */
+export const getBaseUrl = () => {
+  // Browser should use relative path
+  if (isBrowser()) {
+    return '';
+  }
+  
+  // When rendering on the server, we need to use an absolute URL
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  
+  // If not in production, use localhost
+  return 'http://localhost:3000';
+}; 

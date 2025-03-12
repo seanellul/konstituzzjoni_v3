@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { trackPageView, trackActiveUser, getOrCreateSessionId } from '@/lib/analytics';
 import { initActiveUsersTracking } from '@/lib/activeUsersStore';
-import { isBrowser } from '@/lib/utils';
+import { isBrowser, getBaseUrl } from '@/lib/utils';
 
 export default function PageViewTracker() {
   const pathname = usePathname();
@@ -13,8 +13,11 @@ export default function PageViewTracker() {
     // Skip on server-side
     if (!isBrowser()) return;
     
+    console.log('PageViewTracker initialized');
+    
     // Initialize session ID
     const sessionId = getOrCreateSessionId();
+    console.log('Session ID:', sessionId);
     
     // Track page view for this specific page
     trackPageView(pathname);
@@ -29,16 +32,27 @@ export default function PageViewTracker() {
     // Set up headers for future API requests
     const originalFetch = window.fetch;
     window.fetch = function(input, init) {
+      // Only modify API requests to our own endpoints
+      const inputUrl = typeof input === 'string' ? input : input instanceof URL ? input.toString() : '';
+      const isApiCall = inputUrl.includes('/api/');
+      
       init = init || {};
-      init.headers = init.headers || {};
       
-      // Add session ID header to all API requests
-      init.headers = {
-        ...init.headers,
-        'x-session-id': sessionId
-      };
+      if (isApiCall) {
+        init.headers = init.headers || {};
+        
+        // Add session ID header to all API requests
+        init.headers = {
+          ...init.headers,
+          'x-session-id': sessionId
+        };
+      }
       
-      return originalFetch(input, init);
+      // Add better error handling for fetch
+      return originalFetch(input, init).catch(error => {
+        console.error(`Fetch error for ${inputUrl}:`, error);
+        throw error;
+      });
     };
     
     // Restore original fetch when component unmounts
