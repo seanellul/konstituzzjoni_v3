@@ -203,7 +203,7 @@ class PerformanceMonitor {
   }
 
   private initEngagementTracking() {
-    let pageStartTime = Date.now();
+    const pageStartTime = Date.now();
     let maxScrollDepth = 0;
     
     // Track scroll depth
