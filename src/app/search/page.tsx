@@ -8,12 +8,12 @@ export const metadata = {
 };
 
 interface SearchPageProps {
-  searchParams: { 
+  searchParams: Promise<{ 
     q?: string; 
     chapter?: string;
     type?: string;
     metadata?: string;
-  };
+  }>;
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {

@@ -7,7 +7,7 @@ import { DocumentTextIcon, MagnifyingGlassIcon, BookOpenIcon, ChartBarIcon } fro
 interface Feature {
   title: string;
   description: string;
-  icon: JSX.Element;
+  icon: React.ReactElement;
   color: string;
 }
 

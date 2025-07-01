@@ -26,10 +26,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { chapterNumber: string; articleNumber: string };
+  params: Promise<{ chapterNumber: string; articleNumber: string }>;
 }): Promise<Metadata> {
-  const chapterNum = parseInt(params.chapterNumber, 10);
-  const articleNum = parseInt(params.articleNumber, 10);
+  const resolvedParams = await params;
+  const chapterNum = parseInt(resolvedParams.chapterNumber, 10);
+  const articleNum = parseInt(resolvedParams.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);
 
   if (!article) {
@@ -45,9 +46,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function ArticlePage({ params }: { params: { chapterNumber: string; articleNumber: string } }) {
-  const chapterNum = parseInt(params.chapterNumber, 10);
-  const articleNum = parseInt(params.articleNumber, 10);
+export default async function ArticlePage({ params }: { params: Promise<{ chapterNumber: string; articleNumber: string }> }) {
+  const resolvedParams = await params;
+  const chapterNum = parseInt(resolvedParams.chapterNumber, 10);
+  const articleNum = parseInt(resolvedParams.articleNumber, 10);
   const article = await getArticle(chapterNum, articleNum);
 
   if (!article) {

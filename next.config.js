@@ -1,29 +1,29 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
+  
   images: {
     domains: ['images.unsplash.com'],
+    formats: ['image/webp', 'image/avif'],
+    dangerouslyAllowSVG: true,
+    minimumCacheTTL: 60,
   },
-  typescript: {
-    // !! WARN !!
-    // Temporarily ignoring TypeScript errors
-    // This should be removed once the type issue is resolved properly
-    ignoreBuildErrors: true,
-  },
-  // Disable static generation for pages that use client-side only features
+  
+  // Optimizations
   experimental: {
-    // This prevents "window is not defined" errors during build
-    workerThreads: false,
-    cpus: 1
+    optimizePackageImports: ['@heroicons/react'],
   },
-  // Configure specific routes to be client-side only
-  // This prevents prerendering pages that use window/browser APIs
-  output: 'standalone',
+  
+  // Improved build ID generation
   generateBuildId: async () => {
-    // This makes each build unique to avoid caching issues
-    return `build-${Date.now()}`;
+    if (process.env.NODE_ENV === 'production') {
+      return process.env.VERCEL_GIT_COMMIT_SHA || `build-${Date.now()}`;
+    }
+    return 'development';
   },
-  // Add headers to API routes for CORS and caching
+  // Add headers for performance and security
   async headers() {
     return [
       {
@@ -35,6 +35,37 @@ const nextConfig = {
           { key: 'Access-Control-Allow-Methods', value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT' },
           { key: 'Access-Control-Allow-Headers', value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, x-session-id' },
           { key: 'Cache-Control', value: 'no-store, max-age=0' },
+        ],
+      },
+      {
+        // Cache static assets aggressively
+        source: '/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Cache Next.js static files
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        // Cache constitution content for 1 hour
+        source: '/constitution/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=3600, s-maxage=3600' },
+        ],
+      },
+      {
+        // Security headers
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Frame-Options', value: 'DENY' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
       },
     ];

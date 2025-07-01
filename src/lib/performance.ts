@@ -84,7 +84,7 @@ class PerformanceMonitor {
   private async initWebVitals() {
     try {
       // Dynamic import to avoid SSR issues
-      const { getCLS, getFID, getFCP, getLCP, getTTFB } = await import('web-vitals');
+      const { onCLS, onINP, onFCP, onLCP, onTTFB } = await import('web-vitals');
       
       const reportWebVital = (metric: any) => {
         this.recordMetric({
@@ -102,11 +102,11 @@ class PerformanceMonitor {
         });
       };
 
-      getCLS(reportWebVital);
-      getFID(reportWebVital);
-      getFCP(reportWebVital);
-      getLCP(reportWebVital);
-      getTTFB(reportWebVital);
+      onCLS(reportWebVital);
+      onINP(reportWebVital);
+      onFCP(reportWebVital);
+      onLCP(reportWebVital);
+      onTTFB(reportWebVital);
       
     } catch (error) {
       console.warn('[PerformanceMonitor] Web Vitals not available:', error);

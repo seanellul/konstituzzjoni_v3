@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Article, Chapter, Constitution } from '@/types/constitution';
+import { cache } from './cache';
 
 const articlesDirectory = path.join(process.cwd(), 'articles');
 
@@ -8,6 +9,12 @@ const articlesDirectory = path.join(process.cwd(), 'articles');
  * Get all chapters of the constitution
  */
 export async function getConstitutionStructure(): Promise<Constitution> {
+  // Try to get from cache first
+  const cached = await cache.getConstitutionStructure();
+  if (cached) {
+    return cached;
+  }
+
   const schemaPath = path.join(articlesDirectory, 'constitution_toc.json');
   const schemaContent = fs.readFileSync(schemaPath, 'utf8');
   const schema = JSON.parse(schemaContent);
@@ -35,6 +42,9 @@ export async function getConstitutionStructure(): Promise<Constitution> {
     }
   });
   
+  // Cache the result
+  cache.setConstitutionStructure(constitution);
+  
   return constitution;
 }
 
@@ -42,6 +52,12 @@ export async function getConstitutionStructure(): Promise<Constitution> {
  * Get all articles from a specific chapter
  */
 export async function getChapterArticles(chapterNumber: number): Promise<Article[]> {
+  // Try to get from cache first
+  const cached = await cache.getChapterArticles(chapterNumber);
+  if (cached) {
+    return cached;
+  }
+
   const chapterDir = path.join(articlesDirectory, `chapter_${chapterNumber}`);
   
   if (!fs.existsSync(chapterDir)) {
@@ -70,6 +86,9 @@ export async function getChapterArticles(chapterNumber: number): Promise<Article
   
   // Sort articles by number
   articles.sort((a, b) => a.number - b.number);
+  
+  // Cache the result
+  cache.setChapterArticles(chapterNumber, articles);
   
   return articles;
 }
