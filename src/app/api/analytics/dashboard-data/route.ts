@@ -47,37 +47,56 @@ async function getArticleTitle(chapter: number, article: number): Promise<string
   }
 }
 
+// Helper function to validate timeframe parameter
+function validateTimeframe(timeframe: string): string {
+  const validTimeframes = ['day', 'week', 'month', 'year', 'all'];
+  return validTimeframes.includes(timeframe) ? timeframe : 'day';
+}
+
+// Helper function to calculate date range
+function getDateRange(timeframe: string): Date {
+  const startDate = new Date();
+  switch (timeframe) {
+    case 'day':
+      startDate.setDate(startDate.getDate() - 1);
+      break;
+    case 'week':
+      startDate.setDate(startDate.getDate() - 7);
+      break;
+    case 'month':
+      startDate.setMonth(startDate.getMonth() - 1);
+      break;
+    case 'year':
+      startDate.setFullYear(startDate.getFullYear() - 1);
+      break;
+    case 'all':
+      // No date filtering for all-time stats
+      startDate.setFullYear(2000);
+      break;
+    default:
+      startDate.setDate(startDate.getDate() - 1); // Default to 1 day
+  }
+  return startDate;
+}
+
 export async function GET(request: Request) {
+  const startTime = Date.now();
+  
   try {
     const { searchParams } = new URL(request.url);
-    const timeframe = searchParams.get('timeframe') || 'day';
+    const rawTimeframe = searchParams.get('timeframe') || 'day';
+    const timeframe = validateTimeframe(rawTimeframe);
+    
+    console.log(`[Analytics API] Fetching dashboard data for timeframe: ${timeframe}`);
     
     // Calculate the start date based on the timeframe
-    const startDate = new Date();
-    switch (timeframe) {
-      case 'day':
-        startDate.setDate(startDate.getDate() - 1);
-        break;
-      case 'week':
-        startDate.setDate(startDate.getDate() - 7);
-        break;
-      case 'month':
-        startDate.setMonth(startDate.getMonth() - 1);
-        break;
-      case 'year':
-        startDate.setFullYear(startDate.getFullYear() - 1);
-        break;
-      case 'all':
-        // No date filtering for all-time stats
-        startDate.setFullYear(2000);
-        break;
-      default:
-        startDate.setDate(startDate.getDate() - 1); // Default to 1 day
-    }
+    const startDate = getDateRange(timeframe);
     
     // Calculate a timestamp from 5 minutes ago for active users
     const fiveMinutesAgo = new Date();
     fiveMinutesAgo.setMinutes(fiveMinutesAgo.getMinutes() - 5);
+    
+    console.log(`[Analytics API] Date range: ${startDate.toISOString()} to ${new Date().toISOString()}`);
     
     // Execute all queries in parallel for better performance
     const [
@@ -146,7 +165,7 @@ export async function GET(request: Request) {
         where: { lastActive: { gte: fiveMinutesAgo } }
       }),
       
-      // Unique visitors
+      // Unique visitors with better error handling
       prisma.$queryRaw`
         SELECT COUNT(DISTINCT "sessionId") as unique_visitors
         FROM (
@@ -158,13 +177,18 @@ export async function GET(request: Request) {
           UNION
           SELECT "sessionId" FROM "SearchQuery" WHERE timestamp >= ${startDate} AND "sessionId" IS NOT NULL
         ) as combined_views
-      `
+      `.catch(error => {
+        console.error('[Analytics API] Error in unique visitors query:', error);
+        return [{ unique_visitors: 0 }];
+      })
     ]);
     
-    // Extract unique_visitors value, ensuring it's a regular number
+    // Extract unique_visitors value with better error handling
     const uniqueVisitorsCount = Array.isArray(uniqueVisitors) && uniqueVisitors[0]?.unique_visitors !== undefined
       ? Number(uniqueVisitors[0].unique_visitors)
       : 0;
+    
+    console.log(`[Analytics API] Unique visitors calculated: ${uniqueVisitorsCount}`);
     
     // Convert BigInt values to regular numbers
     const processedResults = {
@@ -177,12 +201,12 @@ export async function GET(request: Request) {
         totalPageViews,
         totalSearches,
         activeUserCount,
-        uniqueVisitors: uniqueVisitorsCount
+        uniqueVisitors: uniqueVisitorsCount // Fixed: Use the extracted count, not the raw query result
       },
       timeframe
     };
     
-    // Add article titles to topArticles
+    // Add article titles to topArticles with concurrent fetching
     const topArticlesWithTitles = await Promise.all(
       processedResults.topArticles.map(async (article: any) => {
         const title = await getArticleTitle(article.chapter, article.article);
@@ -196,11 +220,43 @@ export async function GET(request: Request) {
     // Update the processed results with article titles
     processedResults.topArticles = topArticlesWithTitles;
     
-    return NextResponse.json(processedResults, { status: 200 });
+    const responseTime = Date.now() - startTime;
+    console.log(`[Analytics API] Dashboard data fetched successfully in ${responseTime}ms`);
+    
+    // Add metadata to response
+    const response = {
+      ...processedResults,
+      metadata: {
+        responseTime,
+        timestamp: new Date().toISOString(),
+        dateRange: {
+          from: startDate.toISOString(),
+          to: new Date().toISOString()
+        }
+      }
+    };
+    
+    return NextResponse.json(response, { 
+      status: 200,
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300', // Cache for 1 minute
+      }
+    });
   } catch (error) {
-    console.error('Error fetching dashboard data:', error);
+    const responseTime = Date.now() - startTime;
+    console.error('[Analytics API] Error fetching dashboard data:', error);
+    console.error('[Analytics API] Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      responseTime
+    });
+    
     return NextResponse.json(
-      { error: 'Failed to fetch dashboard data' },
+      { 
+        error: 'Failed to fetch dashboard data',
+        details: process.env.NODE_ENV === 'development' ? error instanceof Error ? error.message : 'Unknown error' : undefined,
+        timestamp: new Date().toISOString()
+      },
       { status: 500 }
     );
   }

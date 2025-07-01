@@ -11,6 +11,7 @@ import {
   ClockIcon,
   ArrowPathIcon
 } from '@heroicons/react/24/outline';
+import AnalyticsHealthStatus from '@/components/AnalyticsHealthStatus';
 
 // Types for our analytics data
 interface TopArticle {
@@ -148,6 +149,16 @@ export default function AnalyticsDashboard() {
           <ClockIcon className="w-4 h-4 mr-1" />
           <span>Last updated at {formatLastUpdated(lastUpdated)}</span>
         </div>
+      </motion.div>
+
+      {/* Analytics Health Status */}
+      <motion.div 
+        className="mb-8"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.15 }}
+      >
+        <AnalyticsHealthStatus />
       </motion.div>
 
       {loading && !dashboardData ? (
