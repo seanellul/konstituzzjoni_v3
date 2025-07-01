@@ -30,8 +30,8 @@ const structuredData = {
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": "https://kostituzzjoni.mt/#website",
-      "url": "https://kostituzzjoni.mt/",
+             "@id": "https://constitution.mt/#website",
+       "url": "https://constitution.mt/",
       "name": "Kostituzzjoni.mt - Interactive Constitution of Malta",
       "description": "Interactive digital platform for exploring and understanding the Constitution of Malta with advanced search and navigation features.",
       "publisher": {
@@ -42,7 +42,7 @@ const structuredData = {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://kostituzzjoni.mt/search?q={search_term_string}"
+                         "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
@@ -51,9 +51,9 @@ const structuredData = {
     },
     {
       "@type": "Organization",
-      "@id": "https://kostituzzjoni.mt/#organization",
-      "name": "Kostituzzjoni.mt",
-      "url": "https://kostituzzjoni.mt/",
+               "@id": "https://constitution.mt/#organization",
+         "name": "Constitution of Malta",
+         "url": "https://constitution.mt/",
       "logo": {
         "@type": "ImageObject",
         "url": "https://kostituzzjoni.mt/logo.png",
@@ -69,9 +69,9 @@ const structuredData = {
       "name": "Constitution of Malta Interactive Reader",
       "serviceType": "Legal Information Service",
       "description": "Digital access to Malta's Constitution with interactive navigation and search capabilities",
-      "provider": {
-        "@id": "https://kostituzzjoni.mt/#organization"
-      },
+               "provider": {
+           "@id": "https://constitution.mt/#organization"
+         },
       "areaServed": {
         "@type": "Country",
         "name": "Malta"
@@ -129,13 +129,17 @@ export default function RootLayout({
         {/* DNS Prefetch for performance */}
         <link rel="dns-prefetch" href="//vercel-analytics.com" />
         
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://kostituzzjoni.mt/" />
-        
-        {/* Alternate Language Versions */}
-        <link rel="alternate" hrefLang="en-MT" href="https://kostituzzjoni.mt/" />
-        <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/mt" />
-        <link rel="alternate" hrefLang="x-default" href="https://kostituzzjoni.mt/" />
+                 {/* Canonical URL */}
+         <link rel="canonical" href="https://constitution.mt/" />
+         
+         {/* Alternate Language Versions and Domain Variants */}
+         <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
+         <link rel="alternate" hrefLang="en-US" href="https://constitution.mt/" />
+         <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />
+         <link rel="alternate" hrefLang="x-default" href="https://constitution.mt/" />
+         
+         {/* Domain equivalence for SEO */}
+         <link rel="alternate" href="https://kostituzzjoni.mt/" title="Kostituzzjoni ta' Malta" />
         
         {/* Legal and Copyright Information */}
         <meta name="copyright" content="© Kostituzzjoni.mt - Educational Use" />

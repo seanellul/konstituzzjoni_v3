@@ -1,7 +1,7 @@
 # Kostituzzjoni.mt - LLM Context Documentation
 
 ## Project Overview
-Kostituzzjoni.mt is an interactive web application for exploring and understanding the Constitution of Malta. Built with Next.js, TypeScript, and Tailwind CSS, it provides a modern, user-friendly interface to access Malta's founding legal document.
+This is an interactive web application for exploring and understanding the Constitution of Malta, hosted on both constitution.mt and kostituzzjoni.mt domains. Built with Next.js, TypeScript, and Tailwind CSS, it provides a modern, user-friendly interface to access Malta's founding legal document in Malta's bilingual environment.
 
 ## Key Features
 - **Interactive Navigation**: Browse through constitutional chapters and articles with intuitive interface
@@ -59,6 +59,9 @@ The Constitution of Malta is organized into 11 main chapters:
 
 ## SEO Strategy & Keywords
 
+### Dual Domain Strategy
+The site is accessible via both constitution.mt (English-focused) and kostituzzjoni.mt (Maltese-focused) domains, targeting Malta's bilingual search landscape. Both domains point to the same repository without redirects, allowing for bilingual SEO optimization.
+
 ### Primary Keywords
 - Malta Constitution
 - Maltese Constitution
@@ -70,6 +73,8 @@ The Constitution of Malta is organized into 11 main chapters:
 - Malta fundamental rights
 - Malta parliament
 - Malta judiciary
+- constitution.mt
+- kostituzzjoni.mt
 
 ### Long-tail Keywords
 - Malta Constitution articles

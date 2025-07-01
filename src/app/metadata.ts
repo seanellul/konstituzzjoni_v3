@@ -26,8 +26,13 @@ export const metadata: Metadata = {
     'constitutional law education', 'Malta legal education', 'interactive constitution',
     'constitutional navigation', 'legal document search', 'Malta civics education',
     
-    // Maltese language variants
-    'Kostituzzjoni ta\' Malta', 'Kostituzzjoni Maltija', 'liġi kostituzzjonali Malta'
+    // Maltese language variants and dual domain
+    'Kostituzzjoni ta\' Malta', 'Kostituzzjoni Maltija', 'liġi kostituzzjonali Malta',
+    'constitution.mt', 'kostituzzjoni.mt', 'Malta constitution website',
+    
+    // Bilingual search terms
+    'Malta bilingual constitution', 'Maltese English constitution',
+    'constitutional law Malta English', 'constitutional law Malta Maltese'
   ],
   authors: [{ name: 'Kostituzzjoni.mt Team' }],
   creator: 'Kostituzzjoni.mt Team',
@@ -47,8 +52,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_MT',
     alternateLocale: ['mt_MT', 'en_US'],
-    url: 'https://kostituzzjoni.mt',
-    siteName: 'Kostituzzjoni.mt',
+    url: 'https://constitution.mt',
+    siteName: 'Constitution of Malta',
     title: 'Interactive Constitution of Malta - Kostituzzjoni.mt',
     description: 'Explore Malta\'s Constitution through an interactive digital platform. Access all constitutional articles, search legal provisions, and understand Malta\'s democratic framework.',
     images: [
@@ -73,10 +78,11 @@ export const metadata: Metadata = {
     bing: 'your-bing-verification-code',
   },
   alternates: {
-    canonical: 'https://kostituzzjoni.mt',
+    canonical: 'https://constitution.mt',
     languages: {
-      'en-MT': 'https://kostituzzjoni.mt',
-      'mt-MT': 'https://kostituzzjoni.mt/mt',
+      'en-MT': 'https://constitution.mt',
+      'en-US': 'https://constitution.mt',
+      'mt-MT': 'https://kostituzzjoni.mt',
     },
   },
   category: 'legal',
