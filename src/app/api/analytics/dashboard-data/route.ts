@@ -177,7 +177,7 @@ export async function GET(request: Request) {
         totalPageViews,
         totalSearches,
         activeUserCount,
-        uniqueVisitors: typeof uniqueVisitors === 'number' ? uniqueVisitors : 0
+        uniqueVisitors: uniqueVisitorsCount
       },
       timeframe
     };
