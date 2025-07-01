@@ -6,7 +6,6 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 import PageViewTracker from '@/components/PageViewTracker';
 import PrivacyNotice from '@/components/PrivacyNotice';
-import { Analytics } from '@vercel/analytics/react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,33 +22,150 @@ const merriweather = Merriweather({
 
 const currentYear = new Date().getFullYear();
 
+// Structured Data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+             "@id": "https://constitution.mt/#website",
+       "url": "https://constitution.mt/",
+      "name": "Kostituzzjoni.mt - Interactive Constitution of Malta",
+      "description": "Interactive digital platform for exploring and understanding the Constitution of Malta with advanced search and navigation features.",
+      "publisher": {
+        "@id": "https://kostituzzjoni.mt/#organization"
+      },
+      "potentialAction": [
+        {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+                         "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        }
+      ],
+      "inLanguage": ["en-MT", "mt-MT"]
+    },
+    {
+      "@type": "Organization",
+               "@id": "https://constitution.mt/#organization",
+         "name": "Constitution of Malta",
+         "url": "https://constitution.mt/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kostituzzjoni.mt/logo.png",
+        "width": 600,
+        "height": 200
+      },
+      "sameAs": [
+        "https://twitter.com/KostituzzjoniMT"
+      ]
+    },
+    {
+      "@type": "GovernmentService",
+      "name": "Constitution of Malta Interactive Reader",
+      "serviceType": "Legal Information Service",
+      "description": "Digital access to Malta's Constitution with interactive navigation and search capabilities",
+               "provider": {
+           "@id": "https://constitution.mt/#organization"
+         },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Malta"
+      },
+      "availableLanguage": ["English", "Maltese"]
+    },
+    {
+      "@type": "LegalDocument",
+      "name": "Constitution of Malta",
+      "description": "The supreme law of Malta, establishing the framework of government and fundamental rights",
+      "legislationDate": "1964-09-21",
+      "legislationJurisdiction": {
+        "@type": "Country",
+        "name": "Malta"
+      },
+      "legislationType": "Constitution"
+    }
+  ]
+};
+
+
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${merriweather.variable}`}>
-      <head>
+    <html lang="en-MT" className={`${inter.variable} ${merriweather.variable}`}>
+            <head>
         <title>Kostituzzjoni.mt - Interactive Constitution of Malta</title>
-        <meta name="description" content="Explore the Constitution of Malta through an interactive, user-friendly interface with advanced search and navigation features." />
+        <meta name="description" content="Explore the Constitution of Malta through an interactive, user-friendly interface. Access all chapters, articles, and amendments of Malta's constitutional law with advanced search and navigation features." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        <meta name="theme-color" content="#dc2626" />
+        
+        {/* Favicon and App Icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://constitution.mt/" />
+        
+        {/* Alternate Language Versions */}
+        <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
+        <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />
+        <link rel="alternate" hrefLang="x-default" href="https://constitution.mt/" />
       </head>
       <body className="bg-secondary-light dark:bg-gray-900 min-h-screen flex flex-col text-gray-900 dark:text-gray-100">
-        <Navigation />
-        <main className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 flex-grow max-w-full overflow-x-hidden">
+        {/* Skip to main content for accessibility */}
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-primary-DEFAULT text-white p-2 z-50">
+          Skip to main content
+        </a>
+        
+        <header role="banner">
+          <Navigation />
+        </header>
+        
+        <main id="main-content" role="main" className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 flex-grow max-w-full overflow-x-hidden">
           {children}
         </main>
-        <footer className="bg-gray-100 dark:bg-gray-800 py-4 sm:py-6 mt-auto border-t border-gray-200 dark:border-gray-700">
+        
+        <footer role="contentinfo" className="bg-gray-100 dark:bg-gray-800 py-4 sm:py-6 mt-auto border-t border-gray-200 dark:border-gray-700">
           <div className="container mx-auto px-4 sm:px-6">
-            <p className="text-center text-gray-600 dark:text-gray-400 text-sm sm:text-base">
-              © {currentYear} Kostituzzjoni.mt | An interactive reader for the Constitution of Malta
-            </p>
+            <div className="text-center space-y-2">
+              <p className="text-gray-600 dark:text-gray-400 text-sm sm:text-base">
+                © {currentYear} Kostituzzjoni.mt | An interactive reader for the Constitution of Malta
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-500">
+                Educational use only. For official legal reference, consult the{' '}
+                <a 
+                  href="https://legislation.mt/eli/const/eng/pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-primary-DEFAULT hover:underline"
+                >
+                  official Constitution of Malta
+                </a>
+              </p>
+              <nav className="flex justify-center space-x-4 text-xs">
+                <a href="/about" className="text-gray-500 hover:text-primary-DEFAULT">About</a>
+                <a href="/privacy" className="text-gray-500 hover:text-primary-DEFAULT">Privacy</a>
+                <a href="/terms" className="text-gray-500 hover:text-primary-DEFAULT">Terms</a>
+                <a href="/contact" className="text-gray-500 hover:text-primary-DEFAULT">Contact</a>
+              </nav>
+            </div>
           </div>
         </footer>
+        
+        {/* Client-side components */}
         <PageViewTracker />
         <PrivacyNotice />
-        <Analytics />
       </body>
     </html>
   );
