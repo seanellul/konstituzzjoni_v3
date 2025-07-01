@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useMemo } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ChartBarIcon, MagnifyingGlassIcon, UserGroupIcon } from '@heroicons/react/24/outline';
@@ -17,7 +17,7 @@ interface TopSearch {
   count: number;
 }
 
-export default function LiveInsightsWidget({ className = '' }: { className?: string }) {
+const LiveInsightsWidget = memo(function LiveInsightsWidget({ className = '' }: { className?: string }) {
   const [topArticle, setTopArticle] = useState<TopArticle | null>(null);
   const [topSearch, setTopSearch] = useState<TopSearch | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -190,4 +190,6 @@ export default function LiveInsightsWidget({ className = '' }: { className?: str
       </motion.div>
     </motion.div>
   );
-} 
+});
+
+export default LiveInsightsWidget; 
