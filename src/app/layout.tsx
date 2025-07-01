@@ -6,8 +6,6 @@ import React from 'react';
 import Navigation from '@/components/Navigation';
 import PageViewTracker from '@/components/PageViewTracker';
 import PrivacyNotice from '@/components/PrivacyNotice';
-import { Analytics } from '@vercel/analytics/react';
-import { metadata } from './metadata';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -92,7 +90,7 @@ const structuredData = {
   ]
 };
 
-export { metadata };
+
 
 export default function RootLayout({
   children,
@@ -101,24 +99,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-MT" className={`${inter.variable} ${merriweather.variable}`}>
-      <head>
-        {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
-        
-        {/* Additional SEO Meta Tags */}
+            <head>
+        <title>Kostituzzjoni.mt - Interactive Constitution of Malta</title>
+        <meta name="description" content="Explore the Constitution of Malta through an interactive, user-friendly interface. Access all chapters, articles, and amendments of Malta's constitutional law with advanced search and navigation features." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <meta name="theme-color" content="#dc2626" />
-        <meta name="msapplication-TileColor" content="#dc2626" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
         
         {/* Favicon and App Icons */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         
@@ -126,39 +114,13 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         
-        {/* DNS Prefetch for performance */}
-        <link rel="dns-prefetch" href="//vercel-analytics.com" />
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://constitution.mt/" />
         
-                 {/* Canonical URL */}
-         <link rel="canonical" href="https://constitution.mt/" />
-         
-         {/* Alternate Language Versions and Domain Variants */}
-         <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
-         <link rel="alternate" hrefLang="en-US" href="https://constitution.mt/" />
-         <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />
-         <link rel="alternate" hrefLang="x-default" href="https://constitution.mt/" />
-         
-         {/* Domain equivalence for SEO */}
-         <link rel="alternate" href="https://kostituzzjoni.mt/" title="Kostituzzjoni ta' Malta" />
-        
-        {/* Legal and Copyright Information */}
-        <meta name="copyright" content="© Kostituzzjoni.mt - Educational Use" />
-        <meta name="author" content="Kostituzzjoni.mt Team" />
-        <meta name="generator" content="Next.js" />
-        <meta name="format-detection" content="telephone=no" />
-        
-        {/* Geographic and Location Tags */}
-        <meta name="geo.region" content="MT" />
-        <meta name="geo.country" content="Malta" />
-        <meta name="geo.placename" content="Malta" />
-        <meta name="ICBM" content="35.9375, 14.3754" />
-        
-        {/* Legal Disclaimer */}
-        <meta name="disclaimer" content="For educational purposes. Official legal documents should be consulted for authoritative reference." />
-        
-        {/* Content Rating */}
-        <meta name="rating" content="general" />
-        <meta name="distribution" content="global" />
+        {/* Alternate Language Versions */}
+        <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
+        <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />
+        <link rel="alternate" hrefLang="x-default" href="https://constitution.mt/" />
       </head>
       <body className="bg-secondary-light dark:bg-gray-900 min-h-screen flex flex-col text-gray-900 dark:text-gray-100">
         {/* Skip to main content for accessibility */}
@@ -204,7 +166,6 @@ export default function RootLayout({
         {/* Client-side components */}
         <PageViewTracker />
         <PrivacyNotice />
-        <Analytics />
       </body>
     </html>
   );
