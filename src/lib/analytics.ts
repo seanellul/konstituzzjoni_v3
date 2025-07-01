@@ -88,6 +88,9 @@ export function trackPageView(path: string) {
   try {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
+    
+    console.log(`[Analytics] Tracking page view: ${path} (session: ${sessionId.substring(0, 8)}...)`);
+    
     fetch(`${baseUrl}/api/analytics/pageview`, {
       method: 'POST',
       headers: { 
@@ -99,6 +102,12 @@ export function trackPageView(path: string) {
         timestamp: new Date().toISOString(),
         referrer: document.referrer || null,
       })
+    }).then(response => {
+      if (!response.ok) {
+        console.warn(`[Analytics] Page view tracking failed: ${response.status}`);
+      }
+    }).catch(error => {
+      console.error('[Analytics] Page view tracking error:', error);
     });
   } catch (error) {
     console.error('Failed to track page view:', error);
