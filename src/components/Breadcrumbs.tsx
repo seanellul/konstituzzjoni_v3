@@ -23,21 +23,21 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.2 }}
     >
-      <ol className="flex flex-wrap items-center text-xs sm:text-sm whitespace-nowrap">
+      <ol className="flex flex-wrap items-center text-xs sm:text-sm">
         <motion.li 
-          className="flex items-center"
+          className="flex items-center flex-shrink-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
           <Link 
             href="/" 
-            className="text-gray-500 hover:text-primary-DEFAULT transition-colors duration-200 flex items-center"
+            className="text-gray-500 hover:text-primary-DEFAULT transition-colors duration-200 flex items-center py-1"
           >
             <HomeIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
             <span className="hidden xs:inline">Home</span>
           </Link>
-          <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 mx-1 sm:mx-2 text-gray-400" aria-hidden="true" />
+          <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 mx-1 sm:mx-2 text-gray-400 flex-shrink-0" aria-hidden="true" />
         </motion.li>
         
         {items.map((item, index) => (
@@ -52,15 +52,24 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
               <>
                 <Link 
                   href={item.href} 
-                  className="text-gray-500 hover:text-primary-DEFAULT transition-colors duration-200 truncate max-w-[100px] sm:max-w-none"
+                  className="text-gray-500 hover:text-primary-DEFAULT transition-colors duration-200 py-1 block"
+                  title={item.label}
                 >
-                  {item.label}
+                  <span className="truncate max-w-[120px] sm:max-w-[200px] md:max-w-none block">
+                    {item.label}
+                  </span>
                 </Link>
                 <ChevronRightIcon className="w-3 h-3 sm:w-4 sm:h-4 mx-1 sm:mx-2 flex-shrink-0 text-gray-400" aria-hidden="true" />
               </>
             ) : (
-              <span className="text-primary-DEFAULT font-medium truncate" aria-current="page">
-                {item.label}
+              <span 
+                className="text-primary-DEFAULT font-medium py-1 block" 
+                aria-current="page"
+                title={item.label}
+              >
+                <span className="truncate max-w-[150px] sm:max-w-[250px] md:max-w-none block">
+                  {item.label}
+                </span>
               </span>
             )}
           </motion.li>
