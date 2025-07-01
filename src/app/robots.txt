@@ -1,0 +1,29 @@
+User-agent: *
+Allow: /
+
+# Allow all constitutional content
+Allow: /constitution/
+Allow: /constitution/chapter/
+Allow: /search
+Allow: /about
+
+# Disallow private areas
+Disallow: /api/private/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /studio/
+
+# Sitemap location
+Sitemap: https://kostituzzjoni.mt/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Specific bot instructions
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
