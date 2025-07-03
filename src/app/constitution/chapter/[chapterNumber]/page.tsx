@@ -13,7 +13,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function getChapter(chapterNum: number): Promise<Chapter> {
+async function getChapter(chapterNum: number): Promise<Chapter> {
   const chapters = await getChapters();
   const chapter = chapters.find(
     (c: Chapter) => c.number === chapterNum
@@ -27,9 +27,10 @@ export async function getChapter(chapterNum: number): Promise<Chapter> {
 export async function generateMetadata({
   params,
 }: {
-  params: { chapterNumber: string };
+  params: Promise<{ chapterNumber: string }>;
 }): Promise<Metadata> {
-  const chapterNum = parseInt(params.chapterNumber, 10);
+  const resolvedParams = await params;
+  const chapterNum = parseInt(resolvedParams.chapterNumber, 10);
   const chapter = await getChapter(chapterNum);
 
   return {
@@ -38,8 +39,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function ChapterPage({ params }: { params: { chapterNumber: string } }) {
-  const chapterNum = parseInt(params.chapterNumber, 10);
+export default async function ChapterPage({ params }: { params: Promise<{ chapterNumber: string }> }) {
+  const resolvedParams = await params;
+  const chapterNum = parseInt(resolvedParams.chapterNumber, 10);
   const chapter = await getChapter(chapterNum);
   const articles = await getChapterArticles(chapterNum);
 

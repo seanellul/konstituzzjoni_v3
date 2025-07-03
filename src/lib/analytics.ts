@@ -199,7 +199,7 @@ export function getOrCreateSessionId(): string {
   if (!isBrowser()) return 'server-side';
   
   let sessionId = localStorage.getItem('constitution_session_id');
-  let sessionCreated = localStorage.getItem('constitution_session_created');
+  const sessionCreated = localStorage.getItem('constitution_session_created');
   const now = Date.now();
   
   // Check if session needs rotation (24 hours by default)

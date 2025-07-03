@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "studio:dev": "cross-env NODE_ENV=development prisma studio",
     "postinstall": "prisma generate",
     "clean": "rimraf .next"
@@ -23,10 +26,14 @@
     "react": "latest",
     "react-dom": "latest",
     "tailwindcss": "^3.3.0",
+    "web-vitals": "^5.0.3",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
     "@types/node": "^22.13.10",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
@@ -34,6 +41,7 @@
     "cross-env": "^7.0.3",
     "eslint": "latest",
     "eslint-config-next": "latest",
+    "jest": "^30.0.3",
     "postcss": "^8.4.24",
     "prisma": "^6.5.0",
     "rimraf": "^5.0.10",
