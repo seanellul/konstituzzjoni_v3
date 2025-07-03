@@ -51,6 +51,24 @@
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any maskable"
+=======
+  "name": "Constitution of Malta - Interactive Reader",
+  "short_name": "Constitution.mt",
+  "description": "Interactive digital platform for exploring Malta's Constitution with advanced search and navigation features",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-MT",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "/icon-512x512.png",
@@ -59,11 +77,36 @@
       "purpose": "any maskable"
     }
   ],
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": [
+    "education",
+    "government",
+    "law",
+    "reference"
+  ],
+  "keywords": [
+    "Malta",
+    "Constitution",
+    "Law",
+    "Government",
+    "Democracy",
+    "Rights",
+    "Kostituzzjoni"
+  ],
   "shortcuts": [
     {
       "name": "Search Constitution",
       "short_name": "Search",
       "description": "Search for articles and content within the Constitution",
+
+      "description": "Search through constitutional articles",
       "url": "/search",
       "icons": [
         {
@@ -80,6 +123,13 @@
       "icons": [
         {
           "src": "/chapters-icon-96x96.png",
+      "name": "Fundamental Rights",
+      "short_name": "Rights",
+      "description": "View fundamental rights and freedoms",
+      "url": "/constitution/chapter/4",
+      "icons": [
+        {
+          "src": "/rights-icon-96x96.png",
           "sizes": "96x96"
         }
       ]
@@ -92,6 +142,13 @@
       "icons": [
         {
           "src": "/analytics-icon-96x96.png",
+      "name": "Government Structure",
+      "short_name": "Government",
+      "description": "Explore Malta's government structure",
+      "url": "/constitution/chapter/6",
+      "icons": [
+        {
+          "src": "/government-icon-96x96.png",
           "sizes": "96x96"
         }
       ]
@@ -117,4 +174,5 @@
   "edge_side_panel": {
     "preferred_width": 400
   }
+  ]
 }
