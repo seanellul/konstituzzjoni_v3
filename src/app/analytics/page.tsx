@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import {
@@ -55,7 +55,7 @@ export default function AnalyticsDashboard() {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Function to fetch dashboard data
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/analytics/dashboard-data?timeframe=${timeframe}`);
@@ -72,7 +72,7 @@ export default function AnalyticsDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [timeframe]);
 
   // Initial data fetch and when timeframe changes
   useEffect(() => {
@@ -81,7 +81,7 @@ export default function AnalyticsDashboard() {
     // Set up auto-refresh every 5 minutes
     const interval = setInterval(fetchDashboardData, 5 * 60 * 1000);
     return () => clearInterval(interval);
-  }, [timeframe]);
+  }, [fetchDashboardData]);
 
   // Format the timeframe for display
   const formatTimeframe = (tf: string): string => {

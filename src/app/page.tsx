@@ -11,6 +11,53 @@ import { useState, useEffect } from 'react';
 import { DocumentTextIcon, MagnifyingGlassIcon, BookOpenIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 import LiveInsightsWidget from '@/components/LiveInsightsWidget';
 
+// Loading components for better UX
+function HeroSectionSkeleton() {
+  return (
+    <div className="min-h-[70vh] flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="animate-pulse text-center">
+        <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg w-96 mx-auto mb-4"></div>
+        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-64 mx-auto"></div>
+      </div>
+    </div>
+  );
+}
+
+function FeaturesSectionSkeleton() {
+  return (
+    <div className="py-12 bg-gray-50 dark:bg-gray-800/50">
+      <div className="container mx-auto px-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-64 mx-auto mb-4"></div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-lg h-48"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function VisualizationSkeleton() {
+  return (
+    <div className="py-8">
+      <div className="container mx-auto px-6">
+        <div className="animate-pulse grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="h-80 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+          <div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4 mb-4"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full mb-2"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-5/6 mb-2"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-4/5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [animationComplete, setAnimationComplete] = useState(false);
@@ -101,188 +148,7 @@ export default function Home() {
   // Simplify or disable on mobile and for reduced motion
   const parallaxY = isMounted && !prefersReducedMotion && window.innerWidth >= 768 ? -scrollY * 0.2 : 0;
   const rotateValue = isMounted && !prefersReducedMotion && window.innerWidth >= 768 ? scrollY * 0.01 : 0;
-// Loading components for better UX
-function HeroSectionSkeleton() {
-  return (
-    <div className="min-h-[70vh] flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <div className="animate-pulse text-center">
-        <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-lg w-96 mx-auto mb-4"></div>
-        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-64 mx-auto"></div>
-      </div>
-    </div>
-  );
-}
 
-function FeaturesSectionSkeleton() {
-  return (
-    <div className="py-12 bg-gray-50 dark:bg-gray-800/50">
-      <div className="container mx-auto px-6">
-        <div className="animate-pulse">
-          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-64 mx-auto mb-4"></div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-gray-200 dark:bg-gray-700 rounded-lg h-48"></div>
-            ))}
-          </div>
-=======
-    <div className="overflow-x-hidden">
-      {/* Hero Section */}
-      <section className="min-h-[70vh] flex flex-col justify-center relative overflow-hidden">
-        {/* Background with subtle animation */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-secondary-light dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 z-0">
-          {!prefersReducedMotion && (
-            <motion.div 
-              className="absolute w-full h-full"
-              initial={{ opacity: 0, scale: 1.1 }}
-              animate={{ opacity: 0.2, scale: 1 }}
-              transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
-            >
-              <div className="absolute w-[600px] h-[600px] rounded-full bg-primary-100 dark:bg-primary-900/30 blur-3xl opacity-20 -top-64 -right-64"></div>
-              <div className="absolute w-[500px] h-[500px] rounded-full bg-blue-100 dark:bg-blue-900/30 blur-3xl opacity-20 top-1/2 -left-64"></div>
-              <div className="absolute w-[700px] h-[700px] rounded-full bg-secondary-200 dark:bg-gray-800 blur-3xl opacity-10 -bottom-96 right-1/3"></div>
-            </motion.div>
-          )}
-        </div>
-
-        {/* Flying paper elements - Only show on larger screens and when motion is allowed */}
-        {!prefersReducedMotion && isMounted && window.innerWidth >= 768 && (
-          <>
-            <motion.div 
-              className="absolute w-40 h-60 bg-white dark:bg-gray-800 rounded shadow-md opacity-10 z-10"
-              initial={{ x: -100, y: -200, rotate: 10 }}
-              animate={{ 
-                x: [-100, 50, -70, 20],
-                y: [-200, -250, -150, -180],
-                rotate: [10, -5, 8, -3],
-              }}
-              transition={{ duration: 25, repeat: Infinity, repeatType: "mirror" }}
-            />
-            
-            <motion.div 
-              className="absolute w-32 h-48 bg-white dark:bg-gray-800 rounded shadow-md opacity-10 z-10 right-20 top-40"
-              initial={{ x: 100, y: 0, rotate: -5 }}
-              animate={{ 
-                x: [100, 20, 70, 30],
-                y: [0, 30, -20, 10],
-                rotate: [-5, 8, -10, 4],
-              }}
-              transition={{ duration: 20, repeat: Infinity, repeatType: "mirror" }}
-            />
-
-            <motion.div 
-              className="absolute w-28 h-40 bg-white dark:bg-gray-800 rounded shadow-md opacity-10 z-10 left-20 bottom-40"
-              initial={{ x: -50, y: 50, rotate: 8 }}
-              animate={{ 
-                x: [-50, 20, -30, 10],
-                y: [50, 20, 60, 30],
-                rotate: [8, -3, 12, 2],
-              }}
-              transition={{ duration: 18, repeat: Infinity, repeatType: "mirror" }}
-            />
-          </>
-        )}
-
-        {/* Hero content */}
-        <div className="container mx-auto px-4 sm:px-6 relative z-20 mb-6">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-          >
-            <motion.h1 
-              className="text-4xl sm:text-5xl md:text-6xl font-bold font-serif text-gray-900 dark:text-gray-100 mb-4 sm:mb-6"
-              variants={heroTextVariants}
-            >
-              The <span className="text-primary-DEFAULT dark:text-primary-400">Constitution</span> of Malta
-              <br />
-              <span className="text-2xl sm:text-3xl md:text-4xl">Interactive Edition</span>
-            </motion.h1>
-            
-            <motion.p 
-              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-8 px-2"
-              variants={itemVariants}
-            >
-              Explore Malta's constitution through an intuitive, modern interface that brings legal text to life.
-            </motion.p>
-
-            <motion.div 
-              className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 px-4"
-              variants={itemVariants}
-            >
-              <Link 
-                href="/constitution" 
-                className="btn-primary text-base sm:text-lg px-6 sm:px-8 py-3 rounded-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform"
-              >
-                <DocumentTextIcon className="w-5 h-5" />
-                <span>Browse Chapters</span>
-              </Link>
-              
-              <Link 
-                href="/search" 
-                className="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 rounded-lg flex items-center justify-center gap-2 hover:scale-105 transition-transform"
-              >
-                <MagnifyingGlassIcon className="w-5 h-5" />
-                <span>Search Articles</span>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function VisualizationSkeleton() {
-  return (
-    <div className="py-8">
-      <div className="container mx-auto px-6">
-        <div className="animate-pulse grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="h-80 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
-          <div>
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-full mb-2"></div>
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-5/6 mb-2"></div>
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-4/5"></div>
-          </div>
-        {/* Constitution preview teaser - simplified for mobile */}
-        <div className="relative h-[80px] sm:h-[120px] md:h-[150px] mb-0 overflow-hidden mx-auto max-w-4xl">
-          <motion.div 
-            className="absolute w-40 sm:w-56 md:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-2 sm:p-3 rotate-3 left-[15%] sm:left-[20%] z-30"
-            initial={{ y: 100, opacity: 0, rotate: 3 }}
-            animate={{ y: 0, opacity: 0.9, rotate: 3 }}
-            transition={{ delay: 0.8, duration: 0.7 }}
-          >
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-1 sm:pb-2 mb-1 sm:mb-2">
-              <h3 className="text-xs sm:text-sm md:text-base font-serif font-bold text-primary-DEFAULT dark:text-primary-400">Chapter I</h3>
-              <h4 className="text-[10px] sm:text-xs md:text-sm text-gray-700 dark:text-gray-300">The Republic of Malta</h4>
-            </div>
-            <p className="text-[8px] sm:text-[10px] md:text-xs text-gray-800 dark:text-gray-300 leading-tight">
-              <span className="font-bold">1.</span> Malta is a democratic republic founded on work...
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="absolute w-40 sm:w-56 md:w-80 bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-2 sm:p-3 -rotate-2 right-[15%] sm:right-[20%] z-20"
-            initial={{ y: 100, opacity: 0, rotate: -2 }}
-            animate={{ y: 0, opacity: 0.85, rotate: -2 }}
-            transition={{ delay: 1, duration: 0.7 }}
-          >
-            <div className="border-b border-gray-200 dark:border-gray-700 pb-1 sm:pb-2 mb-1 sm:mb-2">
-              <h3 className="text-xs sm:text-sm md:text-base font-serif font-bold text-blue-600 dark:text-blue-400">Chapter IV</h3>
-              <h4 className="text-[10px] sm:text-xs md:text-sm text-gray-700 dark:text-gray-300">The Executive</h4>
-            </div>
-            <p className="text-[8px] sm:text-[10px] md:text-xs text-gray-800 dark:text-gray-300 leading-tight">
-              <span className="font-bold">79.</span> The executive authority of Malta is vested in the President.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default function Home() {
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section with Suspense for performance */}
@@ -299,220 +165,6 @@ export default function Home() {
       <Suspense fallback={<FeaturesSectionSkeleton />}>
         <FeaturesSection />
       </Suspense>
-        {/* Scroll indicator - moved up closer to the content */}
-        {!prefersReducedMotion && (
-          <motion.div 
-            className="mx-auto mt-0 mb-1"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: [0, 1, 0], y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <div className="flex flex-col items-center">
-              <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm mb-1">Scroll to explore</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-gray-500 dark:text-gray-400">
-                <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-          </motion.div>
-        )}
-      </section>
-
-      {/* Constitution Visualization Section - Simplified for mobile */}
-      <section className="py-6 sm:py-8 relative overflow-hidden">
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
-          <motion.div 
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-center"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
-            {/* Left side: Simplified Constitution Document for mobile */}
-            <div className="relative h-[200px] sm:h-[280px] md:h-[400px] order-2 lg:order-1">
-              {/* Main Document - Larger and more readable on mobile */}
-              <motion.div 
-                className="absolute w-[85%] sm:w-[70%] md:w-[60%] lg:max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-3 sm:p-4 md:p-6 z-40 left-[7.5%] sm:left-[15%] md:left-[5%] lg:left-20"
-                style={{ 
-                  y: scrollY > 200 ? parallaxY : 0,
-                  rotate: scrollY > 200 ? rotateValue : 0,
-                  transformPerspective: 1000,
-                }}
-                initial={{ y: 100, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-              >
-                <div className="border-b border-gray-200 dark:border-gray-700 pb-2 sm:pb-3 md:pb-4 mb-2 sm:mb-3 md:mb-4">
-                  <h3 className="text-sm sm:text-base md:text-xl font-serif font-bold text-primary-DEFAULT dark:text-primary-400">Chapter I</h3>
-                  <h4 className="text-xs sm:text-sm md:text-lg text-gray-700 dark:text-gray-300">The Republic of Malta</h4>
-                </div>
-                <div className="space-y-1 sm:space-y-2 md:space-y-3">
-                  <motion.p 
-                    className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-300 py-1 md:py-2 border-b border-gray-100 dark:border-gray-700 leading-relaxed"
-                    initial={{ x: -50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    viewport={{ once: true }}
-                  >
-                    <span className="font-bold mr-1 sm:mr-2">1.</span> 
-                    Malta is a democratic republic founded on work and on respect for the fundamental rights and freedoms of the individual.
-                  </motion.p>
-                  <motion.p 
-                    className="text-xs sm:text-sm md:text-base text-gray-800 dark:text-gray-300 py-1 md:py-2 border-b border-gray-100 dark:border-gray-700 leading-relaxed"
-                    initial={{ x: -50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                    viewport={{ once: true }}
-                  >
-                    <span className="font-bold mr-1 sm:mr-2">2.</span> 
-                    The territories of Malta consist of those territories comprised in Malta immediately before the appointed day...
-                  </motion.p>
-                </div>
-                <div className="mt-2 sm:mt-3 md:mt-4 flex justify-end">
-                  <Link href="/constitution/chapter/1" className="text-xs sm:text-sm md:text-base text-primary-DEFAULT dark:text-primary-400 hover:underline flex items-center gap-1">
-                    <span>Continue reading</span>
-                    <svg width="12" height="12" className="sm:w-3 sm:h-3 md:w-4 md:h-4" viewBox="0 0 24 24" fill="none">
-                      <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </Link>
-                </div>
-              </motion.div>
-
-              {/* Background documents - Only show on larger screens for reduced complexity */}
-              {isMounted && window.innerWidth >= 768 && (
-                <>
-                  {/* Chapter III Document - Fundamental Rights */}
-                  <motion.div 
-                    className="absolute w-[55%] md:max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-3 md:p-6 rotate-2 top-4 -left-4 md:-left-8 z-30"
-                    style={{ 
-                      y: scrollY > 200 ? parallaxY * 0.85 : 0,
-                      rotate: scrollY > 200 ? rotateValue * 0.9 + 2 : 2,
-                    }}
-                    initial={{ rotate: 2, opacity: 0 }}
-                    whileInView={{ opacity: 0.95 }}
-                    transition={{ delay: 0.15, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <div className="border-b border-gray-200 dark:border-gray-700 pb-2 md:pb-3 mb-2 md:mb-3">
-                      <h3 className="text-base md:text-xl font-serif font-bold text-amber-600 dark:text-amber-400">Chapter III</h3>
-                      <h4 className="text-sm md:text-lg text-gray-700 dark:text-gray-300">Fundamental Rights and Freedoms</h4>
-                    </div>
-                    <div className="space-y-1 md:space-y-2">
-                      <p className="text-xs md:text-sm text-gray-800 dark:text-gray-300 py-1 border-b border-gray-100 dark:border-gray-700">
-                        <span className="font-bold mr-1 md:mr-2">32.</span> 
-                        Whereas every person in Malta is entitled to the fundamental rights and freedoms...
-                      </p>
-                    </div>
-                  </motion.div>
-
-                  {/* Additional background documents for desktop only */}
-                  {window.innerWidth >= 1024 && (
-                    <>
-                      <motion.div 
-                        className="absolute w-[50%] max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 rotate-3 bottom-5 -left-10 z-50"
-                        style={{ 
-                          y: scrollY > 200 ? parallaxY * 0.7 : 0,
-                          rotate: scrollY > 200 ? rotateValue * 0.8 + 3 : 3,
-                        }}
-                        initial={{ rotate: 3, opacity: 0 }}
-                        whileInView={{ opacity: 0.9 }}
-                        transition={{ delay: 0.2, duration: 0.6 }}
-                        viewport={{ once: true }}
-                      >
-                        <div className="border-b border-gray-200 dark:border-gray-700 pb-3 mb-3">
-                          <h3 className="text-xl font-serif font-bold text-blue-600 dark:text-blue-400">Chapter IV</h3>
-                          <h4 className="text-lg text-gray-700 dark:text-gray-300">The Executive</h4>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-sm text-gray-800 dark:text-gray-300 py-1 border-b border-gray-100 dark:border-gray-700">
-                            <span className="font-bold mr-2">79.</span> 
-                            The executive authority of Malta is vested in the President.
-                          </p>
-                        </div>
-                      </motion.div>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* Right side: Text */}
-            <motion.div
-              className="order-1 lg:order-2"
-              initial={{ x: 100, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold font-serif text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">
-                Bringing Malta's Constitution <br/>
-                <span className="text-primary-DEFAULT dark:text-primary-400">to Life</span>
-              </h2>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-4 sm:mb-6">
-                More than just text, our interactive Constitution of Malta transforms legal language into an engaging, accessible experience for all citizens.
-              </p>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 mb-6 sm:mb-8">
-                Discover the structure, principles and articles that form the foundation of Malta's democracy through a modern, user-friendly interface.
-              </p>
-              
-              {/* Live Analytics Widget */}
-              <div className="mb-4 sm:mb-6">
-                <LiveInsightsWidget />
-              </div>
-              
-              <Link 
-                href="/about" 
-                className="text-primary-DEFAULT dark:text-primary-400 font-medium hover:underline flex items-center gap-2 group"
-              >
-                <span>Learn more about this project</span>
-                <span className="group-hover:translate-x-1 transition-transform">→</span>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-8 sm:py-12 bg-gray-50 dark:bg-gray-800/50">
-        <div className="container mx-auto px-4 sm:px-6">
-          <motion.div 
-            className="text-center max-w-3xl mx-auto mb-8 sm:mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl sm:text-3xl font-bold font-serif text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
-              Explore the Constitution in New Ways
-            </h2>
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300">
-              Our platform offers unique tools and features to help you understand and navigate Malta's founding document.
-            </p>
-          </motion.div>
-
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-            initial="hidden"
-            whileInView="visible"
-            variants={containerVariants}
-            viewport={{ once: true }}
-          >
-            {features.map((feature, index) => (
-              <motion.div 
-                key={index}
-                className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border p-4 sm:p-6 ${feature.color} hover:shadow-md transition-shadow`}
-                variants={itemVariants}
-              >
-                <div className="mb-3 sm:mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-lg sm:text-xl font-bold mb-2 dark:text-gray-100">{feature.title}</h3>
-                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300">{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* SEO Content Section - Malta Constitution Information */}
       <section className="py-16 bg-white dark:bg-gray-900">
