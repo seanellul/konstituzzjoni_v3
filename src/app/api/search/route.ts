@@ -2,6 +2,10 @@ import { NextResponse } from 'next/server';
 import { searchArticles } from '@/lib/constitution';
 import { Article } from '@/types/constitution';
 import { shouldFilterFromAnalytics } from '@/lib/content-filters';
+import { rateLimitMiddleware, searchRateLimiter } from '@/lib/rate-limit';
+import { createLogger } from '@/lib/logger';
+
+const logger = createLogger('API:Search');
 
 // Enhanced search interface
 export interface SearchResult extends Article {
@@ -22,6 +26,12 @@ export interface SearchResponse {
 }
 
 export async function GET(request: Request) {
+  // Apply rate limiting
+  const rateLimitResponse = rateLimitMiddleware(searchRateLimiter)(request);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q') || '';
   const limit = parseInt(searchParams.get('limit') || '20');
@@ -56,7 +66,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(enhancedResults);
   } catch (error) {
-    console.error('Search error:', error);
+    logger.error('Search error:', error);
     return NextResponse.json(
       { error: 'Search failed', results: [], total: 0, query },
       { status: 500 }

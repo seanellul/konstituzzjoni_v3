@@ -25,7 +25,7 @@ prisma.$connect()
   .then(() => {
     console.log('Database connection established');
   })
-  .catch((e) => {
+  .catch((e: unknown) => {
     console.error('Failed to connect to database:', e);
   });
 

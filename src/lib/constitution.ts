@@ -2,6 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import { Article, Chapter, Constitution } from '@/types/constitution';
 import { cache } from './cache';
+import { createLogger } from './logger';
+
+const logger = createLogger('Constitution');
 
 const articlesDirectory = path.join(process.cwd(), 'articles');
 
@@ -76,8 +79,8 @@ export async function getChapterArticles(chapterNumber: number): Promise<Article
         const article = JSON.parse(fileContent) as Article;
         articles.push(article);
       } catch (error: any) {
-        console.error(`Error parsing JSON in file: ${filePath}`);
-        console.error(`Error details: ${error.message}`);
+        logger.error(`Error parsing JSON in file: ${filePath}`);
+        logger.error(`Error details: ${error.message}`);
         // Throw a more informative error
         throw new Error(`Failed to parse JSON in file ${filePath}: ${error.message}`);
       }
@@ -116,9 +119,15 @@ export async function getArticle(chapterNumber: number, articleNumber: number): 
 }
 
 /**
- * Search articles by query
+ * Search articles by query with caching
  */
 export async function searchArticles(query: string): Promise<Article[]> {
+  // Try to get from cache first
+  const cached = await cache.getSearchResults(query);
+  if (cached) {
+    return cached as Article[];
+  }
+
   const results: Article[] = [];
   const chapters = await getChapters();
   
@@ -165,10 +174,14 @@ export async function searchArticles(query: string): Promise<Article[]> {
       
       return false;
     });
-    
+
+
     results.push(...matchedArticles);
   }
-  
+
+  // Cache the search results
+  cache.setSearchResults(query, results);
+
   return results;
 }
 
