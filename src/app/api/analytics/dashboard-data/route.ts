@@ -177,7 +177,7 @@ export async function GET(request: Request) {
           UNION
           SELECT "sessionId" FROM "SearchQuery" WHERE timestamp >= ${startDate} AND "sessionId" IS NOT NULL
         ) as combined_views
-      `.catch(error => {
+      `.catch((error: unknown) => {
         console.error('[Analytics API] Error in unique visitors query:', error);
         return [{ unique_visitors: 0 }];
       })
