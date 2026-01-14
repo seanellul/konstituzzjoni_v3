@@ -9,6 +9,9 @@ import PrivacyNotice from '@/components/PrivacyNotice';
 import { Analytics } from '@vercel/analytics/react';
 import { performanceMonitor } from '@/lib/performance';
 import { initServiceWorker } from '@/lib/sw-registration';
+import { createBrowserLogger } from '@/lib/logger';
+
+const logger = createBrowserLogger('Layout');
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,19 +34,19 @@ const structuredData = {
   "@graph": [
     {
       "@type": "WebSite",
-             "@id": "https://constitution.mt/#website",
-       "url": "https://constitution.mt/",
-      "name": "Kostituzzjoni.mt - Interactive Constitution of Malta",
+      "@id": "https://constitution.mt/#website",
+      "url": "https://constitution.mt/",
+      "name": "Constitution.mt - Interactive Constitution of Malta",
       "description": "Interactive digital platform for exploring and understanding the Constitution of Malta with advanced search and navigation features.",
       "publisher": {
-        "@id": "https://kostituzzjoni.mt/#organization"
+        "@id": "https://constitution.mt/#organization"
       },
       "potentialAction": [
         {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-                         "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
+            "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
@@ -52,12 +55,12 @@ const structuredData = {
     },
     {
       "@type": "Organization",
-               "@id": "https://constitution.mt/#organization",
-         "name": "Constitution of Malta",
-         "url": "https://constitution.mt/",
+      "@id": "https://constitution.mt/#organization",
+      "name": "Constitution of Malta",
+      "url": "https://constitution.mt/",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://kostituzzjoni.mt/logo.png",
+        "url": "https://constitution.mt/logo.png",
         "width": 600,
         "height": 200
       },
@@ -70,9 +73,9 @@ const structuredData = {
       "name": "Constitution of Malta Interactive Reader",
       "serviceType": "Legal Information Service",
       "description": "Digital access to Malta's Constitution with interactive navigation and search capabilities",
-               "provider": {
-           "@id": "https://constitution.mt/#organization"
-         },
+      "provider": {
+        "@id": "https://constitution.mt/#organization"
+      },
       "areaServed": {
         "@type": "Country",
         "name": "Malta"
@@ -103,18 +106,18 @@ export default function RootLayout({
   useEffect(() => {
     // Performance monitoring is automatically initialized on import
     // Just log that it's active
-    console.log('[Layout] Performance monitoring active:', performanceMonitor.getSessionId());
-    
+    logger.log('Performance monitoring active:', performanceMonitor.getSessionId());
+
     // Initialize service worker registration
     initServiceWorker();
-    
+
     // Log initial load performance
     const logInitialPerformance = () => {
       if (typeof window !== 'undefined' && window.performance) {
         const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        
+
         if (navigation) {
-          console.log('[Performance] Page Load Metrics:', {
+          logger.log('Page Load Metrics:', {
             domContentLoaded: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
             loadComplete: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
             totalPageLoad: Math.round(navigation.loadEventEnd - navigation.fetchStart),
@@ -142,6 +145,7 @@ export default function RootLayout({
         <title>Kostituzzjoni.mt - Interactive Constitution of Malta</title>
         <meta name="description" content="Explore the Constitution of Malta through an interactive, user-friendly interface. Access all chapters, articles, and amendments of Malta's constitutional law with advanced search and navigation features." />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
         {/* PWA Configuration */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#BD0F1F" />
@@ -152,17 +156,18 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#BD0F1F" />
         <meta name="msapplication-tap-highlight" content="no" />
-        
-        {/* Icons */}
+
+        {/* Favicon and App Icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
         {/* Performance and SEO */}
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href="https://constitution.mt" />
-        
+        <link rel="canonical" href="https://constitution.mt/" />
+
         {/* Open Graph */}
         <meta property="og:title" content="Constitution of Malta - Interactive Edition" />
         <meta property="og:description" content="Explore Malta's constitution through an intuitive, modern interface that brings legal text to life." />
@@ -171,34 +176,21 @@ export default function RootLayout({
         <meta property="og:image" content="https://constitution.mt/og-image.png" />
         <meta property="og:locale" content="en_US" />
         <meta property="og:site_name" content="Constitution.mt" />
-        
+
         {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Constitution of Malta - Interactive Edition" />
         <meta name="twitter:description" content="Explore Malta's constitution through an intuitive, modern interface that brings legal text to life." />
         <meta name="twitter:image" content="https://constitution.mt/twitter-image.png" />
-        
-        {/* Preload critical resources */}
+
+        {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* Performance hints */}
         <meta httpEquiv="X-DNS-Prefetch-Control" content="on" />
         <link rel="dns-prefetch" href="//vercel-analytics.com" />
-        <meta name="theme-color" content="#dc2626" />
-        
-        {/* Favicon and App Icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://constitution.mt/" />
-        
+
         {/* Alternate Language Versions */}
         <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
         <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />

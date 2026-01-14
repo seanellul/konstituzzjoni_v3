@@ -5,11 +5,8 @@ import HeroSection from '@/components/HeroSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import ConstitutionVisualization from '@/components/ConstitutionVisualization';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { DocumentTextIcon, MagnifyingGlassIcon, BookOpenIcon, ChartBarIcon } from '@heroicons/react/24/outline';
-import LiveInsightsWidget from '@/components/LiveInsightsWidget';
+import { BookOpenIcon } from '@heroicons/react/24/outline';
 
 // Loading components for better UX
 function HeroSectionSkeleton() {
@@ -59,95 +56,6 @@ function VisualizationSkeleton() {
 }
 
 export default function Home() {
-  const [scrollY, setScrollY] = useState(0);
-  const [animationComplete, setAnimationComplete] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  // Only run client-side code after component is mounted
-  useEffect(() => {
-    setIsMounted(true);
-    
-    // Check for reduced motion preference
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setPrefersReducedMotion(mediaQuery.matches);
-    
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const heroTextVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
-  const features = [
-    {
-      title: "Interactive Navigation",
-      description: "Easily browse through chapters and articles with an intuitive interface.",
-      icon: <DocumentTextIcon className="w-6 h-6 sm:w-8 sm:h-8 text-primary-DEFAULT dark:text-primary-400" />,
-      color: "bg-red-50 dark:bg-red-900/20 border-red-100 dark:border-red-900/30"
-    },
-    {
-      title: "Advanced Search",
-      description: "Find exactly what you're looking for with our powerful search functionality.",
-      icon: <MagnifyingGlassIcon className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600 dark:text-blue-400" />,
-      color: "bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-900/30"
-    },
-    {
-      title: "Legal Cross-References",
-      description: "Understand connections between different articles and legal concepts.",
-      icon: <BookOpenIcon className="w-6 h-6 sm:w-8 sm:h-8 text-green-600 dark:text-green-400" />,
-      color: "bg-green-50 dark:bg-green-900/20 border-green-100 dark:border-green-900/30"
-    },
-    {
-      title: "Visual Data Insights",
-      description: "Visualize constitutional elements through interactive charts and graphs.",
-      icon: <ChartBarIcon className="w-6 h-6 sm:w-8 sm:h-8 text-purple-600 dark:text-purple-400" />,
-      color: "bg-purple-50 dark:bg-purple-900/20 border-purple-100 dark:border-purple-900/30"
-    }
-  ];
-
-  // Scroll-triggered animation for the constitution paper effect
-  // Only calculate on client-side to avoid window reference errors
-  // Simplify or disable on mobile and for reduced motion
-  const parallaxY = isMounted && !prefersReducedMotion && window.innerWidth >= 768 ? -scrollY * 0.2 : 0;
-  const rotateValue = isMounted && !prefersReducedMotion && window.innerWidth >= 768 ? scrollY * 0.01 : 0;
 
   return (
     <div className="overflow-x-hidden">

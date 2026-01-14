@@ -16,6 +16,9 @@
 
 import { shouldFilterFromAnalytics } from './content-filters';
 import { isBrowser, getBaseUrl } from './utils';
+import { createBrowserLogger } from './logger';
+
+const logger = createBrowserLogger('Analytics');
 
 // Internal blacklist check - for administrative use only
 function isSessionBlacklisted(): boolean {
@@ -89,7 +92,7 @@ export function trackPageView(path: string) {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
     
-    console.log(`[Analytics] Tracking page view: ${path} (session: ${sessionId.substring(0, 8)}...)`);
+    logger.log(`Tracking page view: ${path} (session: ${sessionId.substring(0, 8)}...)`);
     
     fetch(`${baseUrl}/api/analytics/pageview`, {
       method: 'POST',
@@ -104,13 +107,13 @@ export function trackPageView(path: string) {
       })
     }).then(response => {
       if (!response.ok) {
-        console.warn(`[Analytics] Page view tracking failed: ${response.status}`);
+        logger.warn(`Page view tracking failed: ${response.status}`);
       }
     }).catch(error => {
-      console.error('[Analytics] Page view tracking error:', error);
+      logger.error('Page view tracking error:', error);
     });
   } catch (error) {
-    console.error('Failed to track page view:', error);
+    logger.error('Failed to track page view:', error);
   }
 }
 
@@ -135,7 +138,7 @@ export function trackArticleView(chapter: number, article: number) {
       })
     });
   } catch (error) {
-    console.error('Failed to track article view:', error);
+    logger.error('Failed to track article view:', error);
   }
 }
 
@@ -159,7 +162,7 @@ export function trackChapterView(chapter: number) {
       })
     });
   } catch (error) {
-    console.error('Failed to track chapter view:', error);
+    logger.error('Failed to track chapter view:', error);
   }
 }
 
@@ -170,7 +173,7 @@ export function trackSearch(term: string) {
   
   // Skip tracking of blacklisted search terms
   if (shouldFilterFromAnalytics(term)) {
-    console.log('Search term filtered from analytics tracking');
+    logger.log('Search term filtered from analytics tracking');
     return;
   }
   
@@ -189,7 +192,7 @@ export function trackSearch(term: string) {
       })
     });
   } catch (error) {
-    console.error('Failed to track search:', error);
+    logger.error('Failed to track search:', error);
   }
 }
 
@@ -219,36 +222,52 @@ export function getOrCreateSessionId(): string {
   return sessionId;
 }
 
+// Store the timer ID for cleanup
+let activeUserTimerId: ReturnType<typeof setTimeout> | null = null;
+
 // Function to track active users
-export function trackActiveUser() {
-  if (!isBrowser()) return;
-  
+export function trackActiveUser(): () => void {
+  if (!isBrowser()) return () => {};
+
   // Note: We still track active users even if they're blacklisted or opted out
   // This gives us accurate site usage stats while still respecting privacy for detailed analytics
-  
+
   const sessionId = getOrCreateSessionId();
-  
-  try {
-    const baseUrl = getBaseUrl();
-    fetch(`${baseUrl}/api/analytics/active-user`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'x-session-id': sessionId
-      },
-      body: JSON.stringify({ 
-        sessionId,
-        timestamp: new Date().toISOString(),
-      })
-    }).catch(error => {
-      console.error('Failed to track active user:', error);
-    });
-  } catch (error) {
-    console.error('Failed to track active user:', error);
-  }
-  
-  // Increase re-ping interval from 2 minutes to 3 minutes
-  // The active-users endpoint counts users active in the last 5 minutes,
-  // so pinging every 3 minutes is still within that window
-  setTimeout(trackActiveUser, 3 * 60 * 1000);
+
+  const ping = () => {
+    try {
+      const baseUrl = getBaseUrl();
+      fetch(`${baseUrl}/api/analytics/active-user`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-session-id': sessionId
+        },
+        body: JSON.stringify({
+          sessionId,
+          timestamp: new Date().toISOString(),
+        })
+      }).catch(error => {
+        logger.error('Failed to track active user:', error);
+      });
+    } catch (error) {
+      logger.error('Failed to track active user:', error);
+    }
+
+    // Increase re-ping interval from 2 minutes to 3 minutes
+    // The active-users endpoint counts users active in the last 5 minutes,
+    // so pinging every 3 minutes is still within that window
+    activeUserTimerId = setTimeout(ping, 3 * 60 * 1000);
+  };
+
+  // Initial ping
+  ping();
+
+  // Return cleanup function
+  return () => {
+    if (activeUserTimerId) {
+      clearTimeout(activeUserTimerId);
+      activeUserTimerId = null;
+    }
+  };
 } 
