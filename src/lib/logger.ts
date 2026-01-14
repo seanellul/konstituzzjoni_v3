@@ -5,7 +5,7 @@
 
 type LogLevel = 'log' | 'info' | 'warn' | 'error' | 'debug';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = typeof process !== 'undefined' && process.env?.NODE_ENV === 'development';
 
 class Logger {
   private prefix: string;
