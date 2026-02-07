@@ -7,6 +7,11 @@ Allow: /constitution/chapter/
 Allow: /search
 Allow: /about
 
+# LLM context files
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+
 # Disallow private areas
 Disallow: /api/private/
 Disallow: /admin/
@@ -28,3 +33,28 @@ Crawl-delay: 0
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
+
+# LLM crawlers - context files available at /llm.txt, /llms.txt, /llms-full.txt
+User-agent: GPTBot
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /constitution/
+
+User-agent: ChatGPT-User
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /constitution/
+
+User-agent: Claude-Web
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /constitution/
+
+User-agent: Amazonbot
+Allow: /llm.txt
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /constitution/

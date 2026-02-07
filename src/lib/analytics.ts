@@ -1,14 +1,13 @@
 /**
  * Analytics Utilities for Konstituzzjoni.mt
- * 
+ *
  * These functions help track user interactions with the constitution,
  * collecting anonymized data on which chapters, articles, and terms
  * are most frequently accessed.
- * 
+ *
  * PRIVACY FEATURES:
  * - Session IDs are randomly generated and not tied to personal data
  * - Session IDs rotate regularly to prevent long-term tracking
- * - Users can be blacklisted if needed for inappropriate use
  * - No personal data is collected (no IP addresses, names, etc.)
  * - All data is subject to automatic deletion after the retention period
  * - Inappropriate search terms are filtered from analytics
@@ -17,54 +16,11 @@
 import { shouldFilterFromAnalytics } from './content-filters';
 import { isBrowser, getBaseUrl } from './utils';
 
-// Internal blacklist check - for administrative use only
-function isSessionBlacklisted(): boolean {
-  if (!isBrowser()) return false;
-  
-  const sessionId = localStorage.getItem('constitution_session_id');
-  
-  // Check if this session ID is in the server-side blacklist
-  // This requires a network request, so we cache the result in localStorage
-  if (sessionId) {
-    const blacklistStatus = localStorage.getItem('blacklist_status');
-    const blacklistChecked = localStorage.getItem('blacklist_checked');
-    const now = Date.now();
-    
-    // Only check blacklist status once per hour
-    if (!blacklistChecked || now - parseInt(blacklistChecked) > 60 * 60 * 1000) {
-      // Async check - we'll use the cached value for this request
-      const baseUrl = getBaseUrl();
-      fetch(`${baseUrl}/api/analytics/check-blacklist`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId })
-      })
-      .then(response => response.json())
-      .then(data => {
-        localStorage.setItem('blacklist_status', data.blacklisted ? 'true' : 'false');
-        localStorage.setItem('blacklist_checked', now.toString());
-      })
-      .catch(() => {
-        // On error, assume not blacklisted
-        localStorage.setItem('blacklist_status', 'false');
-        localStorage.setItem('blacklist_checked', now.toString());
-      });
-    }
-    
-    return blacklistStatus === 'true';
-  }
-  
-  return false;
-}
-
 // Check if analytics is enabled for this user
 export function isAnalyticsEnabled(): boolean {
   if (!isBrowser()) return false;
-  
-  // First check if user is blacklisted
-  if (isSessionBlacklisted()) return false;
-  
-  // Otherwise check if they've opted out (hidden functionality, not exposed in UI)
+
+  // Check if they've opted out (hidden functionality, not exposed in UI)
   const analyticsOptOut = localStorage.getItem('analytics_opt_out');
   return analyticsOptOut !== 'true';
 }
@@ -72,7 +28,7 @@ export function isAnalyticsEnabled(): boolean {
 // Allow users to opt out of analytics (hidden functionality, not exposed in UI)
 export function setAnalyticsOptOut(optOut: boolean): void {
   if (!isBrowser()) return;
-  
+
   if (optOut) {
     localStorage.setItem('analytics_opt_out', 'true');
   } else {
@@ -84,20 +40,20 @@ export function setAnalyticsOptOut(optOut: boolean): void {
 export function trackPageView(path: string) {
   if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
-  
+
   try {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
-    
+
     console.log(`[Analytics] Tracking page view: ${path} (session: ${sessionId.substring(0, 8)}...)`);
-    
+
     fetch(`${baseUrl}/api/analytics/pageview`, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-session-id': sessionId
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         path,
         timestamp: new Date().toISOString(),
         referrer: document.referrer || null,
@@ -118,17 +74,17 @@ export function trackPageView(path: string) {
 export function trackArticleView(chapter: number, article: number) {
   if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
-  
+
   try {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
     fetch(`${baseUrl}/api/analytics/article-view`, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-session-id': sessionId
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         chapter,
         article,
         timestamp: new Date().toISOString(),
@@ -143,17 +99,17 @@ export function trackArticleView(chapter: number, article: number) {
 export function trackChapterView(chapter: number) {
   if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
-  
+
   try {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
     fetch(`${baseUrl}/api/analytics/chapter-view`, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-session-id': sessionId
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         chapter,
         timestamp: new Date().toISOString(),
       })
@@ -167,23 +123,23 @@ export function trackChapterView(chapter: number) {
 export function trackSearch(term: string) {
   if (!isBrowser()) return;
   if (!isAnalyticsEnabled()) return;
-  
+
   // Skip tracking of blacklisted search terms
   if (shouldFilterFromAnalytics(term)) {
     console.log('Search term filtered from analytics tracking');
     return;
   }
-  
+
   try {
     const sessionId = getOrCreateSessionId();
     const baseUrl = getBaseUrl();
     fetch(`${baseUrl}/api/analytics/search`, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-session-id': sessionId
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         term,
         timestamp: new Date().toISOString(),
       })
@@ -197,17 +153,17 @@ export function trackSearch(term: string) {
 // Added session rotation for privacy enhancement
 export function getOrCreateSessionId(): string {
   if (!isBrowser()) return 'server-side';
-  
+
   let sessionId = localStorage.getItem('constitution_session_id');
   const sessionCreated = localStorage.getItem('constitution_session_created');
   const now = Date.now();
-  
+
   // Check if session needs rotation (24 hours by default)
   const SESSION_ROTATION_PERIOD = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-  
+
   if (
-    !sessionId || 
-    !sessionCreated || 
+    !sessionId ||
+    !sessionCreated ||
     now - parseInt(sessionCreated) > SESSION_ROTATION_PERIOD
   ) {
     // Generate a new session ID
@@ -215,28 +171,25 @@ export function getOrCreateSessionId(): string {
     localStorage.setItem('constitution_session_id', sessionId);
     localStorage.setItem('constitution_session_created', now.toString());
   }
-  
+
   return sessionId;
 }
 
-// Function to track active users
+// Function to track active users - single ping, interval managed by PageViewTracker
 export function trackActiveUser() {
   if (!isBrowser()) return;
-  
-  // Note: We still track active users even if they're blacklisted or opted out
-  // This gives us accurate site usage stats while still respecting privacy for detailed analytics
-  
+
   const sessionId = getOrCreateSessionId();
-  
+
   try {
     const baseUrl = getBaseUrl();
     fetch(`${baseUrl}/api/analytics/active-user`, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'x-session-id': sessionId
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         sessionId,
         timestamp: new Date().toISOString(),
       })
@@ -246,9 +199,4 @@ export function trackActiveUser() {
   } catch (error) {
     console.error('Failed to track active user:', error);
   }
-  
-  // Increase re-ping interval from 2 minutes to 3 minutes
-  // The active-users endpoint counts users active in the last 5 minutes,
-  // so pinging every 3 minutes is still within that window
-  setTimeout(trackActiveUser, 3 * 60 * 1000);
-} 
+}

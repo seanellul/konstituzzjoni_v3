@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://constitution.mt'),
   title: {
     default: 'Kostituzzjoni.mt - Interactive Constitution of Malta',
     template: '%s | Kostituzzjoni.mt - Constitution of Malta'
@@ -11,25 +12,25 @@ export const metadata: Metadata = {
     'Malta Constitution', 'Maltese Constitution', 'Constitution of Malta', 'Malta constitutional law',
     'Malta legal framework', 'Malta democracy', 'Malta government structure', 'Malta fundamental rights',
     'Malta parliament', 'Malta judiciary', 'Malta executive branch',
-    
+
     // Long-tail keywords
     'Malta Constitution articles', 'Malta Constitution chapters', 'Malta constitutional amendments',
     'Malta fundamental rights and freedoms', 'Malta parliamentary system', 'Malta judicial system',
     'Malta citizenship laws', 'Malta local councils', 'Malta constitutional history',
-    
+
     // Legal and government terms
     'Malta civil rights', 'Malta human rights', 'Malta legal system', 'Malta government',
     'Malta political system', 'Malta democracy principles', 'Malta constitutional reform',
     'Malta rule of law', 'Malta separation of powers', 'Malta checks and balances',
-    
+
     // Interactive and educational
     'constitutional law education', 'Malta legal education', 'interactive constitution',
     'constitutional navigation', 'legal document search', 'Malta civics education',
-    
+
     // Maltese language variants and dual domain
     'Kostituzzjoni ta\' Malta', 'Kostituzzjoni Maltija', 'liġi kostituzzjonali Malta',
     'constitution.mt', 'kostituzzjoni.mt', 'Malta constitution website',
-    
+
     // Bilingual search terms
     'Malta bilingual constitution', 'Maltese English constitution',
     'constitutional law Malta English', 'constitutional law Malta Maltese'
@@ -56,14 +57,6 @@ export const metadata: Metadata = {
     siteName: 'Constitution of Malta',
     title: 'Interactive Constitution of Malta - Kostituzzjoni.mt',
     description: 'Explore Malta\'s Constitution through an interactive digital platform. Access all constitutional articles, search legal provisions, and understand Malta\'s democratic framework.',
-    images: [
-      {
-        url: '/og-image-malta-constitution.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Constitution of Malta - Interactive Digital Platform',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -71,10 +64,6 @@ export const metadata: Metadata = {
     creator: '@KostituzzjoniMT',
     title: 'Interactive Constitution of Malta',
     description: 'Explore Malta\'s Constitution through an interactive digital platform with advanced search and navigation.',
-    images: ['/twitter-card-malta-constitution.jpg'],
-  },
-  verification: {
-    google: 'your-google-verification-code',
   },
   alternates: {
     canonical: 'https://constitution.mt',
@@ -86,4 +75,4 @@ export const metadata: Metadata = {
   },
   category: 'legal',
   classification: 'Legal Education, Government, Constitutional Law',
-}; 
+};

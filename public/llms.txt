@@ -1,0 +1,28 @@
+# Constitution of Malta - Quick Reference
+
+> constitution.mt / kostituzzjoni.mt
+> Interactive digital edition of Malta's Constitution
+> 12 chapters, 124+ articles, bilingual (English/Maltese)
+
+## Chapters
+I. The Republic of Malta (Art. 1-6) - national identity, flag, anthem, language, supremacy of constitution
+II. Declaration of Principles (Art. 7-21) - right to work, education, social welfare
+III. Citizenship (Art. 22-31) - who is a citizen, registration, dual citizenship
+IV. Fundamental Rights and Freedoms (Art. 32-47) - life, liberty, expression, assembly, movement, non-discrimination
+V. The President (Art. 48-50) - office, vacancy, oath
+VI. Parliament (Art. 51-77) - composition, elections, Speaker, legislative powers, sessions
+VII. The Executive (Art. 78-94) - Cabinet, Prime Minister, Ministers, Attorney General, prerogative of mercy
+VIII. The Judiciary (Art. 95-101C) - courts, judges, magistrates, Commission for Administration of Justice
+IX. Finance (Art. 102-108) - Consolidated Fund, expenditure, Auditor General
+X. The Public Service (Art. 109-115) - Public Service Commission, appointments, pensions
+XA. Local Councils (Art. 115A) - local government
+XI. Miscellaneous (Art. 116-124) - Broadcasting Authority, Employment Commission, interpretation
+
+## Key Articles
+- Art. 1: Malta is a democratic republic founded on work, and on fundamental rights
+- Art. 6: The Constitution is the supreme law of Malta
+- Art. 32-47: Fundamental rights and freedoms of the individual
+- Art. 51: Parliament consists of the President and House of Representatives
+- Art. 78: Executive authority vested in the President, exercised by the Cabinet
+
+## Full text available at /llms-full.txt

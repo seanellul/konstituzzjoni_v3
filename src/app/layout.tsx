@@ -1,14 +1,14 @@
-'use client';
-
 import './globals.css';
 import { Inter, Merriweather } from 'next/font/google';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Navigation from '@/components/Navigation';
 import PageViewTracker from '@/components/PageViewTracker';
 import PrivacyNotice from '@/components/PrivacyNotice';
+import LayoutClient from './LayoutClient';
 import { Analytics } from '@vercel/analytics/react';
-import { performanceMonitor } from '@/lib/performance';
-import { initServiceWorker } from '@/lib/sw-registration';
+import { metadata as siteMetadata } from './metadata';
+
+export { siteMetadata as metadata };
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,16 +23,14 @@ const merriweather = Merriweather({
   variable: '--font-merriweather',
 });
 
-const currentYear = new Date().getFullYear();
-
 // Structured Data for SEO
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
-             "@id": "https://constitution.mt/#website",
-       "url": "https://constitution.mt/",
+      "@id": "https://constitution.mt/#website",
+      "url": "https://constitution.mt/",
       "name": "Kostituzzjoni.mt - Interactive Constitution of Malta",
       "description": "Interactive digital platform for exploring and understanding the Constitution of Malta with advanced search and navigation features.",
       "publisher": {
@@ -43,7 +41,7 @@ const structuredData = {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-                         "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
+            "urlTemplate": "https://constitution.mt/search?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
@@ -52,9 +50,9 @@ const structuredData = {
     },
     {
       "@type": "Organization",
-               "@id": "https://constitution.mt/#organization",
-         "name": "Constitution of Malta",
-         "url": "https://constitution.mt/",
+      "@id": "https://constitution.mt/#organization",
+      "name": "Constitution of Malta",
+      "url": "https://constitution.mt/",
       "logo": {
         "@type": "ImageObject",
         "url": "https://kostituzzjoni.mt/logo.png",
@@ -70,9 +68,9 @@ const structuredData = {
       "name": "Constitution of Malta Interactive Reader",
       "serviceType": "Legal Information Service",
       "description": "Digital access to Malta's Constitution with interactive navigation and search capabilities",
-               "provider": {
-           "@id": "https://constitution.mt/#organization"
-         },
+      "provider": {
+        "@id": "https://constitution.mt/#organization"
+      },
       "areaServed": {
         "@type": "Country",
         "name": "Malta"
@@ -93,55 +91,22 @@ const structuredData = {
   ]
 };
 
-
+const currentYear = new Date().getFullYear();
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  useEffect(() => {
-    // Performance monitoring is automatically initialized on import
-    // Just log that it's active
-    console.log('[Layout] Performance monitoring active:', performanceMonitor.getSessionId());
-    
-    // Initialize service worker registration
-    initServiceWorker();
-    
-    // Log initial load performance
-    const logInitialPerformance = () => {
-      if (typeof window !== 'undefined' && window.performance) {
-        const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-        
-        if (navigation) {
-          console.log('[Performance] Page Load Metrics:', {
-            domContentLoaded: Math.round(navigation.domContentLoadedEventEnd - navigation.domContentLoadedEventStart),
-            loadComplete: Math.round(navigation.loadEventEnd - navigation.loadEventStart),
-            totalPageLoad: Math.round(navigation.loadEventEnd - navigation.fetchStart),
-            ttfb: Math.round(navigation.responseStart - navigation.requestStart)
-          });
-        }
-      }
-    };
-    
-    // Log performance after page is fully loaded
-    if (document.readyState === 'complete') {
-      logInitialPerformance();
-    } else {
-      window.addEventListener('load', logInitialPerformance);
-    }
-    
-    return () => {
-      window.removeEventListener('load', logInitialPerformance);
-    };
-  }, []);
-
   return (
     <html lang="en-MT" className={`${inter.variable} ${merriweather.variable}`}>
-            <head>
-        <title>Kostituzzjoni.mt - Interactive Constitution of Malta</title>
-        <meta name="description" content="Explore the Constitution of Malta through an interactive, user-friendly interface. Access all chapters, articles, and amendments of Malta's constitutional law with advanced search and navigation features." />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+      <head>
+        {/* Structured Data JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+
         {/* PWA Configuration */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#BD0F1F" />
@@ -152,53 +117,21 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="msapplication-TileColor" content="#BD0F1F" />
         <meta name="msapplication-tap-highlight" content="no" />
-        
+
         {/* Icons */}
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        
-        {/* Performance and SEO */}
-        <meta name="robots" content="index, follow" />
-        <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
-        <link rel="canonical" href="https://constitution.mt" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content="Constitution of Malta - Interactive Edition" />
-        <meta property="og:description" content="Explore Malta's constitution through an intuitive, modern interface that brings legal text to life." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://constitution.mt" />
-        <meta property="og:image" content="https://constitution.mt/og-image.png" />
-        <meta property="og:locale" content="en_US" />
-        <meta property="og:site_name" content="Constitution.mt" />
-        
-        {/* Twitter Card */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Constitution of Malta - Interactive Edition" />
-        <meta name="twitter:description" content="Explore Malta's constitution through an intuitive, modern interface that brings legal text to life." />
-        <meta name="twitter:image" content="https://constitution.mt/twitter-image.png" />
-        
-        {/* Preload critical resources */}
+
+        {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* Performance hints */}
         <meta httpEquiv="X-DNS-Prefetch-Control" content="on" />
         <link rel="dns-prefetch" href="//vercel-analytics.com" />
-        <meta name="theme-color" content="#dc2626" />
-        
-        {/* Favicon and App Icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
-        
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        
-        {/* Canonical URL */}
-        <link rel="canonical" href="https://constitution.mt/" />
-        
+
         {/* Alternate Language Versions */}
         <link rel="alternate" hrefLang="en-MT" href="https://constitution.mt/" />
         <link rel="alternate" hrefLang="mt-MT" href="https://kostituzzjoni.mt/" />
@@ -209,15 +142,15 @@ export default function RootLayout({
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 bg-primary-DEFAULT text-white p-2 z-50">
           Skip to main content
         </a>
-        
+
         <header role="banner">
           <Navigation />
         </header>
-        
+
         <main id="main-content" role="main" className="container mx-auto px-4 sm:px-6 py-4 sm:py-8 flex-grow max-w-full overflow-x-hidden">
           {children}
         </main>
-        
+
         <footer role="contentinfo" className="bg-gray-100 dark:bg-gray-800 py-4 sm:py-6 mt-auto border-t border-gray-200 dark:border-gray-700">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center space-y-2">
@@ -226,9 +159,9 @@ export default function RootLayout({
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-500">
                 Educational use only. For official legal reference, consult the{' '}
-                <a 
-                  href="https://legislation.mt/eli/const/eng/pdf" 
-                  target="_blank" 
+                <a
+                  href="https://legislation.mt/eli/const/eng/pdf"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="text-primary-DEFAULT hover:underline"
                 >
@@ -244,11 +177,13 @@ export default function RootLayout({
             </div>
           </div>
         </footer>
-        
+
         {/* Client-side components */}
+        <LayoutClient />
         <PageViewTracker />
         <PrivacyNotice />
+        <Analytics />
       </body>
     </html>
   );
-} 
+}

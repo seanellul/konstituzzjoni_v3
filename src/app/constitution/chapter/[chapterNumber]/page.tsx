@@ -33,9 +33,23 @@ export async function generateMetadata({
   const chapterNum = parseInt(resolvedParams.chapterNumber, 10);
   const chapter = await getChapter(chapterNum);
 
+  const chapterUrl = `/constitution/chapter/${chapterNum}`;
+
   return {
     title: `Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} | Constitution of Malta`,
     description: `Browse articles in Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} of the Constitution of Malta`,
+    alternates: {
+      canonical: `https://constitution.mt${chapterUrl}`,
+      languages: {
+        'en-MT': `https://constitution.mt${chapterUrl}`,
+        'mt-MT': `https://kostituzzjoni.mt${chapterUrl}`,
+      },
+    },
+    openGraph: {
+      title: `Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} | Constitution of Malta`,
+      description: `Browse articles in Chapter ${toRomanNumeral(chapterNum)} - ${chapter.title} of the Constitution of Malta`,
+      url: `https://constitution.mt${chapterUrl}`,
+    },
   };
 }
 
@@ -45,9 +59,9 @@ export default async function ChapterPage({ params }: { params: Promise<{ chapte
   const chapter = await getChapter(chapterNum);
   const articles = await getChapterArticles(chapterNum);
 
-  return <ChapterContent 
-    chapter={chapter} 
-    articles={articles as any[]} 
-    chapterNum={chapterNum} 
+  return <ChapterContent
+    chapter={chapter}
+    articles={articles as any[]}
+    chapterNum={chapterNum}
   />;
-} 
+}

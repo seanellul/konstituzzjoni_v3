@@ -40,9 +40,24 @@ export async function generateMetadata({
     };
   }
 
+  const articleUrl = `/constitution/chapter/${chapterNum}/article/${articleNum}`;
+
   return {
     title: `Article ${articleNum} - ${article.title} | Constitution of Malta`,
     description: `Read Article ${articleNum} from Chapter ${toRomanNumeral(chapterNum)} of the Constitution of Malta`,
+    alternates: {
+      canonical: `https://constitution.mt${articleUrl}`,
+      languages: {
+        'en-MT': `https://constitution.mt${articleUrl}`,
+        'mt-MT': `https://kostituzzjoni.mt${articleUrl}`,
+      },
+    },
+    openGraph: {
+      title: `Article ${articleNum} - ${article.title} | Constitution of Malta`,
+      description: `Read Article ${articleNum} from Chapter ${toRomanNumeral(chapterNum)} of the Constitution of Malta`,
+      url: `https://constitution.mt${articleUrl}`,
+      type: 'article',
+    },
   };
 }
 
@@ -59,4 +74,4 @@ export default async function ArticlePage({ params }: { params: Promise<{ chapte
   return (
     <ArticleContent article={article} chapterNum={chapterNum} articleNum={articleNum} />
   );
-} 
+}

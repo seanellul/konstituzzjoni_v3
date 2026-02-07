@@ -5,7 +5,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { chapter, article, timestamp } = body;
-    
+
     // Validate required fields
     if (typeof chapter !== 'number' || typeof article !== 'number') {
       return NextResponse.json(
@@ -13,8 +13,9 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
-    // Create the article view record
+
+    // sessionId is intentionally allowed to be null here for backwards compatibility
+    // with existing data that may not have a session ID attached
     const articleView = await prisma.articleView.create({
       data: {
         chapter,
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
         sessionId: request.headers.get('x-session-id') || null,
       },
     });
-    
+
     return NextResponse.json(
       { success: true, id: articleView.id },
       { status: 200 }
@@ -35,4 +36,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}

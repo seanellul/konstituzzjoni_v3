@@ -13,11 +13,11 @@ export function generateConstitutionalSEO({
   description,
   keywords = [],
   canonicalUrl,
-  ogImage = '/og-image-malta-constitution.jpg',
+  ogImage = '/opengraph-image',
 }: Partial<SEOData> & { title: string; description: string }): SEOData {
   const defaultKeywords = [
     'Malta Constitution',
-    'Maltese Constitution', 
+    'Maltese Constitution',
     'Constitution of Malta',
     'Malta constitutional law',
     'Malta legal framework',
@@ -28,7 +28,7 @@ export function generateConstitutionalSEO({
     title: `${title} | Kostituzzjoni.mt - Constitution of Malta`,
     description,
     keywords: [...defaultKeywords, ...keywords],
-    canonicalUrl: canonicalUrl || 'https://kostituzzjoni.mt',
+    canonicalUrl: canonicalUrl || 'https://constitution.mt',
     ogImage,
   };
 }
@@ -37,7 +37,8 @@ export function ConstitutionalArticleStructuredData(
   articleNumber: number,
   title: string,
   content: string,
-  chapterName: string
+  chapterName: string,
+  chapterNumber: number
 ) {
   return {
     "@context": "https://schema.org",
@@ -56,7 +57,7 @@ export function ConstitutionalArticleStructuredData(
     },
     "legislationDate": "1964-09-21",
     "inLanguage": "en-MT",
-    "url": `https://kostituzzjoni.mt/constitution/article/${articleNumber}`
+    "url": `https://constitution.mt/constitution/chapter/${chapterNumber}/article/${articleNumber}`
   };
 }
 
@@ -85,10 +86,10 @@ export function ConstitutionalChapterStructuredData(
       "@type": "LegalDocument",
       "name": `Article ${article.number}: ${article.title}`,
       "legislationType": "Constitutional Article",
-      "url": `https://kostituzzjoni.mt/constitution/article/${article.number}`
+      "url": `https://constitution.mt/constitution/chapter/${chapterNumber}/article/${article.number}`
     })),
     "legislationDate": "1964-09-21",
     "inLanguage": "en-MT",
-    "url": `https://kostituzzjoni.mt/constitution/chapter/${chapterNumber}`
+    "url": `https://constitution.mt/constitution/chapter/${chapterNumber}`
   };
 }
