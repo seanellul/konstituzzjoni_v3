@@ -20,7 +20,7 @@
     "@vercel/analytics": "^1.5.0",
     "axios": "latest",
     "framer-motion": "latest",
-    "next": "latest",
+    "next": "15.5.8",
     "next-auth": "latest",
     "next-seo": "latest",
     "react": "latest",
